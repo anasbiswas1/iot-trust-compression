@@ -1,3 +1,4 @@
+
 # =====================================================================
 # iot-trust-compression — single source of truth
 # Every notebook and module reads paths/seeds/splits FROM HERE.
@@ -48,21 +49,30 @@ datasets:
 
 # --- Splits (INTEGRITY requirement, not optional) --------------------
 split:
-  primary: grouped               # grouped/source-aware is PRIMARY
+  primary: temporal_within_capture   # each attack captured separately -> capture confounds with class;
+                                      # split each class chronologically (row order proxies capture time).
+                                      # Breaks near-duplicate-burst leakage; keeps every rare class evaluable.
+  robustness: strict_capture_grouped # whole captures to one side; only runs on classes with >=2 capture parts
   applies_to: [measure, crux, predict]
-  train_frac: 0.70               # approximate under grouping
+  train_frac: 0.70
   val_frac: 0.15
   test_frac: 0.15
-  grouping_variable: null        # FREEZE-CHECKLIST: device|session|capture
+  grouping_variable: capture_folder  # RESOLVED: provenance = per-attack capture folder/part (nikitamanaenkov multifile)
+  capture_order_assumption: "row order within each capture CSV proxies capture time (CICFlowMeter writes in capture order); stated explicitly; strict_capture_grouped robustness check partly backs it"
   fine_type_survival:
     min_train_instances: 50      # learnable-count floor
-    min_groups: 2                # must appear in >= 2 groups to be evaluable
+    min_groups: 2                # >=2 capture parts to be eligible for the STRICT robustness split
   keep_random_reference: true    # random split retained to MEASURE the leakage gap
   temporal_split: robustness     # Stage 5 only; timestamps used to SPLIT, not as features
 
+# --- Subsampling (Colab Pro: fast iteration set; full set for final confirmation) ---
+subsample:
+  majority_cap_per_class: 200000   # cap MAJORITY classes; rare classes kept WHOLE
+  rationale: "rare-class collapse is driven by RELATIVE rarity, not absolute count; cap the head, keep the tail intact. Run load_raw(subsample=False) once at the end for a full-scale confirmation pass."
+
 # --- Label granularity (FREEZE-CHECKLIST decision) -------------------
 label_granularity:
-  chosen: null                   # 34_way | 8_way_fine_stratified
+  chosen: 34_way                 # CONFIRMED from data: all 34 fine classes present at true frequencies
   rule: >
     Prefer 34_way iff enough fine types survive the grouped split with
     >= min_train_instances and >= min_groups. Else keep per-type recall
