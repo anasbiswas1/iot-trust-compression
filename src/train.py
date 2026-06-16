@@ -153,3 +153,21 @@ def seed_null_band(arch, df, dataset, splits, seeds, **kw) -> pd.DataFrame:
     R = pd.DataFrame(recs)
     R["mean"] = R.mean(1); R["std"] = R.std(1)
     return R
+
+
+def load_anchor(dataset, arch, compression, seed, arch_kwargs=None):
+    """Reload a saved anchor + its label encoder and scaler. Uses weights_only=False
+    (our own trusted checkpoints contain numpy scaler stats)."""
+    import numpy as np
+    from sklearn.preprocessing import LabelEncoder, StandardScaler
+    from . import models as _m
+    ckpt = torch.load(PATHS.model(dataset, arch, compression, seed),
+                      map_location=DEVICE, weights_only=False)
+    model = _m.build(arch, len(ckpt["feat_cols"]), len(ckpt["classes"]),
+                     **(arch_kwargs or {})).to(DEVICE)
+    model.load_state_dict(ckpt["state_dict"]); model.eval()
+    le = LabelEncoder().fit(np.array(ckpt["classes"]))
+    scaler = StandardScaler()
+    scaler.mean_ = np.asarray(ckpt["scaler_mean"]); scaler.scale_ = np.asarray(ckpt["scaler_scale"])
+    scaler.n_features_in_ = len(ckpt["feat_cols"])
+    return model, le, scaler, ckpt["feat_cols"]
