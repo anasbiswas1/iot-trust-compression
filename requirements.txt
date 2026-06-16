@@ -1,0 +1,25 @@
+# iot-trust-compression — PyTorch stack
+# Pin exact versions once the environment is finalised (reproducibility).
+
+# Core
+numpy
+pandas
+scikit-learn
+scipy
+pyyaml
+
+# Deep learning (architectures + compression) — PyTorch single stack
+torch
+torchao                # int8 / FX-graph post-training quantisation
+# float16 via tensor.half(); pruning via torch.nn.utils.prune (in torch)
+
+# Explainability (perturbation-based across the whole compression matrix)
+shap                   # use KernelSHAP (DeepSHAP gradients are unreliable on int8)
+captum                 # optional: attribution + deletion/AOPC utilities
+
+# Conformal / risk control (Stage 4 certificate stretch)
+mapie                  # or crepes — class-conditional conformal / risk control
+
+# Plotting + notebooks
+matplotlib
+nbformat

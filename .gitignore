@@ -1,0 +1,27 @@
+# Data and model binaries live in Drive, not GitHub
+data/
+models/
+*.csv.gz
+*.parquet
+*.h5
+*.keras
+*.pt
+*.pth
+*.ckpt
+*.onnx
+
+# But DO keep small result tables and arrays that back the paper
+!results/tables/*.csv
+!results/arrays/*.npy
+
+# Python / Colab
+__pycache__/
+*.pyc
+.ipynb_checkpoints/
+.venv/
+env/
+
+# OS / editor
+.DS_Store
+*.swp
+.vscode/

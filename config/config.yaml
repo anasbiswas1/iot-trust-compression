@@ -1,0 +1,137 @@
+# =====================================================================
+# iot-trust-compression — single source of truth
+# Every notebook and module reads paths/seeds/splits FROM HERE.
+# NO path is ever hardcoded inline (the X-IDS multi-seed lesson:
+# inline Path(REPO)/... construction is what made the pipeline
+# un-redirectable and destroyed the seed-42 baseline).
+# This file mirrors anchor_preregistration.json. Keep them in sync.
+# =====================================================================
+
+project: iot-trust-compression
+author: Md Anas Biswas
+
+# --- Roots -----------------------------------------------------------
+# In Colab the repo is cloned INSIDE Drive, so one tree serves both.
+# Override drive_root at runtime if a notebook runs elsewhere.
+paths:
+  drive_root: /content/drive/MyDrive/IoT_Trust_Research/iot-trust-compression
+  data: data                 # gitignored — lives in Drive only
+  models: models             # gitignored — binaries in Drive only
+  results: results           # tracked (tables/figures/arrays)
+  tables: results/tables
+  figures: results/figures
+  arrays: results/arrays
+  logs: logs
+
+# --- Reproducibility -------------------------------------------------
+seeds: [0, 1, 2, 3, 4]
+anchor_seed: 0               # the pre-registered reference seed
+
+# --- Datasets --------------------------------------------------------
+# n_fine / n_categories per the prereg. diagnostic_unit drives the
+# correlation granularity (DECISION: 34, see label_granularity).
+datasets:
+  ciciot2023:
+    role: core
+    n_fine: 34
+    n_categories: 8
+    diagnostic_unit: fine          # correlate the diagnostic over fine types
+    drop_identity_fields: true
+    deduplicate: true
+  ton_iot:
+    role: core
+    drop_identity_fields: true     # addresses/ports/timestamps OUT of features
+    deduplicate: true
+  bot_iot:
+    role: optional                 # held-out generalisation + robustness
+    deduplicate: true
+
+# --- Splits (INTEGRITY requirement, not optional) --------------------
+split:
+  primary: grouped               # grouped/source-aware is PRIMARY
+  applies_to: [measure, crux, predict]
+  train_frac: 0.70               # approximate under grouping
+  val_frac: 0.15
+  test_frac: 0.15
+  grouping_variable: null        # FREEZE-CHECKLIST: device|session|capture
+  fine_type_survival:
+    min_train_instances: 50      # learnable-count floor
+    min_groups: 2                # must appear in >= 2 groups to be evaluable
+  keep_random_reference: true    # random split retained to MEASURE the leakage gap
+  temporal_split: robustness     # Stage 5 only; timestamps used to SPLIT, not as features
+
+# --- Label granularity (FREEZE-CHECKLIST decision) -------------------
+label_granularity:
+  chosen: null                   # 34_way | 8_way_fine_stratified
+  rule: >
+    Prefer 34_way iff enough fine types survive the grouped split with
+    >= min_train_instances and >= min_groups. Else keep per-type recall
+    well-defined and correlate over surviving fine types; category-level
+    only where group counts force it. Consistent across ALL units.
+
+# --- Architectures (size- and macroF1-matched, edge-scale) -----------
+match:
+  on: macro_f1                   # NOT accuracy (accuracy hides collapse)
+  tolerance: 0.02                # under the PRIMARY grouped split
+architectures:
+  mlp:
+    role: dense_anchor
+    params: null                 # FREEZE-CHECKLIST: from built anchor
+    baseline_macro_f1: null
+  cnn1d:
+    role: local_conv_BUILD_FIRST # carries Stage 1 gate + crux experiment
+    params: null
+    baseline_macro_f1: null
+  ft_transformer:
+    role: attention_third_arm
+    params: null
+    baseline_macro_f1: null
+    fallback: gru                # if cannot reach MLP macro-F1 +/- tol on BOTH datasets
+    fallback_tuning_budget: 30   # trials before switching
+
+# --- Compression matrix (PyTorch-native) -----------------------------
+compression:
+  matrix: [M0, prune50, prune80, distillation, int8, float16]
+  prune_method: l1_unstructured     # torch.nn.utils.prune
+  float16_method: half              # .half()
+  int8_method: torchao_fx_ptq       # torchao / FX-graph PTQ
+  int8_transformer_fallback: true   # int8 on MLP/CNN only if transformer PTQ won't yield attribution-accessible model
+
+# --- Metrics ---------------------------------------------------------
+metrics:
+  bootstrap_B: 1000
+  ece_bins: [10, 15, 20]            # adaptive equal-mass
+  attribution_method: kernelshap    # perturbation-based across WHOLE matrix (DeepSHAP lies on int8)
+  aopc_top_k: 5
+  # explanation trust is decomposed: STABILITY (Spearman vs anchor) is NOT
+  # faithfulness; FAITHFULNESS is adjudicated by deletion/AOPC ALONE.
+  # drift is stratified by prediction-change. See src/metrics.py.
+
+# --- Crux experiment -------------------------------------------------
+crux:
+  probe: linear_one_vs_rest
+  auc_retention_threshold: null     # FREEZE before running; report on a continuum regardless
+  interpretation: graded_class_dependent   # NOT a clean binary
+
+# --- Diagnostic (headline; mechanism-grounded) -----------------------
+diagnostic:
+  target_primary: delta_recall      # continuous
+  target_secondary: binary_collapse
+  features:
+    - sample_count
+    - margin
+    - separability
+    - attribution_concentration     # FLAGGED redundancy-confounded; include only if it beats redundancy-free set
+    - effective_rank
+    - neural_collapse_geometry      # v2.1 theory-derived (ETF deviation / minority-collapse angle)
+  baselines_to_beat:
+    - frequency_only
+    - tran_fioretto_margin_gradnorm_only
+  generalisation: [across_architectures, across_compression_families, across_datasets]
+  # across_architectures EARNS the causal claim; failure -> withdraw to correlational.
+
+# --- Mitigation (closing payoff; droppable) --------------------------
+mitigate:
+  strategy: predictor_guided_selective_protection
+  conformal_certificate: stretch    # class-conditional CRC; fallback to empirical risk control
+  conformal_alpha: null             # set with feasibility gate (~1/alpha calib instances for rarest)

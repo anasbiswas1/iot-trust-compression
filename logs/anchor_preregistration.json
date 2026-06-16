@@ -1,0 +1,295 @@
+{
+  "project": "Trust-Preserving Compression for IoT Intrusion Detection (Q1 journal)",
+  "author": "Md Anas Biswas",
+  "affiliation": "School of Computing, University of Portsmouth",
+  "contact": "up2082724@myport.ac.uk",
+  "version": "1.0-prefreeze",
+  "status": "READY TO FREEZE pending freeze_checklist. Do NOT compute any trust metric until frozen_on is set. The value of this file is that it was fixed before metrics; once a metric exists, edits below the line are documented deviations, not free revisions.",
+  "frozen_on": null,
+  "supersedes": "anchor_preregistration_TEMPLATE.json. Full rationale lives in PLAN.md v2.0; this file is the machine-checkable commitment record.",
+
+  "freeze_checklist": {
+    "note": "The handful of values that require inspecting the data or building the anchors. Set these, then set frozen_on, BEFORE any trust metric is computed.",
+    "must_set_from_data_or_builds": [
+      "evaluation_protocol.grouping_variable.chosen — pick device | session | capture per the decision_rule, after counting groups per fine-grained type",
+      "label_granularity.chosen — resolve 34-way vs 8-way-with-fine-stratified-eval per its decision_rule, after checking learnable sample counts under the grouped split",
+      "architectures.*.params — measured from the built anchors",
+      "architectures.*.baseline_macroF1_target — the matched target, set once the anchors are trained under the PRIMARY (grouped) split",
+      "datasets.*.split_seed — confirm or change the defaults below"
+    ],
+    "earned_later_not_now": [
+      "diagnostic_output_contract.rungs.*.numeric_guarantee — left null on purpose; each is filled only when Stage 3 earns it. Pre-registering a guarantee you have not measured is the exact over-claim this project avoids."
+    ]
+  },
+
+  "contribution_hierarchy": {
+    "note": "Narrative order is measure -> explain -> predict -> mitigate; contribution WEIGHT is not equal. Lead the abstract/intro with PREDICT.",
+    "primary": "PREDICT — a pre-deployment, per-class diagnostic forecasting which attack classes lose recall, calibration, or explanation-trust (stability + faithfulness) under compression, from the baseline model alone. v2.1: MECHANISM-GROUNDED, not correlational — features derived from a stated capacity-allocation theory (neural collapse / Minority Collapse); the causal framing is EARNED by cross-architecture generalisation and WITHDRAWN if the mechanism holds only within one architecture.",
+    "backbone": "EXPLAIN — mechanism (information-loss vs decision-rule-loss; effective rank; margin geometry; pruning/quantisation/distillation dissociation), now anchored on neural collapse / Minority Collapse (Fang et al., PNAS 2021) as the account of WHY the tail is fragile (minority-class classifiers collapse toward each other, least angular margin, fail first under compression). Justifies the diagnostic's feature set; not a competing claim.",
+    "problem_statement": "MEASURE — per-class calibration collapse and per-class explanation-trust change (stability + faithfulness, separated per the four-case decomposition) under compression (the per-class TRUST quantification is a genuine but secondary gap; mere replication that collapse happens is substrate, not novelty).",
+    "payoff": "MITIGATE — predictor-guided selective protection. Crowded space; not the core novelty; DROPPABLE per D3. v2.1 STRETCH: a class-conditional conformal / risk-control CERTIFICATE on flagged classes (distribution-free per-class recall guarantee), with a pre-registered fallback to empirical risk control if the rarest classes lack calibration samples."
+  },
+
+  "scope_boundaries": [
+    "Network IoT-IDS / tabular network-flow lane ONLY.",
+    "The IoMT/medical paper (CICIoMT2024, selective prediction) is a SEPARATE project — no medical datasets, no selective prediction here.",
+    "Cites the prior conference paper as prior work; no verbatim text; majority-new experiments.",
+    "No human evaluation (D5). No physical-device deployment, no latency/energy claims (D6)."
+  ],
+
+  "datasets": {
+    "CICIoT2023": {
+      "role": "core",
+      "n_fine_types": 34,
+      "n_categories": 8,
+      "diagnostic_correlation_unit": "34 fine-grained attack types (DECISION: 34, not 8 — to give the diagnostic statistical power; see label_granularity)",
+      "split_seed": 0,
+      "train_frac_target": 0.70,
+      "val_frac_target": 0.15,
+      "test_frac_target": 0.15,
+      "frac_note": "Targets are approximate: under a grouped/source-aware split, exact fractions cannot be hit because whole groups move together.",
+      "preprocessing": "scaler fit on TRAIN only; deduplicate near-duplicate flows; drop identity fields. Dedup + identity removal are MECHANISM-CRITICAL (leaked identifiers create spurious separability that compression 'loses', masquerading as capacity loss)."
+    },
+    "TON_IoT": {
+      "role": "core",
+      "split_seed": 0,
+      "train_frac_target": 0.70,
+      "val_frac_target": 0.15,
+      "test_frac_target": 0.15,
+      "preprocessing": "scaler fit on TRAIN only; deduplicate; drop identity fields (addresses, ports, timestamps from the FEATURE set). NOTE: timestamps may still be used to DEFINE a temporal split without being fed to the model."
+    },
+    "Bot_IoT_optional": {
+      "role": "optional stretch + held-out generalisation test for the diagnostic",
+      "split_seed": 0,
+      "rationale": "Inverted (benign-rare) imbalance tests whether collapse follows class RARITY regardless of which class is rare; serves as the leave-one-dataset-out target."
+    }
+  },
+
+  "label_granularity": {
+    "decision_required": true,
+    "fork": "34-way classifier (clean per-type recall, harder to train, rarest types may be unlearnable) vs 8-way classifier with fine-type-stratified recall evaluation (easier model, but per-fine-type 'recall' becomes category-recall stratified by fine type).",
+    "decision_rule": "Prefer 34-way IF, under the primary grouped split, the number of fine types with a learnable training sample count (>= a pre-set floor, e.g. >= 50 train instances AND present in >= 2 groups) is large enough to support a rank-correlation claim. Otherwise train at the level that keeps per-type recall well-defined and correlate the diagnostic over the surviving fine types, falling back to category level only where group counts force it. Whatever is chosen MUST be consistent across all (type x compression x architecture) units.",
+    "chosen": null
+  },
+
+  "architectures": {
+    "matching_protocol": {
+      "match_on": "macro-F1 (NOT accuracy — accuracy hiding collapse is the premise)",
+      "tolerance": "+/- 0.02 macro-F1 across architectures at baseline",
+      "tolerance_note": "Set under the PRIMARY (grouped) split. Grouped splits are noisier; if +/-0.02 proves infeasible under grouping, a looser documented tolerance is a recorded deviation, not a silent change.",
+      "also_report": "per-class baseline recall, so 'architecture X collapses more' cannot secretly be 'architecture X started weaker'."
+    },
+    "MLP": { "role": "dense anchor", "params": null, "baseline_macroF1_target": null },
+    "CNN1D": { "role": "local/convolutional; BUILD FIRST (lowest risk); carries the Stage 1 gate and the crux experiment", "params": null, "baseline_macroF1_target": null },
+    "FT_Transformer": {
+      "role": "attention; primary third arm",
+      "params": null,
+      "baseline_macroF1_target": null,
+      "fallback": "GRU",
+      "fallback_criterion": "Switch to GRU iff FT-Transformer cannot reach within +/-0.02 macro-F1 of the MLP on BOTH core datasets within a fixed tuning-trial budget. (Caveat: a GRU over feature-as-timestep vectors is a questionable inductive bias for non-sequential flow data — note if triggered.)"
+    }
+  },
+
+  "anchors": {
+    "description": "Full-precision reference model per architecture x dataset, trained under the PRIMARY grouped split, seeds fixed here before metrics.",
+    "seeds": [0, 1, 2, 3, 4],
+    "preregistered_anchor_seed": 0
+  },
+
+  "compression_matrix": ["M0", "prune50", "prune80", "distillation", "int8", "float16"],
+  "compression_note": "The mix of post-training quantisation (no retraining: int8, float16) and retrain/finetune-based methods (prune, distillation) is load-bearing: it dissociates information loss from optimisation-during-finetuning, and the diagnostic must generalise ACROSS families, not be fit to one. STACK: PyTorch (single stack so baseline AND compressed models are the same object type that the probe / KernelSHAP / neural-collapse-geometry code reads uniformly — internals access is first-class on every model). Quantisation: float16 via .half(); int8 via torchao / FX-graph PTQ. PRE-REGISTERED FALLBACK: if int8 PTQ on the FT-Transformer cannot yield a clean, attribution-accessible quantised model within a bounded effort, run int8 on MLP/CNN only and report the transformer-int8 cell as a documented limitation rather than contorting the pipeline. Rationale: quantisation is a once-per-model bounded task; internals access recurs in every novel stage, so friction is concentrated in the one-time task, not smeared across the contributions.",
+
+  "evaluation_protocol": {
+    "note": "Split choice is an INTEGRITY requirement, not a breadth add-on. Random splits leak via near-duplicate flows/sessions/devices, inflating baseline per-class properties AND making 'collapse under compression' partly loss-of-memorised-duplicates — which could manufacture the headline finding. Decided after TA input; goes beyond Stage 3.",
+    "primary_split": "grouped / source-aware (no device/session/capture spans the train/test boundary)",
+    "primary_split_applies_to": ["MEASURE (Stage 1)", "crux experiment", "PREDICT (Stage 3)"],
+    "grouping_variable": {
+      "candidates_priority_order": ["session", "capture", "device"],
+      "decision_rule": "Choose the grouping that removes near-duplicate leakage while leaving the MOST fine-grained types with >= 2 non-empty groups (so each type can appear in both train and test). Justify the choice from group-count tables.",
+      "chosen": null
+    },
+    "fine_type_survival_rule": "A fine-grained type that, under the chosen grouping, lands entirely in train OR entirely in test (cannot be evaluated) is excluded from the per-type diagnostic correlation and the exclusion is reported. Do not silently drop; tabulate which types survive at which grouping.",
+    "leakage_gap_comparison": {
+      "status": "REQUIRED, reported as a FINDING (not just a baseline)",
+      "protocol": "Run baselines under BOTH a random stratified split and the grouped split; the gap (how much random overstates per-class trust at baseline) is the quantitative demonstration that 'trust collapse is latent at baseline'. Lead a figure with it."
+    },
+    "temporal_split": {
+      "status": "robustness layer (Stage 5)",
+      "protocol": "Train on earlier captures, test on later; defined via capture timestamps used for SPLITTING ONLY (not fed to the model). Tests drift, a different question from leakage."
+    },
+    "leave_family_out": {
+      "status": "OPTIONAL and SEPARATELY FRAMED",
+      "caveat": "Tests novel-attack generalisation, a subtly different paper. A family with zero training samples has no 'recall collapse under compression' to measure. Include only for a secondary novelty-detection point, framed as such."
+    },
+    "split_fractions": "see datasets.*; approximate under grouping"
+  },
+
+  "metrics": {
+    "calibration": "adaptive equal-mass ECE at 10/15/20 bins; signed per-class over-confidence gap.",
+    "explanation_trust_decomposition": {
+      "framing": "CRITICAL: attribution drift is NOT the same as faithfulness loss. Drift between baseline and compressed attributions has FOUR causes that must be separated; only the fourth is unfaithfulness.",
+      "four_cases": [
+        "C1 explainer noise on a fixed function (redundant CICFlowMeter features get arbitrary credit; model unchanged) -> estimation artifact, still faithful.",
+        "C2 behaviorally-equivalent reorganization (function routes through a different but equivalent feature; on-distribution behavior preserved) -> each explanation faithful to its own model. This is the 'moved to an equivalent feature' case.",
+        "C3 faithful report of genuine degradation (compressed function leans on worse features for that class; explanation correctly shows it) -> explanation faithful, MODEL degraded. This is the EXPECTED reading for collapsed rare classes and is EVIDENCE for the mechanism, not a flaw.",
+        "C4 explainer breakdown (attribution points at features the compressed model does not use) -> the ONLY genuine unfaithfulness."
+      ],
+      "metric_1_stability": "RENAMED from 'agreement'. Per-instance Spearman of attributions vs the M0 anchor. Reported as explanation STABILITY (a legitimate trust property), NOT as faithfulness. Compared against an explainer-noise floor + a REDUNDANCY/retraining null band (two M0 models, different seeds, no compression — captures credit-sloshing between redundant features with zero function change).",
+      "metric_2_faithfulness": "top-k deletion AOPC vs a random-deletion baseline, run on the COMPRESSED model's OWN top features. This is the SOLE faithfulness adjudicator (the only metric that checks attributions against actual model behavior, so the only one that detects C4).",
+      "prediction_change_stratification": "REQUIRED, and it does the work that a feature-equivalence grouping cannot do reliably (marginal correlation is not the conditional redundancy that drives SHAP credit-splitting, so a correlation-threshold grouping is dropped). Stratify attribution drift by whether the compressed prediction FLIPPED: unchanged predictions -> redundancy+representational floor (C1/C2); flipped predictions -> behavior-coupled drift (C3). The DIFFERENCE is the real signal. Note the redundancy confound concentrates on STABLE/frequent classes (behavior preserved) and is bounded on rare classes (a recall collapse IS a behavior change, so drift there rides on a genuine failure).",
+      "decision_rule_for_calling_unfaithfulness": "Stability says 'drifted' + deletion says compressed top-features STILL carry the predictive load => C2/C3, faithful (report as stability change / mechanism evidence). Stability degraded AND deletion degraded => C4, genuine unfaithfulness. Pre-registered; turns the redundancy problem from a confound into a discriminator.",
+      "attribution_method": "Perturbation-based (KernelSHAP) across the ENTIRE compression matrix. Gradient-based attributions (DeepSHAP) are unreliable on int8-quantised models (piecewise-flat function -> lying gradients) and would manufacture fake C4 unfaithfulness. Method held constant for cross-compression comparability.",
+      "honest_caution": "This control may BOUND the faithfulness claim rather than rescue it: subtracting the redundancy null band may reveal that much apparent drift was credit-sloshing and genuine unfaithfulness is smaller than raw numbers suggest. Report the smaller honest number; the paper is stronger for pre-empting the objection. Acceptable because faithfulness is the SECONDARY contribution and prediction is the headline."
+    },
+    "recall_collapse": "per-class recall delta vs M0, reported against the seed-to-seed recall null band so every 'collapse' is visibly outside stochastic variation.",
+    "inference": "effect sizes + bootstrap 95% CIs (2.5/97.5 percentile). NOT p-values.",
+    "bootstrap_B": 1000,
+    "seed_null_band": "report seed-to-seed variability for recall AND attribution; required for every 'collapse' / 'drift' claim."
+  },
+
+  "crux_experiment": {
+    "purpose": "The spine (D1). Adjudicates information-loss vs decision-rule-loss; sets the FORM of the Stage 4 mitigation; runs BEFORE the mitigation is built.",
+    "design": "For each class, freeze the compressed model's penultimate representation; train a one-vs-rest linear probe; compare its AUC to the same probe on the M0 representation.",
+    "interpretation_precommitment": "PRE-COMMIT that the result is expected to be GRADED and CLASS-DEPENDENT, not a clean binary. Do not write the downstream branch as if a clean switch is expected.",
+    "threshold": null,
+    "threshold_note": "Set the probe-AUC-retention threshold(s) for calling a class 'information-survived' vs 'information-lost' here, before running. Report per-class on a continuum regardless.",
+    "leakage_caveat": "Run under the PRIMARY grouped split. A probe on a leakage-trained representation reads memorised near-duplicates, which would masquerade as 'information survived'. This is why the grouped split extends to the crux, not just the diagnostic."
+  },
+
+  "mechanism_stage_explain": {
+    "format": "hypothesis tournament; the surviving mechanism DEFINES the diagnostic's feature set.",
+    "rival_hypotheses": [
+      "H1 information loss — probe AUC collapses (crux).",
+      "H2 decision-rule shift — probe survives but per-class signed margin collapses; recoverable by re-thresholding.",
+      "H3 optimisation-during-finetuning — distinguished by family: post-training int8/float16 involve no retraining, so collapse there implicates representation/decision geometry, not finetuning dynamics.",
+      "H4 rarity-vs-separability confound — IN per D4: subsample a frequent class to a rare class's count; collapse => rarity causal; robust => separability causal."
+    ],
+    "per_family_proximate_causes": "Test whether magnitude pruning's removed units over-represent high-rare-contribution units (rank units by baseline ablation drop / gradient x activation on the rare class). Frame quantisation as a margin-resolution argument tied to H2.",
+    "neural_collapse_geometry_v2_1": "THEORETICAL LAYER. Measure per-class penultimate geometry vs the ideal simplex ETF: per-class angular separation of classifier/mean vectors and the degree of Minority Collapse (rare-class vectors collapsing toward each other) at baseline and its shift under each compression level. This is the capacity-allocation account (rare classes start with least angular margin -> fail first) and yields the theory-derived predictor feature used in PREDICT. Anchor: Fang et al., Layer-Peeled Model / Minority Collapse, PNAS 2021. The CAUSAL claim is earned iff this geometry predicts per-class collapse CONSISTENTLY across all three architectures; otherwise it is an architecture-specific correlation and the causal framing is withdrawn (see strategic_contingencies).",
+    "measurement_caution": "Class-conditional effective rank / separability is noisy at rare-class sample counts; every such measure needs bootstrap CIs and a same-n subsampled frequent-class control.",
+    "faithful_drift_as_mechanism_evidence": "Per metrics.explanation_trust_decomposition C3: where a collapsed rare class's compressed explanation FAITHFULLY shows reliance shifting to degraded features, that drift localises WHERE the capacity loss landed and feeds this mechanism stage directly. Read this way, faithfulness drift ties the measurement to the mechanism rather than floating beside it as a contested standalone trust metric."
+  },
+
+  "diagnostic_stage_predict": {
+    "goal": "From M0 alone, rank attack classes by predicted post-compression collapse, before compressing.",
+    "predictors_baseline_computable_only": [
+      "per-class sample count",
+      "per-class baseline margin",
+      "baseline linear separability in representation space",
+      "baseline attribution concentration (FLAGGED redundancy-confounded: deflates artificially when a class's signal spreads across redundant features, so it may measure feature-redundancy structure rather than model reliance. Include ONLY if it beats the redundancy-free predictors; do not assume a feature grouping fixes it)",
+      "per-class effective-rank contribution",
+      "per-class neural-collapse geometry (v2.1): ETF deviation / minority-collapse angle, DERIVED from the Stage 2 capacity-allocation theory — this is what makes the predictor theory-grounded rather than a feature grab-bag"
+    ],
+    "predictor_complexity_discipline": "Tiny meta-n. Keep the rule deliberately simple (1-2 features, monotone/threshold or low-capacity), NOT a learned multivariate black box.",
+    "target": {
+      "primary": "continuous per-class delta-recall (report R^2 + predicted-vs-actual calibration plot on held-out classes)",
+      "secondary": "binary collapse label (for the ship/don't-ship framing)",
+      "definition_note": "Both target definitions FROZEN here, before any compressed result is inspected (D2)."
+    },
+    "baselines_to_beat": [
+      "(a) naive frequency-only ('smallest classes collapse')",
+      "(b) Tran & Fioretto (NeurIPS 2022, arXiv:2205.13574) margin/gradient-norm-only predictor"
+    ],
+    "honest_fallback_if_not_beaten": "Report 'rarity/margin necessary but not sufficient; [feature] explains the residual.'",
+    "evaluation_metrics": [
+      "rank correlation predicted-vs-actual collapse (Spearman/Kendall) with bootstrap CIs",
+      "precision@k of correctly flagged collapsing classes (practitioner operating point)",
+      "R^2 + calibration plot for continuous delta-recall"
+    ],
+    "generalisation_tests_credibility": [
+      "ACROSS ARCHITECTURES (v2.1, EARNS THE CAUSAL CLAIM): the theory-derived predictor must transfer MLP -> CNN -> Transformer. Transfer licenses the mechanistic framing; failure to transfer means it is correlational and the causal claim is WITHDRAWN (predictor reported as a strong correlational tool, mechanism as interpretive lens).",
+      "ACROSS compression families (fit on some, predict held-out families — cannot also pool families to inflate n; the held-out commitment is binding)",
+      "ACROSS datasets (leave-one-dataset-out, including Bot-IoT's inverted structure)",
+      "report failure cases; if it only holds within-distribution / within one family, say so (bounds the tool to within-data screening)"
+    ]
+  },
+
+  "diagnostic_output_contract": {
+    "purpose": "What turns a correlation into a reusable artefact. Specified as a TARGET now; numeric guarantees earned at Stage 3.",
+    "architecture": "graceful-degradation ladder — climb only as far as the evidence carries; degrade cleanly if a rung is not earned.",
+    "input_envelope": {
+      "requires": ["a trained baseline (uncompressed) model", "per-class validation data", "the planned compression family"],
+      "promises_nothing_outside": "architectures, datasets, and compression families actually validated. The envelope is a fence, not a flourish."
+    },
+    "output_type": {
+      "decision": "calibrated per-class score + a decision rule that takes the PRACTITIONER's cost ratio as an input parameter. The tool does not pick the cost (so not an automated verdict) but does decide once told the cost (so not no-verdict).",
+      "rationale": "Ranking-only abdicates the decision; tool-decides-everything usurps a threat-model judgement that is not the tool's to make. The cost-parameterised middle is the only honest version."
+    },
+    "security_asymmetric_default": "Conservative about declaring a class 'safe to compress' by default. A diagnostic false negative (says safe, class silently collapses) leaves a detector blind to an attack while believed healthy — strictly worse than a false positive (says risky, efficiency lost). Practitioner must consciously LOWER the cost ratio to tolerate missed collapses.",
+    "novelty_honesty": "The decision-rule machinery (cost-sensitive thresholding, asymmetric operating points) is BORROWED decision theory and is NOT the contribution. Novelty is entirely in the prediction. Do not over-invest in the decision layer at the predictor's expense.",
+    "rungs": {
+      "floor_ranking": {
+        "promise": "order classes by collapse risk",
+        "earn_criterion": "rank correlation predicted-vs-actual significantly positive on held-out (CI excludes 0)",
+        "robustness": "survives calibration error (ordering, not magnitude)",
+        "numeric_guarantee": null
+      },
+      "mid_calibrated_score": {
+        "promise": "per-class predicted delta-recall on a meaningful scale",
+        "earn_criterion": "held-out predicted-vs-actual calibration plot within a pre-set tolerance; NOT assumed",
+        "risk": "absolute score may not transfer across datasets (base-rate / feature-distribution shift) — the hardest validation in the paper",
+        "numeric_guarantee": null
+      },
+      "top_cost_parameterised_decision": {
+        "promise": "ship/don't-ship per class given the practitioner's cost ratio, with the security-asymmetric default",
+        "earn_criterion": "report the FALSE-NEGATIVE envelope at stated cost ratios as a FIRST-CLASS result; a decision rule on a miscalibrated score under-reports its own FNs — disclose, do not hide",
+        "numeric_guarantee": null
+      }
+    },
+    "mandatory_disclaimer": "The contract MUST state its own failure envelope in writing: validated sample size, datasets and compression families tested, held-out generalisation result INCLUDING where it broke, and 'outside this envelope, no guarantee.' The bounding is the credibility; a capabilities-only contract is a sales sheet."
+  },
+
+  "mitigation_stage": {
+    "concept": "predictor-guided selective protection — apply protection ONLY to classes the diagnostic flags; the FORM is set by the crux result.",
+    "if_information_survived": "decision-layer protection (near-free): per-class threshold optimisation (cost-sensitive / Neyman-Pearson), a small re-fit head on the frozen compressed representation, or per-class temperature+bias. Show scalar temperature scaling fixes calibration but cannot move argmax decisions (so cannot recover recall).",
+    "if_information_lost": "compression-time intervention motivated by the mechanism: rare-class-aware pruning saliency (protect high-rare-contribution units), distillation loss up-weighting rare-class logit/boundary matching, or mixed-precision keeping resolution on rare-critical units.",
+    "baselines": [
+      "naive compression (floor)",
+      "scalar temperature scaling",
+      "per-class threshold optimisation (strong cheap baseline)",
+      "focal-loss / class-weighted finetune of the compressed model",
+      "SMOTE/CTGAN-rebalanced compressed model",
+      "rare-class-aware KD (Cluster Computing 2025 style, DOI 10.1007/s10586-025-05597-2)",
+      "uncompressed model (upper reference)"
+    ],
+    "reporting": "trade-off FRONTIER not a point: recall recovered vs (a) compression ratio sacrificed, (b) benign FPR incurred, (c) macro-F1; bootstrap CIs on deltas. Bound the benign blind spot explicitly (state where recall->0 is NOT closed and by how much).",
+    "certified_option_v2_1": {
+      "target": "On flagged-and-protected classes, a class-conditional conformal / conformal-risk-control certificate: distribution-free guarantee that per-class FNR (1 - recall) stays below alpha with high probability post-compression. Upgrades the strongest version of the paper from 'beats baselines' to 'certified', and is the formal backing for diagnostic_output_contract's false-negative envelope. Method anchor: Angelopoulos et al., Conformal Risk Control, arXiv:2208.02814; class-conditional conformal (Ding/Tibshirani et al.).",
+      "feasibility_gate": "A distribution-free per-class certificate needs ~1/alpha calibration instances for the rarest classes just to define the quantile; the rarest attack types may not clear this.",
+      "fallback": "If the rarest classes cannot be certified, DOWNGRADE to an empirical risk-control claim (observed per-class risk + CIs, explicitly NOT a formal certificate) and report the certifiable/non-certifiable boundary as a finding. Certificate is a STRETCH in the SECONDARY, droppable stage — losing it costs a stretch goal, not the paper."
+    },
+    "droppable": "D3 — if a plain focal-loss/class-weighted finetune closes the gap, DROP the novel-method claim on the spot; keep predictor-guided TARGETING as framing; paper stands on predict + explain + measure."
+  },
+
+  "decision_log": {
+    "D1": "Crux experiment is the spine; runs before the mitigation is designed.",
+    "D2": "Diagnostic target: continuous delta-recall primary, binary secondary; both frozen pre-metric.",
+    "D3": "Novel-method claim is droppable if focal-loss finetune closes the gap.",
+    "D4": "Rarity-vs-separability subsampling ablation is IN.",
+    "D5": "No human evaluation; trust is operationalised mathematically; fully automated (stated as a strength).",
+    "D6": "No physical devices; edge-scale satisfied by sizing models (params/MB/sparsity reported); no latency/energy claims."
+  },
+
+  "strategic_contingencies": [
+    "If a pre-compression per-class predictor surfaces in the IoT-IDS lane during build/review -> pivot the lead to the explain mechanism + the pruning/quantisation/distillation dissociation; demote predict to validation of the mechanism.",
+    "If the diagnostic underperforms the naive frequency baseline -> fall back to MEASURE (per-class trust) + EXPLAIN as primary; report the predictor as an honest bounded/negative result ('rarity dominates; richer features add little').",
+    "If the mitigation does not beat focal-loss finetune -> invoke D3; keep predictor-guided targeting.",
+    "v2.1 — If the neural-collapse mechanism does NOT generalise across architectures -> withdraw the CAUSAL framing of PREDICT; report a strong correlational predictor with the mechanism as interpretive lens. Headline survives, downgraded mechanistic->empirical; do not over-defend the theory past its evidence.",
+    "v2.1 — If a per-class conformal certificate is infeasible for the rarest classes -> downgrade to empirical risk control; report the certifiable boundary; make no formal-guarantee claim.",
+    "Re-run the lane-scoped competitor search immediately before submission; the closest items are unreviewed preprints whose status may change."
+  ],
+
+  "honesty_commitments": [
+    "report architectures/classes where the effect does not replicate",
+    "report diagnostic failure cases and the held-out generalisation breakdowns",
+    "report where mitigation does not help (esp. the benign blind spot)",
+    "trust-axis DECOUPLING is a pre-registered possibility: if calibration, faithfulness, and recall do not move together, report it cleanly as a finding rather than forcing a unified 'trust collapses' narrative",
+    "name explanation STABILITY (Spearman vs anchor) and FAITHFULNESS (deletion/AOPC) distinctly; faithfulness is adjudicated by deletion ALONE; attribution drift is not unfaithfulness until the pre-registered decision rule says so",
+    "v2.1 — the mechanistic claim raises the bar: a reviewer will hold the capacity-allocation theory to GENERALISING, not just correlating. Stage 2 neural-collapse measurement and Stage 3 cross-architecture test are load-bearing for the causal claim; fall back to correlational rather than over-defend",
+    "no 'first to' claims; 'to our knowledge' only",
+    "no deployability claims beyond measured quantities",
+    "large-n test sets: effect sizes + bootstrap CIs + retraining null band, not p-values"
+  ],
+
+  "reproducibility": "Locked grouped splits; scaler fit on train only; every stochastic component seeded; anchors pre-registered before any trust metric; public repo holds code/notebooks/result tables/logs/figures; data and binaries stay in Drive."
+}
