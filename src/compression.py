@@ -215,7 +215,8 @@ def evaluate_cell(entry, df, splits, le, scaler, feat_cols, which="test"):
 
     if entry["is_int8"]:
         m = m.cpu().eval(); Xt = torch.tensor(X, dtype=torch.float32)
-        logits = torch.cat([m(Xt[i:i+8192]) for i in range(0, len(Xt), 8192)], 0)
+        logits = _train._forward_batched_cpu(m, Xt) if hasattr(_train, "_forward_batched_cpu") \
+                 else torch.cat([m(Xt[i:i+8192]) for i in range(0, len(Xt), 8192)], 0)
     elif entry["is_half"]:
         m = m.to(DEVICE).eval(); Xt = torch.tensor(X, dtype=torch.float16)
         logits = torch.cat([m(Xt[i:i+8192].to(DEVICE)).float().cpu()
