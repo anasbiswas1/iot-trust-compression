@@ -188,7 +188,11 @@ def build_matrix(anchor, df, dataset, splits, seed, *, arch="cnn1d",
                                              arch=arch, verbose=verbose)
             note = f"L1 prune {int(amt*100)}% + finetune"; half = i8 = False
         elif cell == "distillation":
-            sk = {"channels": (24, 48)}   # smaller student than the (64,128) anchor
+            # student is a SMALLER version of the same architecture (arch-aware kwargs)
+            sk = {"channels": (24, 48)} if arch in ("cnn1d", "gru") else \
+                 {"hidden": (96, 48)} if arch == "mlp" else \
+                 {"d_token": 16, "n_layers": 1}
+
             m, _le, _sc = distill(df, dataset, splits, seed, anchor,
                                   student_kwargs=sk, arch=arch, verbose=verbose)
             note = "KD student (24,48) <- anchor"; half = i8 = False
