@@ -1,0 +1,17 @@
+{
+  "arch": "ft_transformer_lite",
+  "params": 227938,
+  "test_macroF1": 0.5081,
+  "val_macroF1": 0.5445,
+  "cnn_test_macroF1": 0.545,
+  "mlp_test_macroF1": 0.564,
+  "training_time_hours": 4.5,
+  "epochs": 80,
+  "config": {
+    "d_token": 96,
+    "n_heads": 8,
+    "n_layers": 3
+  },
+  "exclusion_reason": "Failed matched-baseline (0.51 vs 0.55/0.56) despite 4-7x params and 4.5h training; excluded from primary architecture comparison to avoid baseline-mismatch confound; violates the edge-scale envelope (227k params, 4.5h) the study targets; consistent with known transformer underperformance on tabular data at this scale.",
+  "decision": "Report CNN + MLP as primary 2-architecture contrast; FT-Transformer noted as supplementary exclusion."
+}
