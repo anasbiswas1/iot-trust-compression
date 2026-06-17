@@ -1,0 +1,14 @@
+class,collapsed,noise_floor,retrain_null,drift_int8,drift_prune80,faithful_M0,faith_margin_M0,faithful_p80,faith_margin_p80,four_case_p80
+DictionaryBruteForce,True,0.828,0.595,0.973,0.436,True,0.1532,True,0.123,drifted_but_faithful
+DDoS-HTTP_Flood,False,0.83,0.699,0.979,0.429,True,0.4766,True,0.4606,drifted_but_faithful
+DoS-HTTP_Flood,True,0.777,0.61,0.971,0.243,True,0.4302,True,0.0709,drifted_but_faithful
+Recon-PortScan,True,0.822,0.48,0.949,0.051,True,0.1376,True,0.0102,drifted_but_faithful
+Recon-OSScan,True,0.802,0.524,0.959,0.065,True,0.155,True,0.0008,drifted_but_faithful
+DDoS-UDP_Flood,False,0.849,0.781,0.983,0.191,True,0.2821,True,0.5499,drifted_but_faithful
+Recon-HostDiscovery,True,0.877,0.624,0.962,0.322,True,0.2251,True,0.0689,drifted_but_faithful
+DoS-SYN_Flood,True,0.766,0.63,0.99,0.222,True,0.1473,True,0.0088,drifted_but_faithful
+DoS-UDP_Flood,True,0.746,0.72,0.985,0.293,True,0.388,True,0.0044,drifted_but_faithful
+DNS_Spoofing,True,0.784,0.557,0.949,0.171,True,0.3713,True,0.3001,drifted_but_faithful
+MITM-ArpSpoofing,True,0.52,0.725,0.989,0.229,True,0.1308,True,0.0256,drifted_but_faithful
+VulnerabilityScan,False,0.886,0.62,0.961,0.242,True,0.2397,True,0.4033,drifted_but_faithful
+BenignTraffic,True,0.809,0.764,0.975,0.581,True,0.1956,True,0.1469,drifted_but_faithful
