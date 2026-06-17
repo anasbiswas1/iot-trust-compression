@@ -160,3 +160,41 @@ def confusability_reallocation(model_M0, model_comp, df, splits, scaler, feat_co
             "absorber_recall_gain": round(rC[int(top)] - rM0[int(top)], 3),
         })
     return pd.DataFrame(rows).sort_values("absorber_took_frac", ascending=False)
+
+
+def rank_collapse_analysis(model_M0, model_comp, df, splits, scaler, feat_cols, le,
+                           is_half_comp=False, which="test", max_n=60000, seed=0):
+    """Test whether compression collapses the REPRESENTATION rank (the entanglement
+    story). Computes effective rank of the penultimate representation for M0 and the
+    compressed model, GLOBALLY and per-class. If sink-consolidation = rank collapse,
+    the compressed model's global + per-class effective rank drops sharply."""
+    import numpy as np, pandas as pd
+    rng = np.random.default_rng(seed)
+    fM0, lM0, y = extract_features(model_M0, df, splits, scaler, feat_cols, le, which=which)
+    fC, lC, _ = extract_features(model_comp, df, splits, scaler, feat_cols, le,
+                                 which=which, is_half=is_half_comp)
+    if len(y) > max_n:
+        idx = rng.choice(len(y), max_n, replace=False)
+        fM0s, fCs, ys = fM0[idx], fC[idx], y[idx]
+    else:
+        fM0s, fCs, ys = fM0, fC, y
+    glob = {
+        "M0_effrank": geom.effective_rank(fM0s),
+        "comp_effrank": geom.effective_rank(fCs),
+        "M0_dim": fM0s.shape[1],
+    }
+    glob["rank_retained_frac"] = round(glob["comp_effrank"] / glob["M0_effrank"], 3)
+    rows = []
+    for c in np.unique(ys):
+        m = ys == c
+        if m.sum() < 20:
+            continue
+        rows.append({
+            "label": le.classes_[int(c)],
+            "support": int(m.sum()),
+            "M0_class_effrank": round(geom.effective_rank(fM0s[m]), 3),
+            "comp_class_effrank": round(geom.effective_rank(fCs[m]), 3),
+        })
+    pc = pd.DataFrame(rows)
+    pc["rank_change"] = (pc["comp_class_effrank"] - pc["M0_class_effrank"]).round(3)
+    return glob, pc.sort_values("support")
