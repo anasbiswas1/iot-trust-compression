@@ -92,3 +92,40 @@ def call_unfaithful(stability_drifted: bool, deletion_degraded: bool) -> bool:
     """Frozen decision rule: genuine unfaithfulness (C4) requires BOTH stability
     drift AND deletion degradation. Drift alone (C2/C3) is faithful."""
     return bool(stability_drifted and deletion_degraded)
+
+
+def per_class_calibration(probs, y_true, n_bins: int = 15):
+    """Per-class calibration. For samples PREDICTED as a class: ECE, precision, signed
+    over-confidence gap. For samples whose TRUE label is the class: mean confidence and
+    fraction confidently-wrong (predicted != true at conf>0.5). Confident-wrongness on a
+    collapsed class is the decision-layer-collapse signature."""
+    import numpy as np, pandas as pd
+    conf = probs.max(1); pred = probs.argmax(1)
+    classes = np.unique(y_true); rows = {}
+    for c in classes:
+        pm = pred == c
+        if pm.sum() > 0:
+            correct_pred = (y_true[pm] == c).astype(int)
+            ece_pred = adaptive_ece(conf[pm], correct_pred, n_bins) if pm.sum() >= n_bins else np.nan
+            gap_pred = signed_overconfidence_gap(conf[pm], correct_pred)
+            precision = float(correct_pred.mean())
+        else:
+            ece_pred, gap_pred, precision = np.nan, np.nan, np.nan
+        tm = y_true == c
+        true_conf = float(conf[tm].mean()) if tm.sum() > 0 else np.nan
+        cw = float(((pred[tm] != c) & (conf[tm] > 0.5)).mean()) if tm.sum() > 0 else np.nan
+        rows[int(c)] = {
+            "n_pred_as": int(pm.sum()), "n_true": int(tm.sum()),
+            "precision": round(precision, 4) if precision == precision else np.nan,
+            "ece_pred_side": round(ece_pred, 4) if ece_pred == ece_pred else np.nan,
+            "overconf_gap_pred_side": round(gap_pred, 4) if gap_pred == gap_pred else np.nan,
+            "mean_conf_on_true": round(true_conf, 4) if true_conf == true_conf else np.nan,
+            "frac_confidently_wrong": round(cw, 4) if cw == cw else np.nan,
+        }
+    return pd.DataFrame(rows).T
+
+
+def overall_ece(probs, y_true, n_bins: int = 15):
+    import numpy as np
+    conf = probs.max(1); correct = (probs.argmax(1) == y_true).astype(int)
+    return adaptive_ece(conf, correct, n_bins)

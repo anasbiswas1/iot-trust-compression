@@ -1,0 +1,7 @@
+,0
+M0,0.0336
+prune50,0.026
+prune80,0.1927
+distillation,0.0255
+int8,0.0331
+float16,0.0337
