@@ -1,0 +1,4 @@
+order_seed,macroF1_M0,macroF1_prune80,n_collapsed,rank_retained
+101,0.5353,0.1048,21,0.738
+202,0.5249,0.1774,20,0.674
+303,0.5294,0.2351,18,0.713
