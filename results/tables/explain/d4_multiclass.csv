@@ -1,0 +1,7 @@
+group,class,kept_train_count,class_recall_M0,class_recall_prune80,class_delta
+separable,DDoS-RSTFINFlood,300,0.9986,0.6569,-0.3418
+separable,DDoS-ICMP_Flood,300,0.997,0.9911,-0.0059
+separable,Mirai-greip_flood,300,0.8849,0.9785,0.0937
+confusable,DoS-UDP_Flood,300,0.1297,0.0,-0.1297
+confusable,DoS-TCP_Flood,300,0.0002,0.0,-0.0002
+confusable,DDoS-SynonymousIP_Flood,300,0.0,0.0001,0.0001
