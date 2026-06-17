@@ -198,3 +198,41 @@ def rank_collapse_analysis(model_M0, model_comp, df, splits, scaler, feat_cols, 
     pc = pd.DataFrame(rows)
     pc["rank_change"] = (pc["comp_class_effrank"] - pc["M0_class_effrank"]).round(3)
     return glob, pc.sort_values("support")
+
+
+def crux_probe(model_M0, model_comp, df, splits, scaler, feat_cols, le,
+               is_half_comp=False, which="test", max_n=40000, seed=0, C=1.0):
+    """THE CRUX (plan D1): per-class one-vs-rest linear probe on the FROZEN penultimate
+    representation of M0 vs compressed; compare AUC.
+    Survives -> info still decodable, collapse is decision-layer (re-thresholding fixes).
+    Collapses -> info genuinely lost, true capacity loss (must touch compression)."""
+    import numpy as np, pandas as pd
+    from sklearn.linear_model import LogisticRegression
+    from sklearn.metrics import roc_auc_score
+    from sklearn.model_selection import train_test_split
+    rng = np.random.default_rng(seed)
+    fM0, lM0, y = extract_features(model_M0, df, splits, scaler, feat_cols, le, which=which)
+    fC, lC, _ = extract_features(model_comp, df, splits, scaler, feat_cols, le,
+                                 which=which, is_half=is_half_comp)
+    if len(y) > max_n:
+        idx = rng.choice(len(y), max_n, replace=False)
+        fM0, fC, y = fM0[idx], fC[idx], y[idx]
+    tr, te = train_test_split(np.arange(len(y)), test_size=0.4, random_state=seed, stratify=y)
+    def probe_auc(feats, c):
+        yb = (y == c).astype(int)
+        if yb[tr].sum() < 5 or yb[te].sum() < 2:
+            return np.nan
+        clf = LogisticRegression(max_iter=500, C=C, class_weight="balanced")
+        clf.fit(feats[tr], yb[tr])
+        return roc_auc_score(yb[te], clf.predict_proba(feats[te])[:, 1])
+    rows = []
+    for c in np.unique(y):
+        a0 = probe_auc(fM0, c); ac = probe_auc(fC, c)
+        rows.append({
+            "label": le.classes_[int(c)],
+            "support_sub": int((y == c).sum()),
+            "M0_probe_auc": round(a0, 4) if a0 == a0 else np.nan,
+            "comp_probe_auc": round(ac, 4) if ac == ac else np.nan,
+            "probe_auc_drop": round(a0 - ac, 4) if (a0 == a0 and ac == ac) else np.nan,
+        })
+    return pd.DataFrame(rows).set_index("label")
