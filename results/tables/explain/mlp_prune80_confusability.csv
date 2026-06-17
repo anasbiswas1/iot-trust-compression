@@ -1,0 +1,3 @@
+collapsed_class,M0_recall,comp_recall,top_absorber,absorber_took_frac,absorber_recall_M0,absorber_recall_comp,absorber_recall_gain
+DDoS-TCP_Flood,0.664,0.398,DoS-TCP_Flood,0.6,0.556,0.803,0.248
+DDoS-PSHACK_Flood,0.998,0.689,DDoS-SlowLoris,0.31,0.962,0.971,0.009
