@@ -1,0 +1,23 @@
+{
+  "target_count": 300,
+  "separable": {
+    "class": "DDoS-RSTFINFlood",
+    "kept_train_count": 300,
+    "target_count": 300,
+    "macroF1_M0": 0.5366,
+    "macroF1_prune80": 0.1378,
+    "class_recall_M0": 0.9986,
+    "class_recall_prune80": 0.6569,
+    "class_delta": -0.3418
+  },
+  "confusable": {
+    "class": "DoS-UDP_Flood",
+    "kept_train_count": 300,
+    "target_count": 300,
+    "macroF1_M0": 0.5202,
+    "macroF1_prune80": 0.2789,
+    "class_recall_M0": 0.1297,
+    "class_recall_prune80": 0.0,
+    "class_delta": -0.1297
+  }
+}
