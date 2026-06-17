@@ -1,0 +1,7 @@
+collapsed,absorber,ovr_auc_M0,ovr_auc_comp,pair_auc_M0,pair_auc_comp,ovr_drop,pair_drop
+DoS-UDP_Flood,DDoS-UDP_Flood,0.9925,0.9924,0.7888,0.7862,0.0001,0.0026
+DoS-SYN_Flood,DDoS-SYN_Flood,0.9872,0.9862,0.8846,0.8833,0.001,0.0013
+DoS-HTTP_Flood,DDoS-HTTP_Flood,0.9984,0.9978,0.9536,0.9402,0.0006,0.0134
+Recon-PortScan,VulnerabilityScan,0.9315,0.9193,0.8223,0.7956,0.0122,0.0267
+Recon-OSScan,VulnerabilityScan,0.9301,0.9201,0.8507,0.8095,0.01,0.0412
+Recon-HostDiscovery,VulnerabilityScan,0.983,0.9734,0.9397,0.9248,0.0096,0.0149
