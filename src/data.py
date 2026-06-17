@@ -138,14 +138,30 @@ def _load_ton(subsample: bool, seed: int) -> pd.DataFrame:
 
 def clean(df: pd.DataFrame, dataset: str) -> pd.DataFrame:
     """Identity-field removal + dedup. MECHANISM-CRITICAL. Done on FEATURES only;
-    label/group/order-helper columns are preserved."""
+    label/group/order-helper columns are preserved. TON_IoT has mixed categorical+
+    numeric features, so categoricals are label-encoded (structural '-' kept as a
+    category) rather than coerced-to-NaN-and-dropped."""
+    from pandas.api.types import is_numeric_dtype
+    from sklearn.preprocessing import LabelEncoder
     keep_meta = [c for c in (LABEL_COL, GROUP_COL, "_part", "_row") if c in df.columns]
     drop = [c for c in IDENTITY_FIELDS.get(dataset, []) if c in df.columns]
     df = df.drop(columns=drop)
-    # numeric coercion + drop rows with inf/NaN introduced by CICFlowMeter
     feat = [c for c in df.columns if c not in keep_meta]
-    df[feat] = df[feat].apply(pd.to_numeric, errors="coerce")
-    df = df.replace([np.inf, -np.inf], np.nan).dropna(subset=feat).reset_index(drop=True)
+
+    # categorical features (non-numeric dtype): label-encode. '-' / absent becomes a
+    # category, which is meaningful (a flow with no SSL differs structurally from one
+    # with SSL). High-cardinality identity-like strings are already dropped via
+    # IDENTITY_FIELDS. CICIoT2023 is all-numeric so this loop is a no-op there.
+    cat = [c for c in feat if not is_numeric_dtype(df[c])]
+    for c in cat:
+        df[c] = LabelEncoder().fit_transform(df[c].astype(str)).astype(np.int64)
+
+    # numeric coercion + drop rows with genuine inf/NaN in the numeric features only
+    num = [c for c in feat if c not in cat]
+    if num:
+        df[num] = df[num].apply(pd.to_numeric, errors="coerce")
+        df = df.replace([np.inf, -np.inf], np.nan).dropna(subset=num).reset_index(drop=True)
+
     # dedup on FEATURES + label (near-duplicate flow rows). Keep order helpers out of the key.
     dedup_key = [c for c in df.columns if c not in ("_part", "_row")]
     df = df.drop_duplicates(subset=dedup_key).reset_index(drop=True)
