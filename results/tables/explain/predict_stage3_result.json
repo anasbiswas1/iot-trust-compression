@@ -1,0 +1,19 @@
+{
+  "stage": "PREDICT (Stage 3)",
+  "verdict": "NEGATIVE / BOUNDED \u2014 per-class collapse not reliably forecastable from baseline features",
+  "evidence": {
+    "prune80_best_feature_spearman": 0.07,
+    "prune80_all_features_ns": true,
+    "distillation_best_feature_spearman": -0.27,
+    "prune50_confusability_spearman": -0.487,
+    "prune50_confusability_CI": [
+      -0.717,
+      -0.138
+    ],
+    "prune50_confusability_significant": true,
+    "gradient_monotone_with_severity": false
+  },
+  "neural_collapse_features_predict": false,
+  "conclusion": "Baseline properties do not determine which classes an aggressively-compressed IDS abandons; confusability predicts collapse only under moderate pruning (prune50), not under aggressive pruning (prune80) or distillation. Collapse is a compression-model interaction, not forecastable pre-compression. Per \u00a79 fallback: PREDICT reported as bounded negative; paper led by EXPLAIN mechanism.",
+  "paper_impact": "Headline shifts from predictive diagnostic to resolved mechanism + honest prediction-boundary; venue leans Computers & Security; MITIGATE (decision-layer recovery, near-free per crux) becomes the practical payoff."
+}
