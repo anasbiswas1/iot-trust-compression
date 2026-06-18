@@ -1,3 +1,15 @@
+> ⚠️ **THIS IS THE ORIGINAL PRE-RESULT DESIGN DOCUMENT (pre-registration), retained as a historical artifact. It reflects the hypotheses set *before* experiments were run. Several of its central bets did NOT survive the experiments and the manuscript reports the opposite finding. Do not read this as the paper's contribution — see the manuscript and `README.md` for actual results.**
+>
+> **What the experiments actually found (and how it differs from this plan):**
+> - **PREDICT is an honest *negative*, not the headline.** This plan positioned a pre-deployment per-class *forecaster* as the primary contribution. In fact, under aggressive pruning, per-class collapse is **not reliably forecastable** from the uncompressed model; only confusability under moderate pruning carries a signal, and it does not generalise across compression methods. Practitioners must verify per-class behaviour *after* compressing.
+> - **Minority-Collapse geometry does NOT predict collapse.** This plan derived the predictor's features from neural-collapse / Minority-Collapse theory (Fang et al. 2021) and treated that as the scientific justification. The data did not bear this out: baseline ETF-deviation and margin do **not** order classes by collapse (rank correlations weak and non-significant). The theory is engaged as an *ancestor whose prediction fails here*, which is reported as a negative result.
+> - **EXPLAIN is the actual headline.** The resolved mechanism — collapse is a **decision-layer reallocation**, not capacity loss (linear probe shows information survives; the pruned argmax hands confusable classes to a higher-frequency neighbour) — is the paper's spine.
+> - **MITIGATE is decision-layer head re-fit, not predictor-guided.** Because the predictor did not work and the crux showed information survives, the remedy is re-fitting only the classification head on the frozen compressed model (not "predictor-guided selective protection"). The conformal-certificate stretch goal was not pursued.
+>
+> The value of keeping this document is integrity: the hypotheses were pre-committed, and the paper reports honestly where the evidence diverged from them.
+
+---
+
 # Research Plan — Trust-Preserving Compression for IoT Intrusion Detection
 
 **A framework to measure, explain, predict, and mitigate per-class trustworthiness collapse in compressed network intrusion detectors.**
