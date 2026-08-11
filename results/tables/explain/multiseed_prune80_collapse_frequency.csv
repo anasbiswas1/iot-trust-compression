@@ -1,0 +1,14 @@
+label,times_collapsed,n_seeds,fraction
+DictionaryBruteForce,5,5,1.0
+Recon-PortScan,5,5,1.0
+BenignTraffic,5,5,1.0
+DNS_Spoofing,5,5,1.0
+DoS-HTTP_Flood,4,5,0.8
+Recon-OSScan,4,5,0.8
+DDoS-HTTP_Flood,3,5,0.6
+DDoS-UDP_Flood,3,5,0.6
+Recon-HostDiscovery,3,5,0.6
+DoS-UDP_Flood,3,5,0.6
+DoS-SYN_Flood,3,5,0.6
+MITM-ArpSpoofing,3,5,0.6
+VulnerabilityScan,2,5,0.4

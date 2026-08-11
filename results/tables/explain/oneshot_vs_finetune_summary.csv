@@ -1,0 +1,4 @@
+cell,macro_f1,sparsity,n_collapsed_measurable
+M0,0.5451,0.0,0
+prune80_oneshot_noFT,0.008,0.7836,13
+prune80_FT,0.3377,0.7836,10
