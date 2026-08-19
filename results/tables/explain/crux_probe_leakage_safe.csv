@@ -1,0 +1,14 @@
+label,collapsed,auc_M0,auc_prune80,auc_drop
+DictionaryBruteForce,True,0.9588,0.9488,0.0101
+DDoS-HTTP_Flood,False,0.9983,0.9978,0.0004
+DoS-HTTP_Flood,True,0.9978,0.9975,0.0003
+Recon-PortScan,True,0.9272,0.92,0.0072
+Recon-OSScan,True,0.9201,0.9109,0.0093
+DDoS-UDP_Flood,False,0.9903,0.9901,0.0002
+Recon-HostDiscovery,True,0.978,0.971,0.007
+DoS-SYN_Flood,True,0.9386,0.944,-0.0054
+DoS-UDP_Flood,True,0.9919,0.9918,0.0001
+DNS_Spoofing,True,0.9846,0.961,0.0236
+MITM-ArpSpoofing,True,0.9362,0.9234,0.0128
+VulnerabilityScan,False,0.9687,0.9582,0.0105
+BenignTraffic,True,0.9603,0.9503,0.01

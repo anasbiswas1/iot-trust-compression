@@ -1,0 +1,7 @@
+condition,finetuned,macro_f1,global_sparsity,n_collapsed_of_13,collapsed
+body_only,False,0.005,0.6665,13,DictionaryBruteForce;DDoS-HTTP_Flood;DoS-HTTP_Flood;Recon-PortScan;Recon-OSScan;DDoS-UDP_Flood;Recon-HostDiscovery;DoS-SYN_Flood;DoS-UDP_Flood;DNS_Spoofing;MITM-ArpSpoofing;VulnerabilityScan;BenignTraffic
+body_only,True,0.2542,0.6665,10,DictionaryBruteForce;DoS-HTTP_Flood;Recon-PortScan;Recon-OSScan;DDoS-UDP_Flood;DoS-SYN_Flood;DNS_Spoofing;MITM-ArpSpoofing;VulnerabilityScan;BenignTraffic
+head_only,False,0.4893,0.1171,7,DictionaryBruteForce;DoS-HTTP_Flood;Recon-PortScan;Recon-OSScan;DoS-UDP_Flood;VulnerabilityScan;BenignTraffic
+head_only,True,0.5208,0.1171,4,DoS-HTTP_Flood;DDoS-UDP_Flood;DNS_Spoofing;MITM-ArpSpoofing
+full_prune (reference),False,0.008,0.7836,13,
+full_prune (reference),True,0.3377,0.7836,10,
