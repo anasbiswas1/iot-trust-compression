@@ -25,3 +25,11 @@ env/
 .DS_Store
 *.swp
 .vscode/
+
+kaggle.json
+.kaggle/
+*.env
+.env*
+*credentials*
+*.pem
+*.key
