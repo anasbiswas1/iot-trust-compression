@@ -5,7 +5,7 @@ cnn1d,2,0.5610536637792989,ok
 cnn1d,3,0.5753460568090442,ok
 cnn1d,4,0.5638135323996817,ok
 mlp,0,0.5799348490471066,ok
-mlp,1,,FileNotFoundError: [Errno 2] No such file or directory: '/content/drive/MyDrive/IoT_Trust_Research/iot-trust-compression/models/ciciot2023/ciciot2023__mlp__M0__seed1.pt'
-mlp,2,,FileNotFoundError: [Errno 2] No such file or directory: '/content/drive/MyDrive/IoT_Trust_Research/iot-trust-compression/models/ciciot2023/ciciot2023__mlp__M0__seed2.pt'
-mlp,3,,FileNotFoundError: [Errno 2] No such file or directory: '/content/drive/MyDrive/IoT_Trust_Research/iot-trust-compression/models/ciciot2023/ciciot2023__mlp__M0__seed3.pt'
-mlp,4,,FileNotFoundError: [Errno 2] No such file or directory: '/content/drive/MyDrive/IoT_Trust_Research/iot-trust-compression/models/ciciot2023/ciciot2023__mlp__M0__seed4.pt'
+mlp,1,0.566756917872631,ok
+mlp,2,0.5720532425019309,ok
+mlp,3,0.5932715764835421,ok
+mlp,4,0.5785704932562918,ok
