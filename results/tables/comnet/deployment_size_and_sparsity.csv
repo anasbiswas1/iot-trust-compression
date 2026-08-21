@@ -1,0 +1,4 @@
+cell,visible_parameters,visible_nonzero_parameters,visible_parameter_sparsity,torch_state_dict_bytes,index_value_sparse_payload_estimate_bytes,numeric_input_dtype,parameter_count_note
+M0,29730,29730,0.0,125683,118920.0,float32,ordinary parameter tensors
+int8,25344,25344,,113389,,float32,quantized Linear weights are packed and not fully exposed by model.parameters()
+float16,29730,29730,0.0,65459,59460.0,float16,ordinary parameter tensors
