@@ -1,0 +1,6 @@
+cell,error_type,count,rate_over_true_attack,rate_over_true_benign
+prune80_head_refit,attack_to_benign,30380,0.05849844992586602,
+prune80_head_refit,benign_to_attack,11050,,0.36905914966099995
+prune80_head_refit,attack_to_same_family_attack,44958,0.0865692334353879,
+prune80_head_refit,attack_to_cross_family_attack,81470,0.15687520459053012,
+prune80_head_refit,exact_attack_type_correct,362522,0.698057112048216,

@@ -1,0 +1,11 @@
+{
+  "cpu_count": 8,
+  "cuda_available": true,
+  "machine": "x86_64",
+  "platform": "Linux-6.6.122+-x86_64-with-glibc2.35",
+  "processor": "x86_64",
+  "python": "3.13.15",
+  "ram_bytes": 54750404608,
+  "torch": "2.11.0+cu128",
+  "torch_threads": 4
+}
