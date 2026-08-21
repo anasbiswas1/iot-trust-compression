@@ -2,11 +2,11 @@
 """
 src/train.py — training + evaluation core (thin notebooks call these).
 
-Tempered class weights (sqrt-inverse-frequency) by design: a GENTLE rare-class
-boost. Full inverse-frequency or focal loss would artificially prop up the rare
-classes and MASK the per-class collapse this paper exists to measure. We want
-rare classes honestly fragile at baseline so the collapse-under-compression
-effect is real and the diagnostic has something to predict.
+Square-root inverse-frequency class weights are fixed across the baseline and
+all compression cells so that the optimisation objective is comparable.  The
+absolute fragility pattern may change under focal, class-balanced, or
+logit-adjusted training; that sensitivity is evaluated separately rather than
+being assumed away.
 
 Leakage discipline: scaler is fit on TRAIN ONLY. Device auto-detected.
 """

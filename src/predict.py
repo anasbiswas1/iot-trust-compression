@@ -1,10 +1,13 @@
 
 """
-src/predict.py — Stage 3: PREDICT (the headline).
-Forecast which classes lose recall under compression, from the M0 model + data ALONE.
-Option 3: assemble neural-collapse + confusability + frequency/capacity features, let
-the data adjudicate. Tiny-n discipline: low-capacity rules, LOCO-CV, bootstrap CIs.
-Must beat frequency-only AND margin-only (Tran & Fioretto) baselines.
+src/predict.py — archived Stage 3 class-level diagnostic.
+
+The archived manuscript tables used ``assemble_features(..., which="test")`` and
+are therefore retrospective diagnostics of the evaluation partition, not a
+validated pre-deployment forecaster.  New journal-facing analyses must construct
+covariates on training/validation data only and evaluate against untouched test
+losses; see notebook 10.  Existing defaults are retained solely so archived
+results remain reproducible.
 """
 from __future__ import annotations
 import numpy as np
@@ -18,7 +21,13 @@ from . import explain as _explain
 
 def assemble_features(model_M0, df, splits, scaler, feat_cols, le, which="test",
                       max_n=60000, seed=0):
-    """All candidate per-class predictor features from the M0 model only."""
+    """Assemble candidate per-class features on the explicitly selected split.
+
+    The legacy default ``which="test"`` reproduces the archived retrospective
+    analysis.  For a pre-deployment diagnostic, pass ``which="val"`` (or a
+    training-derived feature table) and keep the compression target on test;
+    notebook 10 implements that separation.
+    """
     feats, logits, y = _explain.extract_features(model_M0, df, splits, scaler, feat_cols, le, which=which)
     rng = np.random.default_rng(seed)
     if len(y) > max_n:

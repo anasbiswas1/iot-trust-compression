@@ -104,7 +104,7 @@ compression:
   matrix: [M0, prune50, prune80, distillation, int8, float16]
   prune_method: l1_unstructured     # torch.nn.utils.prune
   float16_method: half              # .half()
-  int8_method: torchao_fx_ptq       # torchao / FX-graph PTQ
+  int8_method: torch_dynamic_linear # torch.ao dynamic quantisation of nn.Linear; CNN Conv1d body remains FP32
   int8_transformer_fallback: true   # int8 on MLP/CNN only if transformer PTQ won't yield attribution-accessible model
 
 # --- Metrics ---------------------------------------------------------

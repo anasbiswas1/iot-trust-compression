@@ -62,13 +62,14 @@ def recovery_metrics(logits, y, bias, target_classes, le, benign_idx=None):
     new_rec, new_pred = _per_class_recall(logits, y, bias)
     base_f1 = f1_score(y, base_pred, average="macro")
     new_f1 = f1_score(y, new_pred, average="macro")
-    fpr_change = np.nan
+    delta_benign_fpr = np.nan
     if benign_idx is not None:
         bm = (y == benign_idx)
         if bm.any():
             base_benign_recall = float((base_pred[bm] == benign_idx).mean())
             new_benign_recall = float((new_pred[bm] == benign_idx).mean())
-            fpr_change = round(base_benign_recall - new_benign_recall, 4)
+            # FPR = 1 - benign recall, hence this is FPR_new - FPR_base.
+            delta_benign_fpr = round(base_benign_recall - new_benign_recall, 4)
     target_gain = {le.classes_[c]: round(new_rec[c] - base_rec[c], 4) for c in target_classes}
     others = [c for c in base_rec if c not in target_classes]
     other_cost = {le.classes_[c]: round(new_rec[c] - base_rec[c], 4)
@@ -77,7 +78,9 @@ def recovery_metrics(logits, y, bias, target_classes, le, benign_idx=None):
         "macroF1_base": round(base_f1, 4), "macroF1_new": round(new_f1, 4),
         "macroF1_delta": round(new_f1 - base_f1, 4),
         "mean_target_recovery": round(np.mean(list(target_gain.values())), 4) if target_gain else 0.0,
-        "benign_recall_drop_as_FPR": fpr_change,
+        "delta_benign_fpr": delta_benign_fpr,
+        # Deprecated compatibility alias for archived notebooks.
+        "benign_recall_drop_as_FPR": delta_benign_fpr,
         "target_gain": target_gain, "other_class_cost": other_cost,
     }
 
@@ -95,7 +98,9 @@ def frontier(model_comp, df, splits, scaler, feat_cols, le, target_classes,
         m = recovery_metrics(Lte, yte, bias, tgt_idx, le, benign_idx)
         rows.append({"strength": s, "mean_target_recovery": m["mean_target_recovery"],
                      "macroF1_test": m["macroF1_new"], "macroF1_delta": m["macroF1_delta"],
-                     "benign_FPR_proxy": m["benign_recall_drop_as_FPR"],
+                     "delta_benign_fpr": m["delta_benign_fpr"],
+                     # Deprecated compatibility alias for archived notebooks.
+                     "benign_FPR_proxy": m["delta_benign_fpr"],
                      "n_other_classes_hurt": len(m["other_class_cost"])})
     return pd.DataFrame(rows), (Lval, yval, Lte, yte, tgt_idx, benign_idx)
 

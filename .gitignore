@@ -1,4 +1,4 @@
-# Data and model binaries live in Drive, not GitHub
+# Data and model binaries live outside GitHub
 data/
 models/
 *.csv.gz
@@ -10,26 +10,47 @@ models/
 *.ckpt
 *.onnx
 
-# But DO keep small result tables and arrays that back the paper
-!results/tables/*.csv
-!results/arrays/*.npy
+# Keep small archived result tables/arrays that back the paper
+!results/tables/**/*.csv
+!results/arrays/**/*.npy
 
-# Python / Colab
+# Credentials and local secrets - never commit
+kaggle.json
+**/kaggle.json
+.env
+.env.*
+!.env.example
+.secrets/
+credentials*.json
+secrets*.json
+*token*.txt
+*.pem
+*.key
+*.p12
+*.pfx
+id_rsa*
+id_ed25519*
+
+# Python / notebooks / testing
 __pycache__/
-*.pyc
+*.py[cod]
 .ipynb_checkpoints/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
 .venv/
 env/
+
+# Local safety backups created by the installer
+.comnet_update_backup/
+.repo_fixes_backup/
 
 # OS / editor
 .DS_Store
 *.swp
 .vscode/
+.idea/
 
-kaggle.json
-.kaggle/
-*.env
-.env*
-*credentials*
-*.pem
-*.key
+.comnet_update_backup/

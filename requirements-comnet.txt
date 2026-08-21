@@ -1,0 +1,5 @@
+# Extra dependencies for the Computer Networks extension notebooks.
+# Install after the repository's existing requirements.txt.
+psutil
+pytest
+nbformat

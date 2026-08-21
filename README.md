@@ -1,79 +1,95 @@
-# iot-trust-compression
+# Pruning-Induced Decision-Boundary Reallocation in Fine-Grained IoT Intrusion Classification
 
-**Measure → explain → predict → mitigate: per-class trustworthiness collapse in compressed network IoT intrusion detectors.**
+**Repository companion for the Computer Networks submission.**
 
-Author: Md Anas Biswas, School of Computing, University of Portsmouth (up2082724@myport.ac.uk). Sole-authored.
-Target: Q1 — Expert Systems with Applications (ESWA) or Computers & Security.
+Author: Md Anas Biswas, School of Computing, University of Portsmouth.
 
-The headline contribution is **EXPLAIN**: a mechanistic account of *why* aggressive pruning makes a compressed IoT intrusion detector go silently blind to whole attack classes while aggregate accuracy stays high. The collapse is not a loss of representational capacity but a **decision-layer reallocation** — a linear probe shows the information survives in the compressed representation (a class can fall to 0.00 recall while keeping >0.99 probe AUC), and the pruned argmax boundary hands confusable classes to a higher-frequency neighbour. Post-training quantisation (int8, float16) preserves per-class trust; aggressive pruning destroys it.
+## What the archived experiments support
 
-The study runs **measure → explain → predict → mitigate**. Two of these are deliberately reported as honest negatives: **PREDICT** finds that under aggressive pruning, per-class collapse is *not* reliably forecastable from the uncompressed model (only confusability under moderate pruning carries a signal, and it does not generalise across compression methods) — so practitioners must verify per-class behaviour after compressing rather than screening beforehand. Relatedly, baseline **neural-collapse geometry (Minority Collapse) does not predict** which classes collapse here; we engage that theory as an ancestor whose prediction the data does not bear out. **MITIGATE** then shows a cheap remedy: re-fitting only the classification head on the frozen compressed model recovers most of the lost per-class recall, with the residual blind spot reported rather than hidden. All findings replicate on a second dataset (TON_IoT). See `PLAN.md` for the full design and `logs/anchor_preregistration.json` for the frozen commitments.
+The primary experiment studies a 34-class CICIoT2023 CNN1D under M0, prune50, prune80, distillation, float16, and dynamic int8 quantisation of `Linear` layers.
 
----
+The bounded findings are:
 
-## First-time setup (run once)
+- Moderate pruning can create class-specific recall losses that are not localised by aggregate scores.
+- Under prune80, the main attack errors are predominantly **attack-to-attack fine-type substitutions**, not demonstrated silent attack-to-benign passage. Benign traffic is also routed to attack labels, creating a separate false-alert burden.
+- Under the archived identical-split probe and the stricter train/validation-to-test replication, recall changes much more than relative linear decodability. The conclusion is retained decodability, not perfect representational invariance.
+- Affected samples consolidate onto dominant or decision-favoured confusable labels. Raw class frequency does not consistently determine the transfer direction.
+- Body-only pruning with a dense trainable head reproduces the persistent class-failure pattern more closely than head-only pruning. Classification-head deletion is therefore not a complete explanation.
+- A dense replacement head recovers aggregate macro-F1 but reduces whole-model sparsity and transfers error to some former absorber classes. It is a recall-recovery trade-off, not a cost-free trust-preserving method.
+- The archived baseline diagnostic is **retrospective** because its covariates were assembled on the evaluation partition. It is not presented as validated pre-deployment forecasting.
+- TON_IoT provides a qualitative external collapse-probe-recovery check, not population-wide generality.
 
-Open **`SETUP.ipynb`** in a fresh Colab session and run it top to bottom. It mounts Drive, unzips this bundle to `MyDrive/IoT_Trust_Research/iot-trust-compression/`, configures git, connects an **empty** GitHub repo (`anasbiswas1/iot-trust-compression`) via a `ghp_...` token, sanity-checks that `data/` and `models/` are ignored, and makes the first commit. Then delete `SETUP.ipynb` — you won't need it again. After that, the per-notebook end-of-unit ritual (`git add -A && git commit && git push`) is the whole workflow.
+The current CNN int8 cell is **Linear-layer dynamic quantisation**, leaving the Conv1d body in FP32. It is not full-model CNN int8.
 
-## Repository layout
+## Computer Networks extension notebooks
 
+The extension notebooks write only new outputs under `results/tables/comnet/`.
+
+| Notebook | Purpose | Compute |
+|---|---|---|
+| `09_comnet_security_semantics_and_recovery.ipynb` | Binary, alert-family, fine-type, attack-to-benign, benign-to-attack, substitution, calibration, and recovered-head audit | Light/medium if checkpoints exist |
+| `10_validation_tiers_and_safe_prediction.ipynb` | Validation-frozen tiers and validation-only predictor covariates with test-only targets and family-held-out evaluation | Light/medium if checkpoints or archived targets exist |
+| `11_independent_paired_pruning_seeds.ipynb` | Independently train five baselines and prune each at 50/80%; paired effects and mask overlap | Heavy GPU run |
+| `12_strict_probes_batchnorm_sparse_head.ipynb` | Strict train/validation-to-test probes, strict pairwise probes, BatchNorm-only recalibration, dense-versus-sparse replacement-head control | Medium/heavy |
+| `13_comnet_deployment_benchmark.ipynb` | Actual serialized bytes, visible nonzeros, dense CPU latency, p95 latency, throughput, and RSS snapshots | CPU; run on reportable hardware |
+
+Read `COMPUTER_NETWORKS_RUN_ORDER.md` before running them.
+
+## Canonical archived code
+
+| Manuscript component | Canonical code |
+|---|---|
+| Baseline training/evaluation | `src/train.py` |
+| Compression matrix | `src/compression.py` |
+| Archived relative probes, consolidation, and rank | `src/explain.py` |
+| Archived retrospective diagnostic | `src/predict.py` |
+| Decision-layer recovery | `src/mitigate.py` |
+| Computer Networks extension analyses | `src/comnet_audit.py`, notebooks 09-13 |
+
+`src/crux.py` and `src/diagnostic.py` are tested compatibility interfaces. They replace former dead public stubs but do not retroactively generate archived results.
+
+## Safe setup
+
+Never put GitHub, Kaggle, cloud, or API credentials in source files or notebooks.
+
+```bash
+git clone https://github.com/anasbiswas1/iot-trust-compression.git
+cd iot-trust-compression
+python -m venv .venv
+source .venv/bin/activate  # Windows: .venv\Scripts\activate
+python -m pip install --upgrade pip
+python -m pip install -r requirements.txt
+python -m pip install -r requirements-comnet.txt
 ```
-config/        config.yaml       # SINGLE SOURCE OF TRUTH (paths, seeds, splits, matrix, archs)
-src/           config.py         # loads config.yaml, resolves ALL paths (never hardcode a path)
-               data.py           # load, dedup + identity removal (mechanism-critical), grouped split
-               models.py         # MLP, CNN1D, FT-Transformer (+GRU fallback); all expose .features()
-               compression.py    # M0/prune50/prune80/distillation/int8/float16 (PyTorch-native)
-               metrics.py        # per-class recall, ECE, stability vs faithfulness, bootstrap CIs
-               geometry.py       # neural-collapse geometry, effective rank, margin (v2.1 theory layer)
-               crux.py           # linear-probe recoverability (the spine)
-               diagnostic.py     # pre-compression forecastability test + baselines-to-beat + generalisation eval
-               mitigate.py       # decision-layer recovery (head re-fit on frozen compressed model) + frontier
-notebooks/     00..08            # one stage per notebook, self-contained (see below)
-results/       tables/ figures/ arrays/   # tracked in git — these back the paper
-logs/          anchor_preregistration.json # frozen BEFORE any trust metric
-requirements.txt   PLAN.md   README.md
-```
 
-Data and model binaries are **gitignored** and live only in Drive. GitHub holds code, notebooks, result tables, figures, and logs.
-
-## Drive + GitHub (the working pattern)
-
-- GitHub repo: `github.com/anasbiswas1/iot-trust-compression`
-- Drive root: `/content/drive/MyDrive/IoT_Trust_Research/iot-trust-compression/` — clone the repo **inside** this folder so Colab reads/writes one tree.
-
-## Colab bootstrap (top of every notebook)
+For Colab, mount Drive and use the repository already stored there. Do not paste a token into a notebook.
 
 ```python
-from google.colab import drive; drive.mount('/content/drive')
+from google.colab import drive
+drive.mount('/content/drive')
+
 import os, sys
 REPO = '/content/drive/MyDrive/IoT_Trust_Research/iot-trust-compression'
-os.chdir(REPO); sys.path.insert(0, REPO)
-from src.config import CFG, PATHS, set_all_seeds, require_frozen
-set_all_seeds(CFG['anchor_seed'])
+os.chdir(REPO)
+sys.path.insert(0, REPO)
 ```
 
-## The one rule that prevents the last disaster
+## Result boundaries
 
-Every path comes from `PATHS` (which reads `config/config.yaml`). **No notebook or module ever builds a path inline** with `Path(REPO)/'...'`. The X-IDS multi-seed failure happened because downstream notebooks constructed output paths inline, so a seed/compression override couldn't redirect them — and the seed-42 baseline was overwritten. Centralised paths make seeded, locked splits actually hold. If you need a new path, add a method to `src/config.py`.
+- Existing files under `results/` are archived evidence for the manuscript.
+- The update package does not overwrite archived results, datasets, models, or logs.
+- New extension outputs are written under `results/tables/comnet/`.
+- Do not update manuscript numbers until the new CSVs have been inspected and independently checked.
 
-## Notebook order (one stage each, self-contained)
+## Release discipline
 
-| nb | stage | purpose | gate / branch |
-|----|-------|---------|---------------|
-| `00_data_prep_and_split_audit` | 0 | load, dedup, identity removal, **group-count audit**, lock grouped splits | resolves grouping variable + 34-vs-8 granularity |
-| `01_train_baselines` | 1 | train M0 anchors (CNN1D first), log params + macro-F1 | resolves remaining freeze-checklist items |
-| `02_compress` | 1 | apply the compression matrix; int8 with transformer fallback | — |
-| `03_measure_trust` | 1 | per-class recall / ECE / stability+faithfulness, seed null bands | **Stage 1 gate**: must replicate outside the null |
-| `04_crux_probe` | crux | linear-probe recoverability + margin | **branch point**: info-loss vs decision-layer |
-| `05_explain_mechanism` | 2 | hypothesis tournament, neural-collapse geometry, per-family causes | — |
-| `06_predict_diagnostic` | 3 | test pre-compression forecastability; beat freq + Tran&Fioretto; generalisation tests | reports an honest bounded negative under aggressive pruning |
-| `07_mitigate` | 4 | decision-layer recovery: head re-fit on frozen compressed model; recovery–cost frontier | bounds the residual blind spot |
-| `08_robustness` | 5 | Bot-IoT (inverted), temporal-split drift check | only after 1–4 |
+Before journal submission:
 
-## End-of-unit discipline (non-negotiable)
+1. complete the required extension notebooks;
+2. reconcile every inserted number against its CSV;
+3. remove any credential file from the working tree and Git history;
+4. run the repository tests;
+5. create a tagged release;
+6. record the exact tag and commit hash in the manuscript.
 
-After each notebook: (1) save outputs to Drive, (2) commit + push to GitHub with a meaningful message, (3) push the result CSVs / figures, (4) confirm Drive and GitHub are in sync. **Nothing uncommitted overnight.**
-
-## Status
-
-Experiments complete; manuscript in preparation. The anchor configuration is frozen (`logs/anchor_preregistration.json`), and the result tables and figures under `results/` back the paper. Primary dataset CICIoT2023, cross-dataset validation on TON_IoT.
+See `REPRODUCIBILITY.md`, `SECURITY.md`, `COMPUTER_NETWORKS_RUN_ORDER.md`, and `MANUSCRIPT_UPDATE_MAP.md`.
