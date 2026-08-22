@@ -1,0 +1,22 @@
+{
+  "environment": {
+    "cpu_count": 8,
+    "cuda_available": true,
+    "machine": "x86_64",
+    "platform": "Linux-6.6.122+-x86_64-with-glibc2.35",
+    "processor": "x86_64",
+    "python": "3.13.15",
+    "ram_bytes": 54750404608,
+    "torch": "2.11.0+cu128",
+    "torch_threads": 4
+  },
+  "practical_recall_loss_threshold": 0.1,
+  "run_label": "independent_paired_v1",
+  "seeds": [
+    0,
+    1,
+    2,
+    3,
+    4
+  ]
+}
