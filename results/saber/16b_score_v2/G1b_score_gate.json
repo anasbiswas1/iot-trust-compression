@@ -1,0 +1,26 @@
+{
+  "gate": "G1b_score_v2_offline",
+  "passed": true,
+  "chosen_variant": "v_c",
+  "protocol": "stratified half-split seed0; select-most-wins-vs-fisher; confirm on holdout; pass = >=2/4 harms won and max deficit <=0.10",
+  "harms_won": 4,
+  "max_deficit_vs_fisher": -0.04487942512039217,
+  "holdout": {
+    "harm_awbir": {
+      "chosen": 0.7821622354856211,
+      "fisher": 0.7106619641888227
+    },
+    "harm_fine_macro_f1": {
+      "chosen": 0.6523738469886056,
+      "fisher": 0.5421188279978296
+    },
+    "harm_family_macro_f1": {
+      "chosen": 0.6339799240368963,
+      "fisher": 0.5711882799782962
+    },
+    "harm_hsr_balanced_soc": {
+      "chosen": 0.4377185218368965,
+      "fisher": 0.39283909671650435
+    }
+  }
+}
