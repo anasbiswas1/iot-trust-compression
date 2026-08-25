@@ -1,0 +1,27 @@
+{
+  "gate": "G4_recovery_constrained_regime",
+  "passed": false,
+  "wins_per_method": {
+    "random": {
+      "awbir": 0,
+      "family_macro_f1": 0
+    },
+    "magnitude": {
+      "awbir": 0,
+      "family_macro_f1": 0
+    },
+    "taylor": {
+      "awbir": 1,
+      "family_macro_f1": 2
+    },
+    "fisher": {
+      "awbir": 3,
+      "family_macro_f1": 2
+    },
+    "saber_v2": {
+      "awbir": 2,
+      "family_macro_f1": 2
+    }
+  },
+  "criterion": "saber_v2 strictly most best-cells on awbir AND family_macro_f1 over 3 budgets x {none, minimal}"
+}
