@@ -1,0 +1,112 @@
+# SABER-IDS starter configuration
+# All values are research defaults and must be frozen before confirmatory runs.
+
+project:
+  name: SABER-IDS
+  branch: saber-ids-method
+  output_root: results/saber
+  primary_dataset: CICIoT2023
+  primary_architecture: CNN1D
+
+reproducibility:
+  screening_seeds: [42, 43, 44]
+  confirmatory_seeds: [42, 43, 44, 45, 46]
+  deterministic: true
+  record_git_commit: true
+  write_manifest: true
+
+taxonomy:
+  benign_label: BenignTraffic
+  attack_families:
+    - ddos
+    - dos
+    - mirai
+    - reconnaissance
+    - spoofing_mitm
+    - web_application
+    - malware
+    - brute_force
+
+cost_profiles:
+  miss_sensitive:
+    attack_to_benign: 12.0
+    benign_to_attack: 3.0
+    cross_family_attack: 6.0
+    same_family_attack: 2.0
+  balanced_soc:
+    attack_to_benign: 10.0
+    benign_to_attack: 6.0
+    cross_family_attack: 6.0
+    same_family_attack: 2.0
+  alert_fatigue:
+    attack_to_benign: 8.0
+    benign_to_attack: 10.0
+    cross_family_attack: 5.0
+    same_family_attack: 2.0
+
+risk_graph:
+  top_k_competitors: 3
+  temperature: 1.0
+  confusion_weight: 0.50
+  margin_weight: 0.50
+  min_class_support: 20
+  robust_aggregation: cvar
+  robust_cvar_q: 0.75
+
+groups:
+  minimum_remaining_per_layer: 4
+  example_batch_size: 8
+
+score_validation:
+  max_samples_per_source_class: 512
+  max_gradient_batches: 20
+  group_size_alpha: 0.5
+  flops_beta: 0.5
+  top_k_harm_fraction: 0.20
+  required_spearman_advantage: 0.10
+
+structured_pruning:
+  flops_reduction_budgets: [0.25, 0.40, 0.55]
+  confirmatory_budgets: [0.25, 0.40, 0.55, 0.65, 0.75]
+  screening_methods:
+    - random
+    - magnitude
+    - taylor
+    - fisher
+    - r_sbl
+
+distillation:
+  epochs: 25
+  learning_rate: 0.001
+  weight_decay: 0.0001
+  patience: 6
+  fine_weight: 1.0
+  family_weight: 0.5
+  binary_weight: 0.5
+  margin_weight: 1.0
+  kd_weight: 0.5
+  calibration_weight: 0.1
+  kd_temperature: 3.0
+  margin_delta: 1.0
+
+constraints:
+  enabled: true
+  dual_step_size: 0.05
+  dual_max: 100.0
+  # These are placeholders. Notebook 18 derives teacher-relative thresholds
+  # from validation data before training a student.
+  attack_miss_tolerance: 0.01
+  benign_false_alert_tolerance: 0.03
+  family_nll_tolerance: 0.05
+  class_cvar_tolerance: 0.10
+
+gates:
+  G1_score:
+    require_r_sbl_beats_magnitude_and_taylor: true
+    minimum_primary_metrics_won: 2
+  G2_physical:
+    require_parameter_reduction: true
+    require_flops_reduction: true
+  G3_semantic:
+    minimum_awbir_relative_reduction: 0.25
+    maximum_family_macro_f1_drop: 0.03

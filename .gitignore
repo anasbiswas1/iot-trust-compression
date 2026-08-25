@@ -54,3 +54,5 @@ env/
 .idea/
 
 .comnet_update_backup/
+*.pyc
+.saber_starter_backups/
