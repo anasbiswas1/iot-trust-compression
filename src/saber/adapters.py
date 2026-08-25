@@ -147,7 +147,7 @@ def load_array(path: str | Path, *, key: str | None = None) -> Any:
             return payload[payload.files[0]]
         return {name: payload[name] for name in payload.files}
     if suffix in {".pt", ".pth"}:
-        return torch.load(path, map_location="cpu")
+        return torch.load(path, map_location="cpu", weights_only=False)
     if suffix in {".csv", ".tsv"}:
         return pd.read_csv(path, sep="\t" if suffix == ".tsv" else ",")
     if suffix == ".parquet":
@@ -249,7 +249,7 @@ def collect_logits(
 
 
 def flexible_load_state_dict(model: nn.Module, checkpoint: str | Path) -> dict[str, Any]:
-    payload = torch.load(checkpoint, map_location="cpu")
+    payload = torch.load(checkpoint, map_location="cpu", weights_only=False)
     state = payload
     if isinstance(payload, Mapping):
         for key in ("state_dict", "model_state_dict", "model", "network"):

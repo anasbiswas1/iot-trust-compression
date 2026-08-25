@@ -1,0 +1,31 @@
+{
+  "dataset": "CICIoT2023",
+  "n_validation": 549253,
+  "n_classes": 34,
+  "families": [
+    "malware",
+    "benign",
+    "web_application",
+    "ddos",
+    "spoofing_mitm",
+    "brute_force",
+    "dos",
+    "mirai",
+    "reconnaissance"
+  ],
+  "cost_profiles": [
+    "miss_sensitive",
+    "balanced_soc",
+    "alert_fatigue"
+  ],
+  "risk_graph_config": {
+    "top_k_competitors": 3,
+    "temperature": 1.0,
+    "confusion_weight": 0.5,
+    "margin_weight": 0.5,
+    "min_class_support": 20,
+    "robust_aggregation": "cvar",
+    "robust_cvar_q": 0.75
+  },
+  "environment_count": null
+}

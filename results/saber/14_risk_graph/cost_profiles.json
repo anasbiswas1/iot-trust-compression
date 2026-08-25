@@ -1,0 +1,26 @@
+{
+  "miss_sensitive": {
+    "name": "miss_sensitive",
+    "attack_to_benign": 12.0,
+    "benign_to_attack": 3.0,
+    "cross_family_attack": 6.0,
+    "same_family_attack": 2.0,
+    "exact": 0.0
+  },
+  "balanced_soc": {
+    "name": "balanced_soc",
+    "attack_to_benign": 10.0,
+    "benign_to_attack": 6.0,
+    "cross_family_attack": 6.0,
+    "same_family_attack": 2.0,
+    "exact": 0.0
+  },
+  "alert_fatigue": {
+    "name": "alert_fatigue",
+    "attack_to_benign": 8.0,
+    "benign_to_attack": 10.0,
+    "cross_family_attack": 5.0,
+    "same_family_attack": 2.0,
+    "exact": 0.0
+  }
+}
