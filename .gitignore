@@ -56,3 +56,6 @@ env/
 .comnet_update_backup/
 *.pyc
 .saber_starter_backups/
+results/saber/**/*.npz
+results/saber/**/*.pt
+results/saber/**/*.pth
