@@ -1,0 +1,3 @@
+module_path,old_in_channels,new_in_channels,old_out_channels,new_out_channels,removed,removed_indices,batchnorm_path,downstream_path,downstream_kind
+conv.0,1,1,64,53,11,"4,8,17,27,28,35,36,49,51,58,59",conv.2,conv.3,conv_in
+conv.3,64,53,128,115,13,"4,10,20,21,33,58,60,71,75,85,99,111,123",conv.5,head,linear_in
