@@ -1,0 +1,169 @@
+{
+  "notebook": "16_saber_boundary_leverage.ipynb",
+  "config": {
+    "project": {
+      "name": "SABER-IDS",
+      "branch": "saber-ids-method",
+      "output_root": "results/saber",
+      "primary_dataset": "CICIoT2023",
+      "primary_architecture": "CNN1D"
+    },
+    "reproducibility": {
+      "screening_seeds": [
+        42,
+        43,
+        44
+      ],
+      "confirmatory_seeds": [
+        42,
+        43,
+        44,
+        45,
+        46
+      ],
+      "deterministic": true,
+      "record_git_commit": true,
+      "write_manifest": true
+    },
+    "taxonomy": {
+      "benign_label": "BenignTraffic",
+      "attack_families": [
+        "ddos",
+        "dos",
+        "mirai",
+        "reconnaissance",
+        "spoofing_mitm",
+        "web_application",
+        "malware",
+        "brute_force"
+      ]
+    },
+    "cost_profiles": {
+      "miss_sensitive": {
+        "attack_to_benign": 12.0,
+        "benign_to_attack": 3.0,
+        "cross_family_attack": 6.0,
+        "same_family_attack": 2.0
+      },
+      "balanced_soc": {
+        "attack_to_benign": 10.0,
+        "benign_to_attack": 6.0,
+        "cross_family_attack": 6.0,
+        "same_family_attack": 2.0
+      },
+      "alert_fatigue": {
+        "attack_to_benign": 8.0,
+        "benign_to_attack": 10.0,
+        "cross_family_attack": 5.0,
+        "same_family_attack": 2.0
+      }
+    },
+    "risk_graph": {
+      "top_k_competitors": 3,
+      "temperature": 1.0,
+      "confusion_weight": 0.5,
+      "margin_weight": 0.5,
+      "min_class_support": 20,
+      "robust_aggregation": "cvar",
+      "robust_cvar_q": 0.75
+    },
+    "groups": {
+      "minimum_remaining_per_layer": 4,
+      "example_batch_size": 8
+    },
+    "score_validation": {
+      "max_samples_per_source_class": 512,
+      "max_gradient_batches": 20,
+      "group_size_alpha": 0.5,
+      "flops_beta": 0.5,
+      "top_k_harm_fraction": 0.2,
+      "required_spearman_advantage": 0.1
+    },
+    "structured_pruning": {
+      "flops_reduction_budgets": [
+        0.25,
+        0.4,
+        0.55
+      ],
+      "confirmatory_budgets": [
+        0.25,
+        0.4,
+        0.55,
+        0.65,
+        0.75
+      ],
+      "screening_methods": [
+        "random",
+        "magnitude",
+        "taylor",
+        "fisher",
+        "r_sbl"
+      ]
+    },
+    "distillation": {
+      "epochs": 25,
+      "learning_rate": 0.001,
+      "weight_decay": 0.0001,
+      "patience": 6,
+      "fine_weight": 1.0,
+      "family_weight": 0.5,
+      "binary_weight": 0.5,
+      "margin_weight": 1.0,
+      "kd_weight": 0.5,
+      "calibration_weight": 0.1,
+      "kd_temperature": 3.0,
+      "margin_delta": 1.0
+    },
+    "constraints": {
+      "enabled": true,
+      "dual_step_size": 0.05,
+      "dual_max": 100.0,
+      "attack_miss_tolerance": 0.01,
+      "benign_false_alert_tolerance": 0.03,
+      "family_nll_tolerance": 0.05,
+      "class_cvar_tolerance": 0.1
+    },
+    "gates": {
+      "G1_score": {
+        "require_r_sbl_beats_magnitude_and_taylor": true,
+        "minimum_primary_metrics_won": 2
+      },
+      "G2_physical": {
+        "require_parameter_reduction": true,
+        "require_flops_reduction": true
+      },
+      "G3_semantic": {
+        "minimum_awbir_relative_reduction": 0.25,
+        "maximum_family_macro_f1_drop": 0.03
+      }
+    }
+  },
+  "config_hash": "01c501b4d6d2c116",
+  "git_commit": "29f4634ef001aa8c4e91d0067d1426fdaac7504a",
+  "artifacts": [
+    {
+      "path": "/content/drive/MyDrive/IoT_Trust_Research/iot-trust-compression/results/saber/16_score_validation/group_scores_with_r_sbl.csv",
+      "sha256": "13777a99b15a5cdfeeee459fe3adcc6e4ed70215583767243a5ca49dd1d98a85"
+    },
+    {
+      "path": "/content/drive/MyDrive/IoT_Trust_Research/iot-trust-compression/results/saber/16_score_validation/edge_group_leverage_long.csv",
+      "sha256": "e5e43d045d0d0a8b563b2e899dfba3f5e8d583ff702e84cb98582dccaa86455e"
+    },
+    {
+      "path": "/content/drive/MyDrive/IoT_Trust_Research/iot-trust-compression/results/saber/16_score_validation/single_group_causal_ablation.csv",
+      "sha256": "279ddb197fbeb0124aa8b20303e8b1a77bba5edb19e3dfc3bc95d37c356fe062"
+    },
+    {
+      "path": "/content/drive/MyDrive/IoT_Trust_Research/iot-trust-compression/results/saber/16_score_validation/score_harm_validation.csv",
+      "sha256": "0f0e93c89611147a6987815139829bcf93557dd5bf9f974efb04bfc0c5a48331"
+    },
+    {
+      "path": "/content/drive/MyDrive/IoT_Trust_Research/iot-trust-compression/results/saber/16_score_validation/score_and_causal_harm.csv",
+      "sha256": "ff3fdac51385b724de8445ffcaab885651d5869fa9b980a354daa4ebf83f3b62"
+    },
+    {
+      "path": "/content/drive/MyDrive/IoT_Trust_Research/iot-trust-compression/results/saber/16_score_validation/G1_score_gate.json",
+      "sha256": "27b062696b681f6e1b16f9f9d596bbe44f1bd4f9f2e2dbe9cde43d0ad0b7b032"
+    }
+  ]
+}

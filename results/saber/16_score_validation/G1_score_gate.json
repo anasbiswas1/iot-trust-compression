@@ -1,0 +1,32 @@
+{
+  "gate": "G1_score_validity",
+  "passed": false,
+  "primary_metrics_won": 0,
+  "required": 2,
+  "details": {
+    "harm_awbir": {
+      "r_sbl_spearman": 0.029970770148929824,
+      "best_magnitude_taylor": 0.23271301847380846,
+      "advantage": -0.20274224832487864,
+      "won": false
+    },
+    "harm_hsr_balanced_soc": {
+      "r_sbl_spearman": -0.08204162652435625,
+      "best_magnitude_taylor": 0.01731167586568998,
+      "advantage": -0.09935330239004622,
+      "won": false
+    },
+    "harm_fine_macro_f1": {
+      "r_sbl_spearman": -0.0838527113908255,
+      "best_magnitude_taylor": 0.06172517158126036,
+      "advantage": -0.14557788297208585,
+      "won": false
+    },
+    "harm_family_macro_f1": {
+      "r_sbl_spearman": -0.09931028402463177,
+      "best_magnitude_taylor": 0.06539755310202643,
+      "advantage": -0.1647078371266582,
+      "won": false
+    }
+  }
+}
