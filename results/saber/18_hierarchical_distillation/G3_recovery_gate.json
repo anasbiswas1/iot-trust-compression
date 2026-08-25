@@ -1,0 +1,32 @@
+{
+  "gate": "G3_hierarchical_recovery_screen",
+  "passed": false,
+  "hsbd_primary_wins": 1,
+  "dual_constraints_improved": 0,
+  "details": {
+    "hsbd_fixed_vs_ce_kd": {
+      "awbir": false,
+      "hsr": true,
+      "family_f1": false,
+      "benign_false_alert": false
+    },
+    "dual_constraint_violations": {
+      "proxy_attack_miss": {
+        "fixed": 0.005408588573336599,
+        "dual": 0.007006298527121542
+      },
+      "proxy_benign_false_alert": {
+        "fixed": 0.0,
+        "dual": 0.0
+      },
+      "proxy_family_nll": {
+        "fixed": 0.0,
+        "dual": 0.0
+      },
+      "proxy_class_cvar": {
+        "fixed": 0.0,
+        "dual": 0.0
+      }
+    }
+  }
+}
