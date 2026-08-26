@@ -1,0 +1,36 @@
+{
+  "gate": "G5_depth_probe",
+  "passed": false,
+  "g5a_wins_vs_fisher": 3,
+  "g5a_table": {
+    "v_c": {
+      "harm_awbir": 0.7537813025896065,
+      "harm_fine_macro_f1": 0.06101813478009696,
+      "harm_family_macro_f1": 0.15775224173008817,
+      "harm_hsr_balanced_soc": 0.10272902198102801
+    },
+    "fisher": {
+      "harm_awbir": 0.6395340089920379,
+      "harm_fine_macro_f1": 0.062374412880215016,
+      "harm_family_macro_f1": 0.08248229221611032,
+      "harm_hsr_balanced_soc": 0.05259956380289714
+    },
+    "taylor": {
+      "harm_awbir": 0.5679766031195841,
+      "harm_fine_macro_f1": 0.09861427172029237,
+      "harm_family_macro_f1": 0.10977538743626455,
+      "harm_hsr_balanced_soc": 0.07940278282559844
+    },
+    "magnitude": {
+      "harm_awbir": -0.4554535578831036,
+      "harm_fine_macro_f1": -0.003827141888327934,
+      "harm_family_macro_f1": -0.07331418129756613,
+      "harm_hsr_balanced_soc": -0.02789678071363223
+    }
+  },
+  "g5b_passed": false,
+  "g5b_best_awbir": "taylor",
+  "g5b_best_family_f1": "taylor",
+  "standard_awbir_spread": 0.131301664597135,
+  "criterion": "G5a: v_c>=fisher on >=2/4 harms (all groups). G5b: minimal-recovery saber_v2 strictly best on awbir or family_f1 and within 0.01 on the other."
+}
