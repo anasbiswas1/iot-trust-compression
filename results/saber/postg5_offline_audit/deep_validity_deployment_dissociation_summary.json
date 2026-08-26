@@ -1,0 +1,7 @@
+{
+  "n_methods": 4,
+  "spearman_validity_vs_negative_minimal_awbir": -0.6000000000000001,
+  "spearman_validity_vs_negative_standard_awbir": -0.6000000000000001,
+  "spearman_validity_vs_minimal_family_f1": -0.7999999999999999,
+  "spearman_validity_vs_standard_family_f1": -0.19999999999999998
+}

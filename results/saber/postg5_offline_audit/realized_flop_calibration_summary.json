@@ -1,0 +1,8 @@
+{
+  "uncalibrated_min_realized": 0.4375853074992155,
+  "uncalibrated_max_realized": 0.9666996783809224,
+  "uncalibrated_max_abs_error": 0.41669967838092237,
+  "calibrated_mean_abs_error": 0.005205391695429321,
+  "calibrated_max_abs_error": 0.014491488860997825,
+  "calibrated_all_within_1p5_points": true
+}

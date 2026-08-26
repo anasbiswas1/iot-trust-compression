@@ -1,0 +1,16 @@
+{
+  "n_sources": 22,
+  "top1_hits": 8,
+  "top1_rate": 0.36363636363636365,
+  "top2_hits": 11,
+  "top2_rate": 0.5,
+  "top3_hits": 15,
+  "top3_rate": 0.6818181818181818,
+  "mrr": 0.4924242424242424,
+  "fraction_weighted_top3": 0.7532830636278913,
+  "high_fraction_n": 8,
+  "high_fraction_top3_hits": 7,
+  "high_fraction_top3_rate": 0.875,
+  "binomial_top3_p_naive": 2.1900502461520258e-11,
+  "binomial_high_fraction_top3_p_naive": 3.7787097796988415e-07
+}
