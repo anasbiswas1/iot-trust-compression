@@ -1,0 +1,13 @@
+{
+  "notebook": "20b_freeze_depth_students.ipynb",
+  "n_models": 10,
+  "reconciliation_policy": "NB20 saved no student checkpoints; 20b retrains under the frozen orders/k. Selected sets exactly reproduced by construction. Minimal-regime students reproduce NB20 metrics exactly (seeded dedicated generator, deterministic). Standard-regime recoveries are a second training realization (bridge loader shuffles from global RNG): within-method awbir deltas up to 0.279 vs NB20, comparable to the across-method spread - direct evidence that recovery stochasticity dominates method differences at depth under standard recovery. 20b checkpoints (SHA-256 pinned) are canonical for the test audit; NB20 numbers remain the archived G5 gate record.",
+  "max_validation_reconciliation_difference": {
+    "archive_awbir_difference": 0.2789574584223723,
+    "archive_macro_f1_difference": 0.0963183079006861,
+    "archive_family_f1_difference": 0.0997031718181168
+  },
+  "minimal_regime_exact": true,
+  "realised_flops_ok": true,
+  "status": "ready_for_test_registry_rebaselined"
+}
