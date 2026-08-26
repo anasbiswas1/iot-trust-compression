@@ -1,0 +1,7 @@
+{
+  "notebook": "17b_realized_flop_calibration_and_checkpoint_freeze.ipynb",
+  "n_models": 15,
+  "max_abs_flop_error": 0.006022513335425139,
+  "config_hash": "01c501b4d6d2c116",
+  "status": "ready_for_test_registry"
+}
