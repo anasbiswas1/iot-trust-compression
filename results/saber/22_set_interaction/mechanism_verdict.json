@@ -1,0 +1,6 @@
+{
+  "benchmark": "set_level_interaction_and_recovery_reordering",
+  "raw_additivity_supported": true,
+  "recovery_reorders_or_equalizes": true,
+  "interpretation": "If raw additivity is supported but recovery reorders/equalizes, the channel-to-deployment dissociation is recovery-mediated. If raw additivity also fails, set interactions contribute independently."
+}
