@@ -1,0 +1,12 @@
+{
+  "created_utc": "2026-08-26T21:03:11.886160+00:00",
+  "git_commit": "06e736c7896d16582777c622fe13562786623027",
+  "protocol": "SABER-held-out test evaluation; no training or model selection",
+  "historical_note": "The partition was used in the earlier diagnostic study, but was excluded from SABER graph, score, selection, recovery, and gate development.",
+  "shallow_registry_sha256": "79bf6a098d14cd3eede06fc723206a2dc549431bbe2e6200507751298c99852d",
+  "deep_registry_sha256": "ad2edd2bfc001f2e9c026457db61577e16d93031dddc795daff91349db328ba1",
+  "test_model_summary_sha256": "ee3d7ba27a418f2c95cb9a42eb802d49329d0cbf1e5360f9c1f767ebfbd9357b",
+  "test_per_class_recall_sha256": "a86fcff34828fe313d0fb8ccbb5feca29728a153415fbebd334ebb71f1f96559",
+  "test_awbir_edge_audit_sha256": "5a1975cca4bbb2df36aff0a4149b8ee8a61c1f40aa004666ea255015ebb81787",
+  "n_models_including_teachers": 27
+}
