@@ -1,0 +1,5 @@
+pair,variance_ratio,signature
+DoS-SYN+DDoS-SYN,0.945,compensating
+DoS-TCP+DDoS-TCP,0.6434,compensating
+DoS-UDP+DDoS-UDP,1.3468,co-moving
+DoS-HTTP+DDoS-HTTP,1.1072,co-moving
