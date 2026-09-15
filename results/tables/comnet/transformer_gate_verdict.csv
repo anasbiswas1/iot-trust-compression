@@ -1,0 +1,5 @@
+criterion,value,pass,arch_kwargs
+i_mean_prune80_macro_f1_loss_gt_0.15,0.0187,False,"{'d_token': 96, 'n_heads': 8, 'n_layers': 3}"
+ii_classes_affected_in_ge3of5_seeds_ge_4,1.0,False,"{'d_token': 96, 'n_heads': 8, 'n_layers': 3}"
+iii_min_probe_auc_collapsed_ge_0.85,0.9902,True,"{'d_token': 96, 'n_heads': 8, 'n_layers': 3}"
+iv_refit_recovers_ge_half_of_loss,0.4927,False,"{'d_token': 96, 'n_heads': 8, 'n_layers': 3}"

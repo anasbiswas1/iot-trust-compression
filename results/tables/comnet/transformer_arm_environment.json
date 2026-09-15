@@ -1,0 +1,27 @@
+{
+  "arch_kwargs": {
+    "d_token": 96,
+    "n_heads": 8,
+    "n_layers": 3
+  },
+  "environment": {
+    "cpu_count": 8,
+    "cuda_available": true,
+    "machine": "x86_64",
+    "platform": "Linux-6.6.122+-x86_64-with-glibc2.39",
+    "processor": "x86_64",
+    "python": "3.13.15",
+    "ram_bytes": 54750404608,
+    "torch": "2.11.0+cu128",
+    "torch_threads": 4
+  },
+  "practical_loss": 0.1,
+  "pruner": "layer-wise L1 incl. attention in_proj",
+  "seeds": [
+    0,
+    1,
+    2,
+    3,
+    4
+  ]
+}
