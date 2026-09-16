@@ -1,0 +1,39 @@
+{
+  "amounts": [
+    [
+      0.5,
+      "prune50"
+    ],
+    [
+      0.8,
+      "prune80"
+    ],
+    [
+      0.9,
+      "prune90"
+    ],
+    [
+      0.95,
+      "prune95"
+    ]
+  ],
+  "arch_kwargs": {
+    "hidden": [
+      256,
+      128
+    ]
+  },
+  "cnn_p80_remaining": 5824,
+  "environment": {
+    "cpu_count": 8,
+    "cuda_available": true,
+    "machine": "x86_64",
+    "platform": "Linux-6.6.122+-x86_64-with-glibc2.39",
+    "processor": "x86_64",
+    "python": "3.13.15",
+    "ram_bytes": 54750404608,
+    "torch": "2.11.0+cu128",
+    "torch_threads": 4
+  },
+  "matched_cell": "prune90"
+}
