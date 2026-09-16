@@ -1,0 +1,7 @@
+criterion,value,pass
+matched_cell,prune97,
+matched_mean_macro_f1_loss_gt_0.15,0.0701,False
+matched_classes_affected_ge3of5_ge_4,7,True
+matched_min_probe_auc_collapsed,0.9286,True
+matched_refit_recovery_fraction,0.4333,False
+any_transformer_cell_collapses_up_to_98p5,False,False

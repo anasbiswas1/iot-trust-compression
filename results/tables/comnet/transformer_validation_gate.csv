@@ -1,0 +1,6 @@
+arch,seed,validation_macro_f1,cnn_band,mlp_band,overlaps_archived_bands
+ft_transformer,0,0.5252965173611439,"(0.561, 0.575)","(0.567, 0.593)",False
+ft_transformer,1,0.530431334072892,"(0.561, 0.575)","(0.567, 0.593)",False
+ft_transformer,2,0.5321427648803942,"(0.561, 0.575)","(0.567, 0.593)",False
+ft_transformer,3,0.5293502261497052,"(0.561, 0.575)","(0.567, 0.593)",False
+ft_transformer,4,0.5244180803187769,"(0.561, 0.575)","(0.567, 0.593)",False
