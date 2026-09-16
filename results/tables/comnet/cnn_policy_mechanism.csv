@@ -1,0 +1,3 @@
+policy,min_probe_auc_on_ref_collapsed,head_refit_macro_f1
+layerwise80_protect_conv0,0.9176797296626437,0.5479708158709609
+global80,0.9137121782888665,0.5411021089560419

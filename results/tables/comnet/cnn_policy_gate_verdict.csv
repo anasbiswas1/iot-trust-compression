@@ -1,0 +1,4 @@
+criterion,value,pass
+A_reference_reproduces_collapse,"loss 0.271, 17 classes",True
+B_protect_conv0_eliminates_collapse,"loss 0.013, 2 classes, conv0 sparsity 0.00",True
+C_global80_eliminates_collapse,"loss 0.014, 0 classes, conv0 sparsity 0.29",True
