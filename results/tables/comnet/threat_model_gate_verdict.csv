@@ -1,0 +1,5 @@
+criterion,value,pass
+i_default_exposed_lift_ge_2x,1.12,False
+ii_protect_conv0_lift_lt_1.2x,1.389,False
+ii_global80_lift_lt_1.2x,1.409,False
+ref_dense_lift,1.343,

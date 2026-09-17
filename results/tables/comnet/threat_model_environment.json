@@ -1,0 +1,26 @@
+{
+  "environment": {
+    "cpu_count": 8,
+    "cuda_available": true,
+    "machine": "x86_64",
+    "platform": "Linux-6.6.122+-x86_64-with-glibc2.39",
+    "processor": "x86_64",
+    "python": "3.13.15",
+    "ram_bytes": 54750404608,
+    "torch": "2.11.0+cu128",
+    "torch_threads": 4
+  },
+  "exposed_threshold": 0.2,
+  "recipes": {
+    "default_layerwise80": "prune80_paired",
+    "global80": "global80_paired",
+    "protect_conv0": "layerwise80_protect_conv0_paired"
+  },
+  "seeds": [
+    0,
+    1,
+    2,
+    3,
+    4
+  ]
+}
