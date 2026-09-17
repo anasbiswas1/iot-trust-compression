@@ -1,0 +1,6 @@
+criterion,value,pass
+A_cnn_dose_response_spearman_ge_0.9,1.0,True
+A_cnn_collapse_at_38_taps_loss_gt_0.15_and_ge_2_of_10_classes,"loss 0.256, 4 classes",True
+B_mlp_collapses_at_38_weights_loss_gt_0.15,"loss 0.353, 6 classes",True
+B_mlp_intact_at_80pct,loss 0.085,False
+ref_mlp_dose_response_spearman,1.0,
