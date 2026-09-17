@@ -1,0 +1,35 @@
+{
+  "cnn_runs": {
+    "0.0": "layerwise80_protect_conv0_paired",
+    "0.2": "conv0dose20_paired",
+    "0.5": "conv0dose50_paired",
+    "0.8": "prune80_paired",
+    "0.9": "conv0dose90_paired",
+    "0.95": "conv0dose95_paired"
+  },
+  "environment": {
+    "cpu_count": 8,
+    "cuda_available": true,
+    "machine": "x86_64",
+    "platform": "Linux-6.6.122+-x86_64-with-glibc2.39",
+    "processor": "x86_64",
+    "python": "3.13.15",
+    "ram_bytes": 54750404608,
+    "torch": "2.11.0+cu128",
+    "torch_threads": 4
+  },
+  "mlp_runs": {
+    "0.8": "inputdose8000_mlp_paired",
+    "0.9": "inputdose9000_mlp_paired",
+    "0.9808": "inputdose9808_mlp_paired",
+    "0.9904": "inputdose9904_mlp_paired",
+    "0.9962": "inputdose9962_mlp_paired"
+  },
+  "seeds": [
+    0,
+    1,
+    2,
+    3,
+    4
+  ]
+}
