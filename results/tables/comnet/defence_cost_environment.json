@@ -1,0 +1,28 @@
+{
+  "batch_sizes": [
+    1,
+    32,
+    256,
+    1024
+  ],
+  "environment": {
+    "cpu_count": 8,
+    "cuda_available": false,
+    "machine": "x86_64",
+    "platform": "Linux-6.6.122+-x86_64-with-glibc2.39",
+    "processor": "x86_64",
+    "python": "3.13.15",
+    "ram_bytes": 54750404608,
+    "torch": "2.11.0+cpu",
+    "torch_threads": 1
+  },
+  "recipes": {
+    "default_layerwise80": "prune80_paired",
+    "dense": "M0_paired",
+    "global80": "global80_paired",
+    "protect_conv0": "layerwise80_protect_conv0_paired"
+  },
+  "repeats": 100,
+  "torch_cpu_threads": 1,
+  "warmup": 25
+}
