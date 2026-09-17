@@ -1,0 +1,8 @@
+criterion,value,pass
+i_default_blind_spot_misattribution_gt_0.5,0.6456,True
+i_selection_lift_on_default_ge_1.5x,1.258,False
+ii_protect_conv0_blind_spot_misattribution_lt_0.35,0.227,True
+ii_global80_blind_spot_misattribution_lt_0.35,0.2599,True
+ii_default_vs_protect_ratio_ge_2x,2.844,True
+ii_default_vs_global_ratio_ge_2x,2.484,True
+ref_default_vs_dense_ratio,3.343,
