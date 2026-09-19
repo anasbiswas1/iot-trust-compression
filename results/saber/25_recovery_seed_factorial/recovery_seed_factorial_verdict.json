@@ -1,0 +1,70 @@
+{
+  "analysis": "recovery_seed_factorial",
+  "status": "descriptive_mechanism_confirmation_not_method_gate",
+  "target_flops": 0.4,
+  "methods": [
+    "random",
+    "magnitude",
+    "taylor",
+    "fisher",
+    "saber_v2"
+  ],
+  "recovery_seeds": [
+    101,
+    211,
+    307,
+    401,
+    503
+  ],
+  "results": [
+    {
+      "architecture": "shallow",
+      "regime": "minimal_ce",
+      "mean_rei_awbir": 0.9424732641268129,
+      "mean_rrr_awbir": 0.5,
+      "method_variance_fraction_awbir": 0.28911145434628904,
+      "seed_variance_fraction_awbir": 0.3319837990797348,
+      "interaction_residual_fraction_awbir": 0.3789047465739763,
+      "equalisation_descriptive": true,
+      "rank_reordering_descriptive": false,
+      "recovery_variance_material": true
+    },
+    {
+      "architecture": "shallow",
+      "regime": "full_ce",
+      "mean_rei_awbir": 0.9761925137188033,
+      "mean_rrr_awbir": -0.059999999999999984,
+      "method_variance_fraction_awbir": 0.1985349633117618,
+      "seed_variance_fraction_awbir": 0.2388585059452645,
+      "interaction_residual_fraction_awbir": 0.5626065307429726,
+      "equalisation_descriptive": true,
+      "rank_reordering_descriptive": true,
+      "recovery_variance_material": true
+    },
+    {
+      "architecture": "deep",
+      "regime": "minimal_ce",
+      "mean_rei_awbir": 0.7088396008489359,
+      "mean_rrr_awbir": 0.13999999999999999,
+      "method_variance_fraction_awbir": 0.10354838695224645,
+      "seed_variance_fraction_awbir": 0.46593208421441923,
+      "interaction_residual_fraction_awbir": 0.43051952883333433,
+      "equalisation_descriptive": true,
+      "rank_reordering_descriptive": true,
+      "recovery_variance_material": true
+    },
+    {
+      "architecture": "deep",
+      "regime": "standard_ce",
+      "mean_rei_awbir": 0.9057466570065656,
+      "mean_rrr_awbir": 0.45999999999999996,
+      "method_variance_fraction_awbir": 0.16147347367794176,
+      "seed_variance_fraction_awbir": 0.5638283440929681,
+      "interaction_residual_fraction_awbir": 0.2746981822290898,
+      "equalisation_descriptive": true,
+      "rank_reordering_descriptive": false,
+      "recovery_variance_material": true
+    }
+  ],
+  "interpretation_rule": "Recovery can be described as equalising or reordering selection only for the architecture/regime cells supported by the reported REI, RRR and variance components."
+}

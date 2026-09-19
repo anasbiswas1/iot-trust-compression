@@ -1,0 +1,75 @@
+{
+  "notebook": "25_recovery_seed_factorial.ipynb",
+  "created_utc": "2026-09-19T22:11:53.849698+00:00",
+  "git_commit": "6850f28b9e8c3f6310aab2b1a3668ee791a61609",
+  "config_hash": "01c501b4d6d2c116",
+  "target_flops": 0.4,
+  "architectures": [
+    "shallow",
+    "deep"
+  ],
+  "methods": [
+    "random",
+    "magnitude",
+    "taylor",
+    "fisher",
+    "saber_v2"
+  ],
+  "recovery_seeds": [
+    101,
+    211,
+    307,
+    401,
+    503
+  ],
+  "protocols": {
+    "shallow": [
+      "minimal_ce",
+      "full_ce"
+    ],
+    "deep": [
+      "minimal_ce",
+      "standard_ce"
+    ]
+  },
+  "validation_only": true,
+  "test_loader_used": false,
+  "artifacts": [
+    {
+      "path": "results/saber/25_recovery_seed_factorial/recovery_seed_factorial_runs.csv",
+      "sha256": "0c810f1d0598f2e2b98318a4647a6cc6a52b9cb41f06836914cfec6c29f5cb66"
+    },
+    {
+      "path": "results/saber/25_recovery_seed_factorial/recovery_seed_factorial_epoch_history.csv",
+      "sha256": "9530a4b67c14426b7330a4583cf60d2feea323487c527e7e1ee4ee60ed107f7f"
+    },
+    {
+      "path": "results/saber/25_recovery_seed_factorial/raw_structure_audit.csv",
+      "sha256": "9ad19ecdca73290e1257a04a630859b1419bdd07f31d793360e401f8a69a0c3b"
+    },
+    {
+      "path": "results/saber/25_recovery_seed_factorial/method_seed_summary.csv",
+      "sha256": "ed891a8f8e6555547815b6323274502943173019804c9c47d18dfed8a078787c"
+    },
+    {
+      "path": "results/saber/25_recovery_seed_factorial/recovery_equalisation_and_rank_retention.csv",
+      "sha256": "54bf21ca9df9db34f7ea49139700f21950cc053a96be60818d1ef7bf9b682ca8"
+    },
+    {
+      "path": "results/saber/25_recovery_seed_factorial/variance_decomposition.csv",
+      "sha256": "2daf8ab03be56cfd846b856aaff9a419dc14c5389a3fefefd6dbefdb38a34ebb"
+    },
+    {
+      "path": "results/saber/25_recovery_seed_factorial/rank_stability.csv",
+      "sha256": "17b110d8edecbde490a615ffd4f5b57dcdea1acd2adef483c902f3e52f82964e"
+    },
+    {
+      "path": "results/saber/25_recovery_seed_factorial/probability_best.csv",
+      "sha256": "e47e4b570687b47cfd6c061be891c67e72ce4d908a77a6e55fde805af12089a7"
+    },
+    {
+      "path": "results/saber/25_recovery_seed_factorial/recovery_seed_factorial_verdict.json",
+      "sha256": "09486846a5d1f2857532323fd0ed6ce9e143831ac6a015910a25a943297ff6e4"
+    }
+  ]
+}
