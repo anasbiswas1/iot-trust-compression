@@ -1,0 +1,116 @@
+{
+  "gate": "G6_recovery_efficiency",
+  "G6a_passed": false,
+  "G6b_passed": false,
+  "architectures_analysed": [
+    "deep",
+    "shallow"
+  ],
+  "verdict_complete": true,
+  "per_architecture": {
+    "deep": {
+      "tau": 0.5798775553708971,
+      "friedman_p": 0.4778783444887219,
+      "friedman_chi2": 3.500000000000014,
+      "kendalls_w": 0.1750000000000007,
+      "kruskal_p_unblocked": 0.4076456524887643,
+      "median_units": {
+        "random": 1.0,
+        "magnitude": 1.0,
+        "taylor": 1.0,
+        "fisher": 1.0,
+        "saber_v2": 1.0
+      },
+      "median_spread": 0.0,
+      "best_method_units": "fisher",
+      "mean_auc_family_f1": {
+        "random": 0.5659475863582051,
+        "magnitude": 0.6190402988738407,
+        "taylor": 0.5883670496927201,
+        "fisher": 0.5873408343191139,
+        "saber_v2": 0.5799984692758098
+      },
+      "best_method_auc": "magnitude",
+      "guard_delayed_runs": 0,
+      "censored_runs": 0,
+      "degenerate_no_variation": false,
+      "G6a": false
+    },
+    "shallow": {
+      "tau": 0.5854929766091445,
+      "friedman_p": 0.8874141917264762,
+      "friedman_chi2": 1.1428571428571592,
+      "kendalls_w": 0.05714285714285796,
+      "kruskal_p_unblocked": 0.88404859300192,
+      "median_units": {
+        "random": 1.0,
+        "magnitude": 1.0,
+        "taylor": 1.0,
+        "fisher": 1.0,
+        "saber_v2": 1.0
+      },
+      "median_spread": 0.0,
+      "best_method_units": "fisher",
+      "mean_auc_family_f1": {
+        "random": 0.5906862796840768,
+        "magnitude": 0.5943507971554297,
+        "taylor": 0.5894263142657513,
+        "fisher": 0.5886460887765784,
+        "saber_v2": 0.5858589091825246
+      },
+      "best_method_auc": "magnitude",
+      "guard_delayed_runs": 3,
+      "censored_runs": 0,
+      "degenerate_no_variation": false,
+      "G6a": false
+    }
+  },
+  "amendment": {
+    "gate": "G6_recovery_efficiency",
+    "original_prereg_commit": "307a7dd",
+    "amended_before_any_G6_result": true,
+    "amendments": [
+      {
+        "change": "seeds 3 -> 5, using the NB26 seed set [101,211,307,401,503]",
+        "reason": "NB26 measured recovery-seed variance exceeding selection-method variance (deep AWBIR 47% seed vs 10% method); 3 unblocked seeds per method is underpowered for that variance structure, and sharing NB26 seeds makes the two experiments directly comparable."
+      },
+      {
+        "change": "primary test Kruskal-Wallis -> Friedman blocked by seed (Kendall W reported); Kruskal-Wallis retained as an unblocked secondary",
+        "reason": "every method is recovered under the identical seed set, so the design is matched-block; blocking removes the dominant seed variance instead of letting it mask method effects."
+      },
+      {
+        "change": "outcomes split: units to family-F1 threshold, and units to threshold AND benign-false-alert guard; guard-binding frequency reported",
+        "reason": "NB26 shows shallow minimal-recovery benign_to_attack near the 0.05 guard, so one combined outcome would conflate slow recovery with guard violation."
+      },
+      {
+        "change": "secondary continuous outcome added: mean family macro-F1 across units (AUC)",
+        "reason": "units-to-threshold is coarse and censored; the AUC uses the whole curve."
+      }
+    ],
+    "primary_outcome": "recovery units (passes over the frozen 10% subset) to tau",
+    "tau": "family macro-F1 >= 0.95 x plateau, plateau = median across ALL methods and seeds of the final-unit family macro-F1",
+    "censoring": "runs not reaching tau by E_MAX recorded as E_MAX+1 (censored)",
+    "G6a_pass": "Friedman p<0.05 (blocked by seed) AND median spread >= 1 unit, in >=1 architecture",
+    "G6b_pass": "saber_v2 strictly lowest median units in >=1 architecture, within 1 unit elsewhere",
+    "no_test_access": true,
+    "no_new_selection": true,
+    "methods": [
+      "random",
+      "magnitude",
+      "taylor",
+      "fisher",
+      "saber_v2"
+    ],
+    "seeds": [
+      101,
+      211,
+      307,
+      401,
+      503
+    ],
+    "e_max": {
+      "shallow": 8,
+      "deep": 6
+    }
+  }
+}
