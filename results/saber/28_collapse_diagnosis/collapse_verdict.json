@@ -1,0 +1,51 @@
+{
+  "verdict": "H1_batchnorm_running_statistics",
+  "collapse_threshold_benign_to_attack": 0.1,
+  "eval_mode_collapses": 6,
+  "of_which_also_collapsed_under_batch_statistics": 0,
+  "post_recovery_evaluations": 44,
+  "reproduced_collapse_epochs": [
+    {
+      "architecture": "deep",
+      "seed": 401,
+      "unit": 2
+    },
+    {
+      "architecture": "shallow",
+      "seed": 307,
+      "unit": 4
+    },
+    {
+      "architecture": "shallow",
+      "seed": 307,
+      "unit": 8
+    }
+  ],
+  "raw_pruned_control_unit0": {
+    "eval_b2a_median": 0.628,
+    "batch_b2a_median": 0.40537500000000004,
+    "eval_family_f1_median": 0.48282975389475746,
+    "batch_family_f1_median": 0.4926194212873053
+  },
+  "median_family_f1_when_eval_collapsed": {
+    "eval_mode": 0.28379277435610983,
+    "batch_statistics": 0.64740864462062
+  },
+  "bn_running_var_max": {
+    "collapsed_epochs": 1.4955499768257141,
+    "healthy_epochs": 0.40029263496398926
+  },
+  "bn_running_mean_absmax": {
+    "collapsed_epochs": 0.653144121170044,
+    "healthy_epochs": 0.6780261695384979
+  },
+  "max_batch_loss": {
+    "collapsed_epochs": 1.282890260219574,
+    "healthy_epochs": 0.9625386893749238
+  },
+  "interpretation": {
+    "H1_batchnorm_running_statistics": "weights remain usable; stored running statistics are displaced. Fix: recalibrate BatchNorm statistics before deployment, or select checkpoints on a safety-gated per-epoch audit.",
+    "H2_weight_damage": "the optimisation step itself moved the weights to an unusable point; BatchNorm recalibration would not help and per-epoch safety-gated checkpointing is required.",
+    "mixed": "both mechanisms occur; report per event."
+  }
+}
