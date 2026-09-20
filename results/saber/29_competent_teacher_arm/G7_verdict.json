@@ -1,0 +1,206 @@
+{
+  "arm": "G7_competent_teacher_robustness",
+  "teacher": {
+    "alpha": 0.5,
+    "meets_prereg_criteria": true,
+    "benign_recall": 0.9995,
+    "original_anchor_benign_to_attack_rate": 0.5977,
+    "original_anchor_fine_macro_f1": 0.5596,
+    "n": 109522.0,
+    "fine_accuracy": 0.6241211811325579,
+    "fine_macro_f1": 0.5096655110824013,
+    "binary_accuracy": 0.9348076185606545,
+    "binary_balanced_accuracy": 0.9659276691116545,
+    "binary_attack_recall": 0.9323553382233088,
+    "binary_attack_f1": 0.9649842085646468,
+    "family_accuracy": 0.7683205200781578,
+    "family_macro_f1": 0.5788092780679379,
+    "exact_attack_type_rate": 0.6098917761225148,
+    "attack_to_benign_rate": 0.06764466177669112,
+    "benign_to_attack_rate": 0.0005,
+    "same_family_attack_substitution_rate": 0.14966547260286955,
+    "cross_family_attack_substitution_rate": 0.1727980894979246,
+    "ece15": 0.20275894913855205,
+    "nll": 1.3298513593227583,
+    "brier": 0.5359907847558485,
+    "hsr_miss_sensitive": 0.17245545795974018,
+    "hsr_balanced_soc": 0.1939172038494549,
+    "hsr_alert_fatigue": 0.16424097441609903,
+    "awbir": 0.0
+  },
+  "teacher_meets_prereg_criteria": true,
+  "calibration_within_tolerance": true,
+  "regimes_analysed": [
+    "minimal_ce",
+    "full_ce"
+  ],
+  "verdict_complete": true,
+  "C1_equalisation_holds": true,
+  "C2_seed_variance_exceeds_method_variance": true,
+  "C3_rank_instability_holds": true,
+  "C4_normalisation_collapse_recurs": true,
+  "per_regime": {
+    "minimal_ce": {
+      "recovery_equalisation_index_awbir": 0.880141323595345,
+      "mean_raw_spread": 0.41405538474964676,
+      "mean_recovered_spread": 0.04962813037431284,
+      "variance_shares_awbir": {
+        "method": 0.16369107650179598,
+        "seed": 0.454972700718694,
+        "interaction_residual": 0.38133622277951007
+      },
+      "mean_pairwise_rank_correlation_awbir": 0.3,
+      "pairwise_rank_correlations": [
+        0.8999999999999998,
+        -0.6,
+        0.7,
+        0.7,
+        -0.3,
+        0.8999999999999998,
+        0.6,
+        -0.09999999999999999,
+        -0.49999999999999994,
+        0.7
+      ],
+      "mean_awbir_by_method": {
+        "fisher": 0.08751147551844918,
+        "magnitude": 0.09408826829410195,
+        "random": 0.10999461866764375,
+        "saber_v2": 0.07753717992285156,
+        "taylor": 0.08829287761667262
+      },
+      "best_method_count": {
+        "random": 1,
+        "magnitude": 0,
+        "taylor": 0,
+        "fisher": 0,
+        "saber_v2": 4
+      }
+    },
+    "full_ce": {
+      "recovery_equalisation_index_awbir": 0.835725482462723,
+      "mean_raw_spread": 0.41405538474964676,
+      "mean_recovered_spread": 0.0680187485634598,
+      "variance_shares_awbir": {
+        "method": 0.1893648126035688,
+        "seed": 0.28912600114453063,
+        "interaction_residual": 0.5215091862519006
+      },
+      "mean_pairwise_rank_correlation_awbir": -0.059999999999999984,
+      "pairwise_rank_correlations": [
+        0.6,
+        -0.6,
+        0.3,
+        -0.19999999999999998,
+        -0.7999999999999999,
+        0.49999999999999994,
+        0.39999999999999997,
+        -0.8999999999999998,
+        -0.6,
+        0.7
+      ],
+      "mean_awbir_by_method": {
+        "fisher": 0.0827948831307691,
+        "magnitude": 0.10632320542031488,
+        "random": 0.12221780616266002,
+        "saber_v2": 0.08982791702356727,
+        "taylor": 0.08855691713882377
+      },
+      "best_method_count": {
+        "random": 0,
+        "magnitude": 1,
+        "taylor": 0,
+        "fisher": 3,
+        "saber_v2": 1
+      }
+    }
+  },
+  "collapse_audit": {
+    "epoch_evaluations": 175,
+    "eval_mode_collapses": 7,
+    "of_which_healthy_under_batch_statistics": 7,
+    "collapse_cells": [
+      {
+        "method": "random",
+        "regime": "full_ce",
+        "seed": 211,
+        "epoch": 4,
+        "eval_b2a": 0.4303,
+        "batch_b2a": 0.0003
+      },
+      {
+        "method": "magnitude",
+        "regime": "full_ce",
+        "seed": 211,
+        "epoch": 4,
+        "eval_b2a": 0.4143,
+        "batch_b2a": 0.0008
+      },
+      {
+        "method": "taylor",
+        "regime": "full_ce",
+        "seed": 211,
+        "epoch": 4,
+        "eval_b2a": 0.9008,
+        "batch_b2a": 0.0008
+      },
+      {
+        "method": "taylor",
+        "regime": "full_ce",
+        "seed": 401,
+        "epoch": 4,
+        "eval_b2a": 0.187,
+        "batch_b2a": 0.0003
+      },
+      {
+        "method": "fisher",
+        "regime": "full_ce",
+        "seed": 211,
+        "epoch": 4,
+        "eval_b2a": 0.8075,
+        "batch_b2a": 0.0003
+      },
+      {
+        "method": "fisher",
+        "regime": "full_ce",
+        "seed": 401,
+        "epoch": 4,
+        "eval_b2a": 0.1177,
+        "batch_b2a": 0.0005
+      },
+      {
+        "method": "saber_v2",
+        "regime": "full_ce",
+        "seed": 211,
+        "epoch": 4,
+        "eval_b2a": 0.2323,
+        "batch_b2a": 0.0013
+      }
+    ]
+  },
+  "prereg": {
+    "arm": "G7_competent_teacher_robustness",
+    "threat": "shallow dense anchor escalates 59.8% of benign validation traffic; AWBIR is teacher-referenced, so shallow-arm conclusions may reflect a flawed reference",
+    "teacher_acceptance": {
+      "benign_to_attack_rate": "<= 0.10 on validation",
+      "binary_attack_recall": ">= 0.90 on validation",
+      "fine_macro_f1": ">= 0.50 on validation (not materially worse than the 0.56 anchor)"
+    },
+    "design": "5 selection methods x 5 recovery seeds x 2 regimes (minimal_ce, full_ce) at realised 40% on structures re-derived for THIS teacher; dual-mode BatchNorm audit at every epoch; no test access",
+    "robustness_claims_under_test": [
+      "C1 equalisation: recovery equalisation index for AWBIR >= 0.70 in both regimes",
+      "C2 variance dominance: recovery-seed share of AWBIR variance exceeds selection-method share",
+      "C3 rank instability: mean pairwise rank correlation across seeds < 0.5 on AWBIR",
+      "C4 normalisation collapse recurs: at least one epoch with benign_to_attack > 0.10 that is healthy under batch statistics"
+    ],
+    "reporting_rule": "each claim is reported as held or not held. A claim that does not hold is reported as a failure of robustness for that finding, not removed.",
+    "seeds": [
+      101,
+      211,
+      307,
+      401,
+      503
+    ],
+    "no_test_access": true
+  }
+}

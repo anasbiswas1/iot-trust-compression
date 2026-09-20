@@ -1,0 +1,25 @@
+{
+  "arm": "G7_competent_teacher_robustness",
+  "threat": "shallow dense anchor escalates 59.8% of benign validation traffic; AWBIR is teacher-referenced, so shallow-arm conclusions may reflect a flawed reference",
+  "teacher_acceptance": {
+    "benign_to_attack_rate": "<= 0.10 on validation",
+    "binary_attack_recall": ">= 0.90 on validation",
+    "fine_macro_f1": ">= 0.50 on validation (not materially worse than the 0.56 anchor)"
+  },
+  "design": "5 selection methods x 5 recovery seeds x 2 regimes (minimal_ce, full_ce) at realised 40% on structures re-derived for THIS teacher; dual-mode BatchNorm audit at every epoch; no test access",
+  "robustness_claims_under_test": [
+    "C1 equalisation: recovery equalisation index for AWBIR >= 0.70 in both regimes",
+    "C2 variance dominance: recovery-seed share of AWBIR variance exceeds selection-method share",
+    "C3 rank instability: mean pairwise rank correlation across seeds < 0.5 on AWBIR",
+    "C4 normalisation collapse recurs: at least one epoch with benign_to_attack > 0.10 that is healthy under batch statistics"
+  ],
+  "reporting_rule": "each claim is reported as held or not held. A claim that does not hold is reported as a failure of robustness for that finding, not removed.",
+  "seeds": [
+    101,
+    211,
+    307,
+    401,
+    503
+  ],
+  "no_test_access": true
+}
