@@ -1,0 +1,41 @@
+{
+  "arm": "G8_remedy_and_trigger",
+  "collapse_threshold_benign_to_attack": 0.1,
+  "A_remedy": {
+    "procedure": "reset running mean/var, forward 50 batches of held-out training data (disjoint from the recovery subset) in train mode with cumulative averaging and no gradient, then evaluate in eval mode",
+    "A1": "post-recalibration eval-mode benign_to_attack <= 0.05 on every reproduced collapse",
+    "A2": "post-recalibration eval-mode family macro-F1 >= 0.95 x the batch-statistics value",
+    "A3": "recalibrating a HEALTHY epoch changes benign_to_attack by <= 0.01 and family macro-F1 by <= 0.02, so the remedy does no harm where none is needed"
+  },
+  "definitions": {
+    "normalisation_collapse": "an epoch with eval-mode benign_to_attack > 0.10 whose batch-statistics benign_to_attack is <= 0.10: bad only under stored statistics",
+    "degradation": "an epoch with benign_to_attack > 0.10 under BOTH evaluation modes: the model is genuinely bad, e.g. undertrained; NOT counted as a collapse"
+  },
+  "B_trigger": {
+    "target_cells": [
+      "shallow/fisher/s307",
+      "shallow/saber_v2/s307",
+      "deep/fisher/s401",
+      "deep/saber_v2/s401"
+    ],
+    "conditions": {
+      "baseline": "Adam 1e-3 constant, batch 1024, BN momentum 0.1 (reproduces NB27/28)",
+      "cosine_decay": "Adam 1e-3 -> 1e-5 cosine over all steps, batch 1024",
+      "lr_1e-4": "Adam 1e-4 constant, batch 1024",
+      "batch_256": "Adam 1e-3 constant, batch 256",
+      "bn_momentum_0.01": "Adam 1e-3 constant, batch 1024, BN momentum 0.01"
+    },
+    "outcome": "count of NORMALISATION collapses per condition across the four cells; degradation epochs reported separately",
+    "eliminates": "zero normalisation collapses in all four cells",
+    "reduces": "fewer normalisation collapses than baseline",
+    "trains_adequately": "median final family macro-F1 >= 0.90 x the baseline value; a condition that eliminates collapse by failing to train is reported as such",
+    "note": "baseline must reproduce at least one collapse or the ablation is uninformative"
+  },
+  "C_seed_variance": {
+    "design": "shallow, fisher, 5 seeds [101,211,307,401,503], 8 units on the 10% subset, baseline vs cosine_decay",
+    "outcome": "SD across seeds of final-unit AWBIR, and normalisation-collapse count, per condition",
+    "reporting": "descriptive ratio with a bootstrap 95% interval; no pass/fail gate"
+  },
+  "no_test_access": true,
+  "no_new_selection": true
+}
