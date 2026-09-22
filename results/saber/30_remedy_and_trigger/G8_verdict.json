@@ -1,0 +1,128 @@
+{
+  "arm": "G8_remedy_and_trigger",
+  "A_remedy": {
+    "A1_post_recalibration_b2a_le_0.05": true,
+    "A2_family_f1_recovers_to_batchstats": false,
+    "A3_no_harm_on_healthy": false,
+    "n_collapses_treated": 6,
+    "n_healthy_controls": 4,
+    "collapsed_b2a_before_median": 0.61675,
+    "collapsed_b2a_after_median": 0.00075,
+    "collapsed_family_f1_before_median": 0.28379277435610983,
+    "collapsed_family_f1_after_median": 0.6044781547649845
+  },
+  "B_trigger": {
+    "baseline": {
+      "normalisation_collapses": 6,
+      "degradation_epochs": 0,
+      "cells_with_normalisation_collapse": 4,
+      "epoch_evaluations": 28,
+      "max_bn_running_var": 11.725090026855469,
+      "median_final_awbir": 0.1764436681283037,
+      "median_final_family_f1": 0.4209271434173873,
+      "trains_adequately": true,
+      "verdict": "baseline"
+    },
+    "batch_256": {
+      "normalisation_collapses": 3,
+      "degradation_epochs": 0,
+      "cells_with_normalisation_collapse": 2,
+      "epoch_evaluations": 28,
+      "max_bn_running_var": 14.185050010681152,
+      "median_final_awbir": 0.0908790825080974,
+      "median_final_family_f1": 0.4702847279566813,
+      "trains_adequately": true,
+      "verdict": "reduces"
+    },
+    "bn_momentum_0.01": {
+      "normalisation_collapses": 4,
+      "degradation_epochs": 0,
+      "cells_with_normalisation_collapse": 2,
+      "epoch_evaluations": 28,
+      "max_bn_running_var": 11.739696502685549,
+      "median_final_awbir": 0.09534359611837495,
+      "median_final_family_f1": 0.5569453911495403,
+      "trains_adequately": true,
+      "verdict": "reduces"
+    },
+    "cosine_decay": {
+      "normalisation_collapses": 6,
+      "degradation_epochs": 0,
+      "cells_with_normalisation_collapse": 4,
+      "epoch_evaluations": 28,
+      "max_bn_running_var": 9.972967147827148,
+      "median_final_awbir": 0.14864639015783748,
+      "median_final_family_f1": 0.42867044133808024,
+      "trains_adequately": true,
+      "verdict": "does_not_reduce"
+    },
+    "lr_1e-4": {
+      "normalisation_collapses": 4,
+      "degradation_epochs": 8,
+      "cells_with_normalisation_collapse": 4,
+      "epoch_evaluations": 28,
+      "max_bn_running_var": 8.824037551879883,
+      "median_final_awbir": 0.14398242246997053,
+      "median_final_family_f1": 0.4350124131568898,
+      "trains_adequately": true,
+      "verdict": "reduces"
+    }
+  },
+  "C_seed_variance": {
+    "final_awbir_sd_baseline": 0.07186691501350041,
+    "final_awbir_sd_cosine": 0.07091906506733012,
+    "sd_ratio_cosine_over_baseline": 0.9868110389044494,
+    "sd_ratio_bootstrap_95ci": [
+      0.0039552085567980885,
+      23.606256896700547
+    ],
+    "final_awbir_mean_baseline": 0.13935985380067228,
+    "final_awbir_mean_cosine": 0.13348699911453743,
+    "normalisation_collapses_baseline": 3,
+    "normalisation_collapses_cosine": 3,
+    "degradation_epochs_baseline": 0,
+    "degradation_epochs_cosine": 0,
+    "n_seeds": 5
+  },
+  "prereg": {
+    "arm": "G8_remedy_and_trigger",
+    "collapse_threshold_benign_to_attack": 0.1,
+    "A_remedy": {
+      "procedure": "reset running mean/var, forward 50 batches of held-out training data (disjoint from the recovery subset) in train mode with cumulative averaging and no gradient, then evaluate in eval mode",
+      "A1": "post-recalibration eval-mode benign_to_attack <= 0.05 on every reproduced collapse",
+      "A2": "post-recalibration eval-mode family macro-F1 >= 0.95 x the batch-statistics value",
+      "A3": "recalibrating a HEALTHY epoch changes benign_to_attack by <= 0.01 and family macro-F1 by <= 0.02, so the remedy does no harm where none is needed"
+    },
+    "definitions": {
+      "normalisation_collapse": "an epoch with eval-mode benign_to_attack > 0.10 whose batch-statistics benign_to_attack is <= 0.10: bad only under stored statistics",
+      "degradation": "an epoch with benign_to_attack > 0.10 under BOTH evaluation modes: the model is genuinely bad, e.g. undertrained; NOT counted as a collapse"
+    },
+    "B_trigger": {
+      "target_cells": [
+        "shallow/fisher/s307",
+        "shallow/saber_v2/s307",
+        "deep/fisher/s401",
+        "deep/saber_v2/s401"
+      ],
+      "conditions": {
+        "baseline": "Adam 1e-3 constant, batch 1024, BN momentum 0.1 (reproduces NB27/28)",
+        "cosine_decay": "Adam 1e-3 -> 1e-5 cosine over all steps, batch 1024",
+        "lr_1e-4": "Adam 1e-4 constant, batch 1024",
+        "batch_256": "Adam 1e-3 constant, batch 256",
+        "bn_momentum_0.01": "Adam 1e-3 constant, batch 1024, BN momentum 0.01"
+      },
+      "outcome": "count of NORMALISATION collapses per condition across the four cells; degradation epochs reported separately",
+      "eliminates": "zero normalisation collapses in all four cells",
+      "reduces": "fewer normalisation collapses than baseline",
+      "trains_adequately": "median final family macro-F1 >= 0.90 x the baseline value; a condition that eliminates collapse by failing to train is reported as such",
+      "note": "baseline must reproduce at least one collapse or the ablation is uninformative"
+    },
+    "C_seed_variance": {
+      "design": "shallow, fisher, 5 seeds [101,211,307,401,503], 8 units on the 10% subset, baseline vs cosine_decay",
+      "outcome": "SD across seeds of final-unit AWBIR, and normalisation-collapse count, per condition",
+      "reporting": "descriptive ratio with a bootstrap 95% interval; no pass/fail gate"
+    },
+    "no_test_access": true,
+    "no_new_selection": true
+  }
+}
