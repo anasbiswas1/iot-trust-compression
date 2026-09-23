@@ -1,0 +1,15 @@
+tag,architecture,unit,eval_b2a,batch_b2a,eval_family_f1,eval_awbir,is_collapse,bn_var_max,teacher_b2a
+groupnorm_dense/shallow/s307,shallow,1,0.00075,,0.5845509558491115,0.12831476726213184,False,,0.0005
+groupnorm_dense/shallow/s307,shallow,2,0.00025,,0.5867466936123207,0.13917213039671644,False,,0.0005
+groupnorm_dense/shallow/s307,shallow,3,0.0005,,0.5990333786677887,0.14206651579176596,False,,0.0005
+groupnorm_dense/shallow/s307,shallow,4,0.0015,,0.5834512628850342,0.130301888391199,False,,0.0005
+groupnorm_dense/shallow/s307,shallow,5,0.00075,,0.5835909709448666,0.13067120783846553,False,,0.0005
+groupnorm_dense/shallow/s307,shallow,6,0.001,,0.6270723281795691,0.13156159388030098,False,,0.0005
+groupnorm_dense/shallow/s307,shallow,7,0.001,,0.6203295317219094,0.13294989189494694,False,,0.0005
+groupnorm_dense/shallow/s307,shallow,8,0.0015,,0.5911694527647762,0.12766531482281,False,,0.0005
+groupnorm_dense/deep/s401,deep,1,0.0,,0.670746480416381,0.03907854054937615,False,,0.0
+groupnorm_dense/deep/s401,deep,2,0.0,,0.6235078594771982,0.05771128337235046,False,,0.0
+groupnorm_dense/deep/s401,deep,3,0.0,,0.614729104834701,0.06293267748118464,False,,0.0
+groupnorm_dense/deep/s401,deep,4,0.0,,0.642914326420717,0.06314533383612078,False,,0.0
+groupnorm_dense/deep/s401,deep,5,0.0,,0.6418835330405045,0.048905423994286434,False,,0.0
+groupnorm_dense/deep/s401,deep,6,0.0,,0.586340611933736,0.14482472820656656,False,,0.0

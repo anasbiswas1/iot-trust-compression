@@ -1,0 +1,202 @@
+{
+  "arm": "T_trigger_isolation_ciciot2023",
+  "baseline_collapses": 9,
+  "baseline_cells_collapsing": 6,
+  "T1_clipping_removes_all_collapses": true,
+  "T1_collapses_under_clipping": 0,
+  "T1_max_bn_var_baseline": 15.13542366027832,
+  "T1_max_bn_var_clipped": 11.252999305725098,
+  "T2_groupnorm_no_spike": true,
+  "T2_spikes": 0,
+  "T2_groupnorm_teacher_b2a": {
+    "groupnorm_dense/deep/s401": 0.0,
+    "groupnorm_dense/shallow/s307": 0.0005
+  },
+  "T2_spikes_relative_to_teacher_baseline": 0,
+  "T2_groupnorm_eval_b2a_by_unit": {
+    "groupnorm_dense/deep/s401": [
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    "groupnorm_dense/shallow/s307": [
+      0.0008,
+      0.0002,
+      0.0005,
+      0.0015,
+      0.0008,
+      0.001,
+      0.001,
+      0.0015
+    ]
+  },
+  "T3_reading": "tracks_subset",
+  "T3_subset_fixed_variants_collapsing": 2,
+  "T3_order_fixed_variants_collapsing": 0,
+  "T4_collapse_persists_unweighted": true,
+  "T4_collapses": 6,
+  "T5_var_jumps_coincide_with_extreme_batches": true,
+  "T5_by_unit": {
+    "1": {
+      "top3_var_jump_batches": [
+        10,
+        165,
+        241
+      ],
+      "top3_max_abs_z_batches": [
+        10,
+        165,
+        223
+      ],
+      "overlap": 2,
+      "max_abs_z_in_unit": 1390.3966064453125,
+      "max_var_jump": 2.266854852437973
+    },
+    "2": {
+      "top3_var_jump_batches": [
+        19,
+        26,
+        172
+      ],
+      "top3_max_abs_z_batches": [
+        19,
+        26,
+        172
+      ],
+      "overlap": 3,
+      "max_abs_z_in_unit": 1390.3966064453125,
+      "max_var_jump": 2.255021333694458
+    },
+    "3": {
+      "top3_var_jump_batches": [
+        129,
+        154,
+        221
+      ],
+      "top3_max_abs_z_batches": [
+        154,
+        221,
+        237
+      ],
+      "overlap": 2,
+      "max_abs_z_in_unit": 1390.3966064453125,
+      "max_var_jump": 2.318369835615158
+    },
+    "4": {
+      "top3_var_jump_batches": [
+        134,
+        169,
+        242
+      ],
+      "top3_max_abs_z_batches": [
+        169,
+        197,
+        242
+      ],
+      "overlap": 2,
+      "max_abs_z_in_unit": 1390.3966064453125,
+      "max_var_jump": 2.3794073462486267
+    },
+    "5": {
+      "top3_var_jump_batches": [
+        67,
+        112,
+        184
+      ],
+      "top3_max_abs_z_batches": [
+        67,
+        184,
+        220
+      ],
+      "overlap": 2,
+      "max_abs_z_in_unit": 1390.3966064453125,
+      "max_var_jump": 2.377858489751816
+    },
+    "6": {
+      "top3_var_jump_batches": [
+        90,
+        119,
+        172
+      ],
+      "top3_max_abs_z_batches": [
+        90,
+        119,
+        172
+      ],
+      "overlap": 3,
+      "max_abs_z_in_unit": 1390.3966064453125,
+      "max_var_jump": 2.3977532386779785
+    },
+    "7": {
+      "top3_var_jump_batches": [
+        40,
+        108,
+        116
+      ],
+      "top3_max_abs_z_batches": [
+        40,
+        64,
+        116
+      ],
+      "overlap": 2,
+      "max_abs_z_in_unit": 1390.3966064453125,
+      "max_var_jump": 2.4147492349147797
+    },
+    "8": {
+      "top3_var_jump_batches": [
+        63,
+        156,
+        243
+      ],
+      "top3_max_abs_z_batches": [
+        63,
+        192,
+        243
+      ],
+      "overlap": 2,
+      "max_abs_z_in_unit": 1390.3966064453125,
+      "max_var_jump": 2.451709508895874
+    }
+  },
+  "collapse_units_baseline_shallow_fisher_s307": [
+    4,
+    8
+  ],
+  "extreme_value_diagnostic": {
+    "n_features": 41,
+    "features_with_max_abs_z_over_100": 9,
+    "fraction_rows_any_abs_z_over_10": 0.010671152733266354,
+    "fraction_rows_any_abs_z_over_100": 5.8521240134723485e-05,
+    "subset_s307_max_abs_z": 1390.3966064453125,
+    "subset_s307_rows_abs_z_over_100": 20,
+    "subset_s401_max_abs_z": 1390.3966064453125,
+    "subset_s401_rows_abs_z_over_100": 17,
+    "subset_s101_max_abs_z": 360.4218444824219,
+    "subset_s101_rows_abs_z_over_100": 16
+  },
+  "prereg": {
+    "arm": "T_trigger_isolation_ciciot2023",
+    "cells": "the four pruned cells that collapse in NB27/28/30 (shallow fisher s307, shallow saber_v2 s307, deep fisher s401, deep saber_v2 s401) and the two unpruned cells that collapse in NB31 (dense shallow s307, dense deep s401); recovery: 8 (shallow) / 6 (deep) units on the seeded 10% subset, Adam 1e-3, batch 1024, inverse-sqrt class weighting",
+    "collapse_definition": "as in NB30/31: eval-mode benign escalation > 0.10 with batch-statistics escalation <= 0.10",
+    "conditions": {
+      "T1_input_clipping": "features clipped to their 0.1 / 99.9 training percentiles before the model, the preprocessing of the corpus that never collapsed; applied at recovery and evaluation; all six cells",
+      "T2_no_running_statistics": "dense models rebuilt with GroupNorm(1, C) in place of BatchNorm, trained under the NB29 recipe, recovered under the identical seeded subsets and orders (shallow s307, deep s401); with no running statistics there is no dual mode, so the signal is an eval-mode benign escalation spike > 0.10 at any epoch",
+      "T3_subset_vs_order": "shallow fisher: (a) subset fixed at seed 307, batch order varied over three seeds; (b) batch-order seed fixed at 307, subset varied over three seeds",
+      "T4_unweighted_loss": "plain cross-entropy on the four pruned cells",
+      "T5_per_batch_trace": "baseline shallow fisher s307: per batch, the batch's maximum |z| and the maximum BatchNorm running variance after the step; eval-mode benign escalation every 25 batches"
+    },
+    "claims": {
+      "T1": "input clipping removes every normalisation collapse in all six cells",
+      "T2": "GroupNorm dense models show no eval-mode benign escalation spike > 0.10 at any epoch for seeds 307 and 401",
+      "T3": "collapses track the subset: they occur in at least two of three order variants with the subset fixed and in at most one of three subset variants with the order fixed; the reverse pattern is reported as tracking the order; neither is reported as such",
+      "T4": "removing class weighting does not remove the collapse in the four pruned cells (at least one collapse remains)",
+      "T5": "descriptive: the three largest single-batch jumps in maximum running variance coincide with the three batches of highest maximum |z| in the same unit"
+    },
+    "reporting_rule": "each claim reported as held or not held",
+    "no_test_access": true,
+    "no_new_selection": true
+  }
+}
