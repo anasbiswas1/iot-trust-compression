@@ -1,0 +1,173 @@
+{
+  "arm": "B_second_corpus_scores_and_structures",
+  "B6_vc_at_least_fisher_on_two_deep_harms": false,
+  "deep_harms_where_vc_ge_fisher": 1,
+  "shallow_harms_where_vc_ge_fisher": 4,
+  "significant_differences_95": [
+    {
+      "architecture": "shallow",
+      "harm": "harm_awbir",
+      "diff": 0.0760879518362078,
+      "ci_lo": 0.0233776146090504,
+      "ci_hi": 0.1312107659249149
+    }
+  ],
+  "validity_spearman": {
+    "shallow": {
+      "harm_awbir": {
+        "random": 0.1052,
+        "magnitude": -0.5288,
+        "taylor": 0.3909,
+        "fisher": 0.6402,
+        "saber_v2": 0.7163
+      },
+      "harm_hsr_balanced_soc": {
+        "random": 0.1212,
+        "magnitude": -0.4358,
+        "taylor": 0.282,
+        "fisher": 0.4738,
+        "saber_v2": 0.5089
+      },
+      "harm_fine_macro_f1": {
+        "random": 0.1158,
+        "magnitude": -0.4371,
+        "taylor": 0.3109,
+        "fisher": 0.5124,
+        "saber_v2": 0.5498
+      },
+      "harm_family_macro_f1": {
+        "random": 0.102,
+        "magnitude": -0.451,
+        "taylor": 0.2232,
+        "fisher": 0.4342,
+        "saber_v2": 0.4866
+      }
+    },
+    "deep": {
+      "harm_awbir": {
+        "random": 0.0257,
+        "magnitude": -0.3296,
+        "taylor": 0.777,
+        "fisher": 0.7526,
+        "saber_v2": 0.7775
+      },
+      "harm_hsr_balanced_soc": {
+        "random": 0.0368,
+        "magnitude": -0.3074,
+        "taylor": 0.5138,
+        "fisher": 0.5115,
+        "saber_v2": 0.5102
+      },
+      "harm_fine_macro_f1": {
+        "random": 0.0289,
+        "magnitude": -0.2825,
+        "taylor": 0.5481,
+        "fisher": 0.5303,
+        "saber_v2": 0.5238
+      },
+      "harm_family_macro_f1": {
+        "random": 0.0427,
+        "magnitude": -0.2917,
+        "taylor": 0.5122,
+        "fisher": 0.5064,
+        "saber_v2": 0.5051
+      }
+    }
+  },
+  "calibration_mean_abs_error_pp": 0.1806678424561342,
+  "calibration_max_abs_error_pp": 0.5365481579098053,
+  "all_within_tolerance": true,
+  "raw_students": [
+    {
+      "architecture": "shallow",
+      "method": "random",
+      "realised_flops": 0.4001,
+      "raw_awbir": 0.4202,
+      "raw_family_macro_f1": 0.3015,
+      "raw_benign_to_attack_rate": 0.815
+    },
+    {
+      "architecture": "shallow",
+      "method": "magnitude",
+      "realised_flops": 0.4054,
+      "raw_awbir": 0.4819,
+      "raw_family_macro_f1": 0.3393,
+      "raw_benign_to_attack_rate": 0.996
+    },
+    {
+      "architecture": "shallow",
+      "method": "taylor",
+      "realised_flops": 0.4014,
+      "raw_awbir": 0.3346,
+      "raw_family_macro_f1": 0.597,
+      "raw_benign_to_attack_rate": 0.0945
+    },
+    {
+      "architecture": "shallow",
+      "method": "fisher",
+      "realised_flops": 0.4048,
+      "raw_awbir": 0.2381,
+      "raw_family_macro_f1": 0.6981,
+      "raw_benign_to_attack_rate": 0.1322
+    },
+    {
+      "architecture": "shallow",
+      "method": "saber_v2",
+      "realised_flops": 0.4031,
+      "raw_awbir": 0.1778,
+      "raw_family_macro_f1": 0.6487,
+      "raw_benign_to_attack_rate": 0.2095
+    },
+    {
+      "architecture": "deep",
+      "method": "random",
+      "realised_flops": 0.4006,
+      "raw_awbir": 0.2976,
+      "raw_family_macro_f1": 0.5283,
+      "raw_benign_to_attack_rate": 0.2592
+    },
+    {
+      "architecture": "deep",
+      "method": "magnitude",
+      "realised_flops": 0.4006,
+      "raw_awbir": 0.476,
+      "raw_family_macro_f1": 0.0872,
+      "raw_benign_to_attack_rate": 1.0
+    },
+    {
+      "architecture": "deep",
+      "method": "taylor",
+      "realised_flops": 0.4008,
+      "raw_awbir": 0.1172,
+      "raw_family_macro_f1": 0.7889,
+      "raw_benign_to_attack_rate": 0.0402
+    },
+    {
+      "architecture": "deep",
+      "method": "fisher",
+      "realised_flops": 0.4012,
+      "raw_awbir": 0.1189,
+      "raw_family_macro_f1": 0.7892,
+      "raw_benign_to_attack_rate": 0.0395
+    },
+    {
+      "architecture": "deep",
+      "method": "saber_v2",
+      "realised_flops": 0.4001,
+      "raw_awbir": 0.135,
+      "raw_family_macro_f1": 0.7713,
+      "raw_benign_to_attack_rate": 0.038
+    }
+  ],
+  "prereg": {
+    "arm": "B_second_corpus_scores_and_structures",
+    "out_of_sample_design": "every saliency score is computed on TRAINING data (a natural-prior slice of 40 batches, seed 7, for Taylor and Fisher; a class-balanced training subset of up to 512 rows per class, seed 7, for semantic boundary leverage); every single-channel harm is measured on the VALIDATION evaluation subsample. The two never overlap, so score-to-harm validity is out-of-sample, unlike the CICIoT2023 benchmark",
+    "scores": "random (seed 1), magnitude, Taylor, Fisher, V-C = within-layer percentile rank of raw semantic boundary leverage times layer mean Fisher; V-C definition frozen from Section 5",
+    "harms": "single-group functional zeroing via temporarily_zero_group; harm_awbir (teacher-referenced, IoMT graph), harm_hsr_balanced_soc, harm_fine_macro_f1, harm_family_macro_f1, harm_benign_false_alert, all larger-is-worse relative to the teacher on the same rows",
+    "claims": {
+      "B6": "on the deep architecture, V-C's Spearman correlation with harm is at least Fisher's on at least two of the four semantic harms (awbir, hsr, fine, family); reported for both architectures with a layer-stratified bootstrap of the difference (2,000 resamples)"
+    },
+    "structures": "realised-FLOP calibration to 40% for all five methods on both architectures, tolerance 1.5 points, minimum 8 channels per layer; frozen structures and raw-student audits saved for notebooks 34 and 35",
+    "no_test_access": true
+  }
+}
