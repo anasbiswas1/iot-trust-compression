@@ -1,0 +1,19 @@
+{
+  "arm": "S_audit_followups",
+  "S_twenty_seeds": {
+    "design": "5 methods x 20 recovery seeds on the frozen 40% structures, minimal recovery (1 unit on a seeded 10% subset), both architectures; every final model recalibrated on the fixed slice of NB31 (seed 2026); analyses under both normalisations with recalibrated primary; the 5 original seeds are included so the 5-seed result is a subset",
+    "S1": "with 20 seeds, the paired-contrast minimum detectable difference (half-width of the 95% interval) on recalibrated AWBIR is at most 0.03 in both cells",
+    "S2": "descriptive: which method effects are detectable at 20 seeds (permutation, and paired contrasts with Holm correction over the 10 pairs per cell), their sizes with intervals, and whether the shallow ordering of Section 7.12 (V-C lowest, magnitude highest) holds",
+    "S2_ground_truth": "the same contrasts on ground-truth HSR (balanced profile) and benign escalation, so the effect is stated in a non-teacher-referenced endpoint"
+  },
+  "S_frozen_random40": {
+    "design": "the frozen shallow random 40% student (17b registry, hash-verified) evaluated on validation at the class-balanced subsample and at the natural prior (all validation rows), in eval mode, under batch statistics, and after recalibration; the same for its 14 frozen siblings and the teacher; for benign rows, the predicted-class distribution of escalations and the feature extremity (max |z|) of escalated versus retained benign rows",
+    "S3": "reading rule fixed in advance: if its natural-prior validation benign escalation is at least 0.05, the test-time 11.8% is a prior/subsample effect visible on validation; if it stays below 0.05, it is a validation-versus-test discrepancy the paper reports as such without touching test"
+  },
+  "S_natural_prior": {
+    "design": "all 25 frozen students and both teachers evaluated on the full validation partition at its natural class prior, same code path as the balanced subsample",
+    "S4": "the validation-to-test difference in fine macro-F1 for each teacher (0.51 to 0.40 deep, 0.56 to 0.53 shallow) is a prior effect if natural-prior validation is within 0.03 of the test value; otherwise it is reported as unexplained"
+  },
+  "no_test_access": true,
+  "no_new_selection": true
+}
