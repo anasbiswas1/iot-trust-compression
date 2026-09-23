@@ -1,0 +1,52 @@
+{
+  "arm": "H_hardware_proxy",
+  "cpu": "Intel(R) Xeon(R) CPU @ 2.20GHz",
+  "torch": "2.11.0+cpu",
+  "threads": 1,
+  "flops_ratio_range": [
+    0.5946345184209019,
+    0.6028622136805774
+  ],
+  "latency_b1_ratio_range": [
+    0.792696422779067,
+    1.0002510631990964
+  ],
+  "latency_b256_ratio_range": [
+    0.4466152091545087,
+    0.7381877400140708
+  ],
+  "size_ratio_range": [
+    0.5368701442841287,
+    0.7014926176302425
+  ],
+  "activation_ratio_range_b256": [
+    0.6315150400147181,
+    0.865505929851123
+  ],
+  "dense_latency_ms_b1": {
+    "ciciot2023/shallow": 0.273,
+    "ciciot2023/deep": 0.647,
+    "iomt2024/shallow": 0.266,
+    "iomt2024/deep": 0.646
+  },
+  "dense_size_kb": {
+    "ciciot2023/shallow": 122.4,
+    "ciciot2023/deep": 725.9,
+    "iomt2024/shallow": 114.8,
+    "iomt2024/deep": 710.8
+  },
+  "note": "single-thread x86 proxy; per-flow latency at batch 1 is dominated by framework overhead at this model size, which is why the b256 ratio tracks FLOPs more closely",
+  "prereg": {
+    "arm": "H_hardware_proxy",
+    "device": "single CPU thread of the Colab runtime (x86), reported as a PROXY for constrained hardware; no edge board was available",
+    "models": "both corpora, both architectures: the dense teacher and the five frozen 40% students (CICIoT2023: 17b/20b registries; IoMT: NB33 registry), rebuilt from the frozen structures with random weights, since latency and memory depend on the graph, not the values",
+    "measurements": {
+      "latency": "median and 99th percentile of per-batch wall time over 200 timed forward passes after 20 warm-up passes, for batch sizes 1 and 256, eval mode, no grad",
+      "memory": "parameter and buffer bytes, plus the summed bytes of every module output in one batch-256 forward pass captured by forward hooks (an upper bound on live activations)",
+      "size": "serialised state_dict size in KB",
+      "flops": "realised multiply-accumulates per flow from the surgery profiler, the paper's existing cost axis"
+    },
+    "reporting": "descriptive; latency reduction ratios placed beside realised-FLOP reduction ratios for the same models; no pass/fail claim",
+    "no_test_access": true
+  }
+}
