@@ -1,0 +1,20 @@
+{
+  "arm": "B_second_corpus_bridge",
+  "corpus": "CIC-IoMT-2024 WiFi/MQTT, loaded through the IoMT compression project's own loader; official CIC train side only, exact-duplicate rows removed, 20% stratified validation carve-out (seed 42); official CIC test parquet is never opened in any SABER arm",
+  "preprocessing": "train-fitted 0.1/99.9 percentile clipping then train-fitted standardisation, identical to the IoMT compression project",
+  "hierarchy": "fine = attack_type (Benign plus attack types), family = the IoMT project's six families",
+  "cost_profiles": "the three CICIoT2023 profiles, unchanged; they are stances an operator might hold and are the authors' construction, aggregated by CVaR exactly as before",
+  "graph": "built from the shallow teacher's validation logits with the frozen CICIoT2023 risk_graph configuration (top_k 3, confusion 0.5 / margin 0.5, min support 20, CVaR q 0.75)",
+  "teachers": {
+    "architectures": "CNN1D two-block (64/128) and DeepCNN1D four-block, the CICIoT2023 topologies",
+    "recipe": "Adam 1e-3, batch 1024, inverse-power class weighting with exponent chosen from {0.25, 0.35, 0.50}, 4 fixed epochs, seed 0",
+    "acceptance": {
+      "benign_to_attack_rate": "<= 0.10 on validation",
+      "binary_attack_recall": ">= 0.90 on validation",
+      "fine_macro_f1": ">= 0.50 on validation"
+    },
+    "rule": "highest fine macro-F1 among candidates meeting all three; if none meets them, the lowest-benign-escalation candidate with attack recall >= 0.90 is used and teacher_meets_prereg is recorded False"
+  },
+  "evaluation_subsample": "validation rows capped at 4,000 per class, shuffled with seed 12345",
+  "no_test_access": true
+}
