@@ -59,4 +59,4 @@ env/
 results/saber/**/*.npz
 results/saber/**/*.pt
 results/saber/**/*.pth
-results/saber/36_consistent_normalisation/checkpoints/
+results/saber/31_consistent_normalisation/checkpoints/

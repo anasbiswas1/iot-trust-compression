@@ -1,0 +1,15 @@
+{
+  "registry_row_found": true,
+  "checkpoint": "results/saber/17b_calibrated_checkpoint_freeze/random_r40cal_checkpoint.pt",
+  "checkpoint_exists": true,
+  "file_sha256": "eb043306a8d2b2ee546303e270be3c09b90edd363cb25fcf77508de803c0482c",
+  "registry_sha256": "eb043306a8d2b2ee546303e270be3c09b90edd363cb25fcf77508de803c0482c",
+  "hash_matches_registry": true,
+  "validation_b2a_eval": 0.023,
+  "validation_b2a_batchstats": 0.00025,
+  "validation_b2a_recalibrated": 0.0005,
+  "validation_family_f1_eval": 0.5880388408857505,
+  "validation_family_f1_batchstats": 0.6030279053805043,
+  "validation_family_f1_recalibrated": 0.6014414475871159,
+  "reading": "not a normalisation collapse on validation; test-time 11.8% unexplained by this check"
+}

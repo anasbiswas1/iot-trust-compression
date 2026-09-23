@@ -1,0 +1,24 @@
+{
+  "arm": "N_consistent_normalisation",
+  "recalibration": "reset BatchNorm running statistics; forward 50 batches of 1,024 rows from ONE fixed training-data calibration slice (seed 2026, identical for every model) in train mode with cumulative averaging and no gradient; evaluate in eval mode",
+  "factorial": "5 methods x 5 seeds, frozen 40% structures from the 17b/20b registries; shallow regimes minimal_ce (1 unit on a seeded 10% subset) and full_ce (6 fixed full epochs); deep regimes minimal_ce and standard_ce (2 full epochs); Adam 1e-3, batch 1024, inverse-sqrt class weighting; final checkpoint of every cell saved",
+  "claims": {
+    "N1": "after uniform recalibration, a recovery-seed effect on AWBIR remains detectable by permutation (p < 0.05) in at least two of the four architecture-regime cells",
+    "N2": "after uniform recalibration, no selection-method effect on AWBIR becomes detectable (p < 0.05) in a cell where it was not detectable as-trained",
+    "N3": "the dense, unpruned model recovered under the identical subsets, orders, weighting and schedule produces no normalisation collapse (eval-mode benign escalation > 0.10 with batch-statistics escalation <= 0.10) in any of five seeds on either architecture",
+    "N4": "recalibration alone, with no gradient step, brings no frozen raw student below 10% benign escalation; if it does for some, Section 7.2's claim is narrowed to 'without recalibration'"
+  },
+  "also_recorded": [
+    "dual-mode evaluation on the validation subsample of the frozen shallow random 40% student that escalates 11.8% of benign test traffic (the test partition is not touched)",
+    "NB30 remedy re-run on its saved snapshots with the full outcome set: attack-miss rate, per-family recall, ground-truth HSR under all three profiles, ECE, before and after"
+  ],
+  "seeds": [
+    101,
+    211,
+    307,
+    401,
+    503
+  ],
+  "no_test_access": true,
+  "no_new_selection": true
+}
