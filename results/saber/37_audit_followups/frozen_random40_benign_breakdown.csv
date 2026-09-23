@@ -1,0 +1,3 @@
+prior,benign_rows,escalated,rate,median_max_abs_z_escalated,median_max_abs_z_retained,share_escalated_with_abs_z_over_10,share_retained_with_abs_z_over_10,top_destinations
+balanced,4000,92,0.023,3.7773818969726562,3.2157950401306152,0.10869565217391304,0.03428863868986694,"{'DoS-TCP_Flood': 53, 'DoS-SYN_Flood': 12, 'DoS-UDP_Flood': 9, 'DDoS-ICMP_Flood': 4, 'DDoS-UDP_Fragmentation': 4, 'DDoS-RSTFINFlood': 2}"
+natural,29940,707,0.023613894455577822,3.7773818969726562,3.153787612915039,0.10042432814710042,0.03454999486881264,"{'DoS-TCP_Flood': 407, 'DoS-SYN_Flood': 69, 'DoS-UDP_Flood': 64, 'DDoS-UDP_Fragmentation': 47, 'DDoS-UDP_Flood': 37, 'DDoS-ICMP_Flood': 21}"

@@ -1,0 +1,191 @@
+{
+  "arm": "S_audit_followups",
+  "S1_mde_le_0.03_both_cells": true,
+  "S2": {
+    "shallow": {
+      "recal_awbir": {
+        "p_method": 0.0,
+        "p_seed": 0.0,
+        "means": {
+          "random": 0.1139446532795811,
+          "magnitude": 0.11666044745063016,
+          "taylor": 0.10884110553039916,
+          "fisher": 0.1009811802953469,
+          "saber_v2": 0.10032460056199825
+        },
+        "mde": 0.0035493586768611924,
+        "max_mde": 0.006085225609990836,
+        "n_holm_significant": 8,
+        "max_abs_mean": 0.0163358468886319,
+        "rank_rho": 0.6578947368421051,
+        "rei": 0.9495679254037012
+      },
+      "recal_hsr_balanced": {
+        "p_method": 0.0,
+        "means": {
+          "random": 0.15836562517119843,
+          "magnitude": 0.16667181022990812,
+          "taylor": 0.16183287376052297,
+          "fisher": 0.1569208013001953,
+          "saber_v2": 0.15456912766384828
+        },
+        "n_holm_significant": 7,
+        "max_abs_mean": 0.012102682566059782
+      },
+      "recal_b2a": {
+        "p_method": 0.0015,
+        "means": {
+          "random": 0.0322375,
+          "magnitude": 0.0304,
+          "taylor": 0.021962500000000003,
+          "fisher": 0.025912499999999998,
+          "saber_v2": 0.025224999999999997
+        },
+        "n_holm_significant": 2,
+        "max_abs_mean": 0.010275
+      },
+      "five_seed_subset": {
+        "p_method": 0.0002,
+        "mde": 0.009515525896308975
+      },
+      "collapses": 0
+    },
+    "deep": {
+      "recal_awbir": {
+        "p_method": 0.0054,
+        "p_seed": 0.0,
+        "means": {
+          "random": 0.08115762373249405,
+          "magnitude": 0.061409723821696925,
+          "taylor": 0.059500625223742956,
+          "fisher": 0.05674632794956115,
+          "saber_v2": 0.06343148791058231
+        },
+        "mde": 0.014537673165207144,
+        "max_mde": 0.01880439259390082,
+        "n_holm_significant": 3,
+        "max_abs_mean": 0.024411295782932885,
+        "rank_rho": 0.24684210526315786,
+        "rei": 0.810081097841161
+      },
+      "recal_hsr_balanced": {
+        "p_method": 0.0,
+        "means": {
+          "random": 0.18736856521977316,
+          "magnitude": 0.16492175088110148,
+          "taylor": 0.17339356476324388,
+          "fisher": 0.17502629608663095,
+          "saber_v2": 0.18302067164587935
+        },
+        "n_holm_significant": 9,
+        "max_abs_mean": 0.022446814338671676
+      },
+      "recal_b2a": {
+        "p_method": 0.0,
+        "means": {
+          "random": 0.00026250000000000004,
+          "magnitude": 0.0017000000000000001,
+          "taylor": 0.0001,
+          "fisher": 0.0002,
+          "saber_v2": 0.000125
+        },
+        "n_holm_significant": 4,
+        "max_abs_mean": 0.0016000000000000003
+      },
+      "five_seed_subset": {
+        "p_method": 0.9067,
+        "mde": 0.044781214429507485
+      },
+      "collapses": 0
+    }
+  },
+  "S3_reading": "validation_vs_test_discrepancy",
+  "S3_random40": {
+    "balanced_val_b2a_eval": 0.023,
+    "natural_val_b2a_eval": 0.0236138944555778,
+    "natural_val_b2a_batch": 0.0006680026720106,
+    "natural_val_b2a_recal": 0.0015698062792251,
+    "test_b2a_locked": 0.118,
+    "benign_breakdown": [
+      {
+        "prior": "balanced",
+        "benign_rows": 4000,
+        "escalated": 92,
+        "rate": 0.023,
+        "median_max_abs_z_escalated": 3.777381896972656,
+        "median_max_abs_z_retained": 3.2157950401306152,
+        "share_escalated_with_abs_z_over_10": 0.108695652173913,
+        "share_retained_with_abs_z_over_10": 0.0342886386898669,
+        "top_destinations": "{'DoS-TCP_Flood': 53, 'DoS-SYN_Flood': 12, 'DoS-UDP_Flood': 9, 'DDoS-ICMP_Flood': 4, 'DDoS-UDP_Fragmentation': 4, 'DDoS-RSTFINFlood': 2}"
+      },
+      {
+        "prior": "natural",
+        "benign_rows": 29940,
+        "escalated": 707,
+        "rate": 0.0236138944555778,
+        "median_max_abs_z_escalated": 3.777381896972656,
+        "median_max_abs_z_retained": 3.153787612915039,
+        "share_escalated_with_abs_z_over_10": 0.1004243281471004,
+        "share_retained_with_abs_z_over_10": 0.0345499948688126,
+        "top_destinations": "{'DoS-TCP_Flood': 407, 'DoS-SYN_Flood': 69, 'DoS-UDP_Flood': 64, 'DDoS-UDP_Fragmentation': 47, 'DDoS-UDP_Flood': 37, 'DDoS-ICMP_Flood': 21}"
+      }
+    ]
+  },
+  "S4_teacher_val_natural_within_0.03_of_test": {
+    "shallow": true,
+    "deep": false
+  },
+  "natural_vs_balanced_validation_students": [
+    {
+      "architecture": "deep",
+      "prior": "balanced",
+      "fine_f1": 0.4998,
+      "b2a": 0.0004,
+      "awbir": 0.139,
+      "ece": 0.2491
+    },
+    {
+      "architecture": "deep",
+      "prior": "natural",
+      "fine_f1": 0.5054,
+      "b2a": 0.0003,
+      "awbir": 0.1408,
+      "ece": 0.2384
+    },
+    {
+      "architecture": "shallow",
+      "prior": "balanced",
+      "fine_f1": 0.5385,
+      "b2a": 0.0026,
+      "awbir": 0.1128,
+      "ece": 0.1754
+    },
+    {
+      "architecture": "shallow",
+      "prior": "natural",
+      "fine_f1": 0.5446,
+      "b2a": 0.0023,
+      "awbir": 0.1125,
+      "ece": 0.1738
+    }
+  ],
+  "prereg": {
+    "arm": "S_audit_followups",
+    "S_twenty_seeds": {
+      "design": "5 methods x 20 recovery seeds on the frozen 40% structures, minimal recovery (1 unit on a seeded 10% subset), both architectures; every final model recalibrated on the fixed slice of NB31 (seed 2026); analyses under both normalisations with recalibrated primary; the 5 original seeds are included so the 5-seed result is a subset",
+      "S1": "with 20 seeds, the paired-contrast minimum detectable difference (half-width of the 95% interval) on recalibrated AWBIR is at most 0.03 in both cells",
+      "S2": "descriptive: which method effects are detectable at 20 seeds (permutation, and paired contrasts with Holm correction over the 10 pairs per cell), their sizes with intervals, and whether the shallow ordering of Section 7.12 (V-C lowest, magnitude highest) holds",
+      "S2_ground_truth": "the same contrasts on ground-truth HSR (balanced profile) and benign escalation, so the effect is stated in a non-teacher-referenced endpoint"
+    },
+    "S_frozen_random40": {
+      "design": "the frozen shallow random 40% student (17b registry, hash-verified) evaluated on validation at the class-balanced subsample and at the natural prior (all validation rows), in eval mode, under batch statistics, and after recalibration; the same for its 14 frozen siblings and the teacher; for benign rows, the predicted-class distribution of escalations and the feature extremity (max |z|) of escalated versus retained benign rows",
+      "S3": "reading rule fixed in advance: if its natural-prior validation benign escalation is at least 0.05, the test-time 11.8% is a prior/subsample effect visible on validation; if it stays below 0.05, it is a validation-versus-test discrepancy the paper reports as such without touching test"
+    },
+    "S_natural_prior": {
+      "design": "all 25 frozen students and both teachers evaluated on the full validation partition at its natural class prior, same code path as the balanced subsample",
+      "S4": "the validation-to-test difference in fine macro-F1 for each teacher (0.51 to 0.40 deep, 0.56 to 0.53 shallow) is a prior effect if natural-prior validation is within 0.03 of the test value; otherwise it is reported as unexplained"
+    },
+    "no_test_access": true,
+    "no_new_selection": true
+  }
+}
