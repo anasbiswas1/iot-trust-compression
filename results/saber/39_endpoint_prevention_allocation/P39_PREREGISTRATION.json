@@ -1,0 +1,39 @@
+{
+  "arm": "A_dev_graph__B_prevention_endpoints__C_allocation",
+  "A_dev_graph": {
+    "design": "CIC-IoMT-2024: a development slice of 10% of the TRAINING rows (stratified by class, seed 39) is set aside; the vulnerability graph is rebuilt from the shallow teacher's logits on that slice with the released configuration (top-3, T=1, weights 0.5/0.5, support 20, CVaR 0.75); semantic boundary leverage for both architectures is recomputed with the development graph on a class-balanced sample of the REMAINING training rows (512 per class, seed 7); V-C_dev = within-layer percentile rank of that leverage times the layer-mean Fisher of notebook 33 (training-based, unchanged); correlated with notebook 33's single-channel harms on the validation subsample",
+    "A1": "V-C_dev's Spearman correlation with single-channel HSR harm is within 0.05 of the validation-graph V-C's on each architecture (0.509 shallow, 0.510 deep); if so, V-C's out-of-sample validity on the ground-truth endpoint does not depend on the validation-built graph and the 'out of sample' claim is restored for V-C on the graph-free harms"
+  },
+  "B_prevention_endpoints": {
+    "design": "CICIoT2023, the six collapsing cells of notebook 35 (shallow fisher/V-C/dense at seed 307; deep fisher/V-C/dense at seed 401), recovered exactly as there (10% seeded subset, 8 or 6 units, Adam 1e-3, class-weighted CE) under three conditions, unclipped baseline, inputs clipped at the 0.1/99.9 training percentiles (400k-row sample, seed 2026), and GroupNorm dense models for the two dense cells; the FULL deployment audit (benign escalation, attack-miss rate, family and fine macro-F1, ground-truth HSR, AWBIR) recorded at every unit, plus the recalibrated audit of every final checkpoint",
+    "B1": "at the final unit, the clipped student's ground-truth HSR is within 0.02 of the unclipped-then-recalibrated student's HSR in at least five of six cells; if not, clipping has a measurable deployment cost and the paper reports it",
+    "B2": "GroupNorm dense models keep attack-miss rate below 0.10 and family macro-F1 above 0.50 at every unit; if not, the 'no escalation spike' reading is qualified by what they do instead"
+  },
+  "C_allocation": {
+    "design": "CICIoT2023 deep, the five frozen 20b structures; for each, an ALLOCATION-MATCHED RANDOM structure keeps the same number of channels in every layer but chooses which channels to keep uniformly at random (seed 39 + method index); 5 allocations x 20 seeds under minimal recovery, every model recalibrated on the notebook 31 slice; compared with notebook 37's twenty-seed means for the same allocations' methods",
+    "C1": "for at least four of the five allocations, the allocation-matched random mean recalibrated HSR is within 0.006 (twice the twenty-seed half-width) of the method's own mean; if so, the deployed ground-truth differences among methods at depth are attributable to layer-width allocation rather than channel identity, and the paper says so; if not, channel identity contributes and the paper says that"
+  },
+  "seeds": [
+    101,
+    211,
+    307,
+    401,
+    503,
+    613,
+    719,
+    823,
+    907,
+    1013,
+    1109,
+    1201,
+    1303,
+    1409,
+    1511,
+    1607,
+    1709,
+    1801,
+    1907,
+    2003
+  ],
+  "no_test_access": true
+}
