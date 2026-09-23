@@ -1,0 +1,233 @@
+{
+  "ciciot_deep_flops_matched": {
+    "hsr_balanced": {
+      "means": {
+        "random": 0.18736856521977316,
+        "magnitude": 0.17660588740161787,
+        "taylor": 0.17358211135662238,
+        "fisher": 0.17595177224667186,
+        "saber_v2": 0.18280080714377017
+      },
+      "order_low_to_high": [
+        "taylor",
+        "fisher",
+        "magnitude",
+        "saber_v2",
+        "random"
+      ],
+      "p_method": 0.0,
+      "p_seed": 0.0016,
+      "n_holm_significant": 8,
+      "max_abs_mean": 0.013786453863150782,
+      "mde": 0.0029777540169301855,
+      "rank_rho": 0.661578947368421,
+      "rei": 0.9142369337310685
+    },
+    "awbir": {
+      "means": {
+        "random": 0.08115762373249405,
+        "magnitude": 0.06390205072753628,
+        "taylor": 0.0573060611260894,
+        "fisher": 0.0563313663660156,
+        "saber_v2": 0.06719517280809026
+      },
+      "order_low_to_high": [
+        "fisher",
+        "taylor",
+        "magnitude",
+        "saber_v2",
+        "random"
+      ],
+      "p_method": 0.0057,
+      "p_seed": 0.0001,
+      "n_holm_significant": 1,
+      "max_abs_mean": 0.024826257366478432,
+      "mde": 0.014603563402169891,
+      "rank_rho": 0.20526315789473676,
+      "rei": 0.761330223573987
+    },
+    "b2a": {
+      "means": {
+        "random": 0.00026250000000000004,
+        "magnitude": 0.0019500000000000003,
+        "taylor": 0.00017500000000000003,
+        "fisher": 3.7500000000000003e-05,
+        "saber_v2": 0.00017500000000000003
+      },
+      "order_low_to_high": [
+        "fisher",
+        "taylor",
+        "saber_v2",
+        "random",
+        "magnitude"
+      ],
+      "p_method": 0.0,
+      "p_seed": 0.2798,
+      "n_holm_significant": 4,
+      "max_abs_mean": 0.0019125000000000004,
+      "mde": 0.000250958916915631,
+      "rank_rho": 0.6295265429689438
+    },
+    "parameters_by_method": {
+      "random": 109756,
+      "magnitude": 127559,
+      "taylor": 106237,
+      "fisher": 102395,
+      "saber_v2": 96904
+    }
+  },
+  "ciciot_deep_params_matched": {
+    "hsr_balanced": {
+      "means": {
+        "random": 0.18797136648344623,
+        "magnitude": 0.16954274027136096,
+        "taylor": 0.17337265572213797,
+        "fisher": 0.17622915943828638,
+        "saber_v2": 0.18427904895820013
+      },
+      "order_low_to_high": [
+        "magnitude",
+        "taylor",
+        "fisher",
+        "saber_v2",
+        "random"
+      ],
+      "p_method": 0.0,
+      "p_seed": 0.0,
+      "n_holm_significant": 10,
+      "max_abs_mean": 0.018428626212085224,
+      "mde": 0.0024895194506575546,
+      "rank_rho": 0.7594736842105262,
+      "rei": 0.9004900055148223
+    },
+    "awbir": {
+      "means": {
+        "random": 0.08310335937608437,
+        "magnitude": 0.08269470911265844,
+        "taylor": 0.055269703602433606,
+        "fisher": 0.05683709843674321,
+        "saber_v2": 0.06155239521455821
+      },
+      "order_low_to_high": [
+        "taylor",
+        "fisher",
+        "saber_v2",
+        "magnitude",
+        "random"
+      ],
+      "p_method": 0.0001,
+      "p_seed": 0.0001,
+      "n_holm_significant": 4,
+      "max_abs_mean": 0.027833655773650757,
+      "mde": 0.014793835221715682,
+      "rank_rho": 0.19052631578947365,
+      "rei": 0.8139821684071733
+    },
+    "b2a": {
+      "means": {
+        "random": 0.000275,
+        "magnitude": 0.010287500000000002,
+        "taylor": 0.00011250000000000001,
+        "fisher": 6.25e-05,
+        "saber_v2": 0.00013749999999999998
+      },
+      "order_low_to_high": [
+        "fisher",
+        "taylor",
+        "saber_v2",
+        "random",
+        "magnitude"
+      ],
+      "p_method": 0.0,
+      "p_seed": 0.1486,
+      "n_holm_significant": 4,
+      "max_abs_mean": 0.010225000000000001,
+      "mde": 0.00019086471827458448,
+      "rank_rho": 0.6739890096446453
+    },
+    "parameters_by_method": {
+      "random": 109446,
+      "magnitude": 109145,
+      "taylor": 109258,
+      "fisher": 109438,
+      "saber_v2": 109595
+    }
+  },
+  "iomt_deep_flops_matched": {
+    "hsr_balanced": {
+      "means": {
+        "random": 0.13919864886601252,
+        "magnitude": 0.14474071095383617,
+        "taylor": 0.13406482226154087,
+        "fisher": 0.1313651278751809,
+        "saber_v2": 0.1364942898504101
+      },
+      "order_low_to_high": [
+        "fisher",
+        "taylor",
+        "saber_v2",
+        "random",
+        "magnitude"
+      ],
+      "p_method": 0.0,
+      "p_seed": 0.0258,
+      "n_holm_significant": 5,
+      "max_abs_mean": 0.013375583078655296,
+      "mde": 0.004185415144415514,
+      "rank_rho": 0.3942105263157895,
+      "rei": 0.950227153590774
+    },
+    "awbir": {
+      "means": {
+        "random": 0.12436682055592889,
+        "magnitude": 0.14373614166734744,
+        "taylor": 0.10257692384347059,
+        "fisher": 0.0948265679229062,
+        "saber_v2": 0.11089699988349569
+      },
+      "order_low_to_high": [
+        "fisher",
+        "taylor",
+        "saber_v2",
+        "random",
+        "magnitude"
+      ],
+      "p_method": 0.0,
+      "p_seed": 0.0005,
+      "n_holm_significant": 4,
+      "max_abs_mean": 0.048909573744441215,
+      "mde": 0.01715089677682713,
+      "rank_rho": 0.3078947368421052,
+      "rei": 0.8038861695206551
+    },
+    "b2a": {
+      "means": {
+        "random": 0.050075,
+        "magnitude": 0.057637499999999994,
+        "taylor": 0.05134999999999999,
+        "fisher": 0.052375000000000005,
+        "saber_v2": 0.0506375
+      },
+      "order_low_to_high": [
+        "random",
+        "saber_v2",
+        "taylor",
+        "fisher",
+        "magnitude"
+      ],
+      "p_method": 0.0,
+      "p_seed": 0.0,
+      "n_holm_significant": 4,
+      "max_abs_mean": 0.0075625000000000015,
+      "mde": 0.002381096206136613,
+      "rank_rho": 0.2930200993231711
+    },
+    "parameters_by_method": {
+      "random": 106681,
+      "magnitude": 123608,
+      "taylor": 99680,
+      "fisher": 100583,
+      "saber_v2": 97117
+    }
+  }
+}

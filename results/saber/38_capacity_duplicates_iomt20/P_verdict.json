@@ -1,0 +1,172 @@
+{
+  "arm": "P_capacity_duplicates_iomt20",
+  "D1_gap_explained_by_train_val_duplication": false,
+  "D_deep_teacher": {
+    "val_all": 0.5098388141181842,
+    "val_not_in_train": 0.5098388141181842,
+    "test": 0.4027086306583231
+  },
+  "D_fraction_val_in_train": 0.0,
+  "D_student_gap_mean": {
+    "all_minus_test": 0.09705096234453109,
+    "dedup_minus_test": 0.09705096234453109
+  },
+  "P0_fresh_flop_matched_reproduces_NB37_ordering": false,
+  "P1_parameter_matched_preserves_ordering": true,
+  "I1_iomt_deep_reading": "channel_level_ordering",
+  "cells": {
+    "ciciot_deep_flops_matched": {
+      "hsr": {
+        "order_low_to_high": [
+          "taylor",
+          "fisher",
+          "magnitude",
+          "saber_v2",
+          "random"
+        ],
+        "means": {
+          "random": 0.18736856521977316,
+          "magnitude": 0.17660588740161787,
+          "taylor": 0.17358211135662238,
+          "fisher": 0.17595177224667186,
+          "saber_v2": 0.18280080714377017
+        },
+        "p_method": 0.0,
+        "n_holm_significant": 8,
+        "max_abs_mean": 0.013786453863150782,
+        "mde": 0.0029777540169301855,
+        "rank_rho": 0.661578947368421
+      },
+      "awbir_order": [
+        "fisher",
+        "taylor",
+        "magnitude",
+        "saber_v2",
+        "random"
+      ],
+      "awbir_holm": 1,
+      "parameters": {
+        "random": 109756,
+        "magnitude": 127559,
+        "taylor": 106237,
+        "fisher": 102395,
+        "saber_v2": 96904
+      }
+    },
+    "ciciot_deep_params_matched": {
+      "hsr": {
+        "order_low_to_high": [
+          "magnitude",
+          "taylor",
+          "fisher",
+          "saber_v2",
+          "random"
+        ],
+        "means": {
+          "random": 0.18797136648344623,
+          "magnitude": 0.16954274027136096,
+          "taylor": 0.17337265572213797,
+          "fisher": 0.17622915943828638,
+          "saber_v2": 0.18427904895820013
+        },
+        "p_method": 0.0,
+        "n_holm_significant": 10,
+        "max_abs_mean": 0.018428626212085224,
+        "mde": 0.0024895194506575546,
+        "rank_rho": 0.7594736842105262
+      },
+      "awbir_order": [
+        "taylor",
+        "fisher",
+        "saber_v2",
+        "magnitude",
+        "random"
+      ],
+      "awbir_holm": 4,
+      "parameters": {
+        "random": 109446,
+        "magnitude": 109145,
+        "taylor": 109258,
+        "fisher": 109438,
+        "saber_v2": 109595
+      }
+    },
+    "iomt_deep_flops_matched": {
+      "hsr": {
+        "order_low_to_high": [
+          "fisher",
+          "taylor",
+          "saber_v2",
+          "random",
+          "magnitude"
+        ],
+        "means": {
+          "random": 0.13919864886601252,
+          "magnitude": 0.14474071095383617,
+          "taylor": 0.13406482226154087,
+          "fisher": 0.1313651278751809,
+          "saber_v2": 0.1364942898504101
+        },
+        "p_method": 0.0,
+        "n_holm_significant": 5,
+        "max_abs_mean": 0.013375583078655296,
+        "mde": 0.004185415144415514,
+        "rank_rho": 0.3942105263157895
+      },
+      "awbir_order": [
+        "fisher",
+        "taylor",
+        "saber_v2",
+        "random",
+        "magnitude"
+      ],
+      "awbir_holm": 4,
+      "parameters": {
+        "random": 106681,
+        "magnitude": 123608,
+        "taylor": 99680,
+        "fisher": 100583,
+        "saber_v2": 97117
+      }
+    }
+  },
+  "prereg": {
+    "arm": "P_capacity_duplicates_iomt20",
+    "D_duplicate_audit": {
+      "design": "exact-duplicate audit of the standardised float32 feature vectors of CICIoT2023: fraction of validation rows whose vector occurs in training, within-validation duplicate fraction, per-class rates; both teachers and the fifteen frozen shallow students evaluated at natural prior on all validation rows and on validation rows absent from training; CIC-IoMT-2024 reported for reference (its bridge removed exact duplicates before splitting)",
+      "D1": "reading rule: if the deep CICIoT2023 teacher's fine macro-F1 on validation rows absent from training is within 0.03 of its locked test value (0.403), the validation-to-test gap is explained by train-validation duplication; otherwise it is not"
+    },
+    "P_parameter_matched": {
+      "design": "deep CICIoT2023 teacher; the five scores recomputed in this notebook on validation batches (as in the original benchmark); for each method TWO structures from the same removal order: FLOP-matched (realised MAC reduction 40%) and PARAMETER-matched (parameter reduction 40%), tolerance 1.5 points, minimum 8 channels per layer; 5 methods x 20 seeds x 2 matchings under minimal recovery, every model recalibrated on the NB31 slice; analysis as in NB37",
+      "P1": "at matched parameters, with 20 seeds, magnitude still has the lowest recalibrated ground-truth HSR and V-C is among the two highest, as at matched FLOPs; if this holds the sign reversal is not a capacity artefact; if magnitude loses its rank or V-C leaves the bottom two, capacity is part of the explanation and the paper says so",
+      "P0": "the FLOP-matched structures rebuilt from fresh scores reproduce the NB37 deep ordering (magnitude lowest HSR, V-C in the bottom two)"
+    },
+    "I_iomt_deep_twenty": {
+      "design": "CIC-IoMT-2024 deep architecture, frozen NB33 structures, 5 methods x 20 seeds, minimal recovery, recalibrated; analysis as in NB37",
+      "I1": "descriptive with a fixed reading: (i) channel-level ordering (Taylor, Fisher or V-C lowest HSR), (ii) CICIoT2023-deep ordering (magnitude lowest), or (iii) no Holm-significant pair on HSR; whichever the data show is reported"
+    },
+    "seeds": [
+      101,
+      211,
+      307,
+      401,
+      503,
+      613,
+      719,
+      823,
+      907,
+      1013,
+      1109,
+      1201,
+      1303,
+      1409,
+      1511,
+      1607,
+      1709,
+      1801,
+      1907,
+      2003
+    ],
+    "no_test_access": true
+  }
+}

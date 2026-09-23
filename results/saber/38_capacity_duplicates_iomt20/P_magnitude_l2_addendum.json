@@ -1,0 +1,14 @@
+{
+  "magnitude_l2_params_matched_hsr_mean": 0.17361434232391665,
+  "magnitude_l1_params_matched_hsr_mean": 0.16954274027136096,
+  "magnitude_l1_flops_matched_hsr_mean": 0.17660588740161787,
+  "magnitude_l2_flops_matched_hsr_mean_NB37": 0.1649,
+  "paired_t_l2_vs_l1_params_matched": 0.003528083553656583,
+  "l2_params_vs_best_other": {
+    "taylor": 0.8753966579606705,
+    "fisher": 0.07233311275312868,
+    "saber_v2": 1.0305145940548468e-07,
+    "random": 2.6360678315982713e-08
+  },
+  "note": "frozen 20b structures used L2 magnitude, abs-of-summed-product Taylor and a simplified leverage; stage 5 used the library's L1 magnitude, sum-of-abs Taylor and full leverage; V-C and random structures are identical under both"
+}
