@@ -1,0 +1,22 @@
+{
+  "arm": "T_trigger_isolation_ciciot2023",
+  "cells": "the four pruned cells that collapse in NB27/28/30 (shallow fisher s307, shallow saber_v2 s307, deep fisher s401, deep saber_v2 s401) and the two unpruned cells that collapse in NB31 (dense shallow s307, dense deep s401); recovery: 8 (shallow) / 6 (deep) units on the seeded 10% subset, Adam 1e-3, batch 1024, inverse-sqrt class weighting",
+  "collapse_definition": "as in NB30/31: eval-mode benign escalation > 0.10 with batch-statistics escalation <= 0.10",
+  "conditions": {
+    "T1_input_clipping": "features clipped to their 0.1 / 99.9 training percentiles before the model, the preprocessing of the corpus that never collapsed; applied at recovery and evaluation; all six cells",
+    "T2_no_running_statistics": "dense models rebuilt with GroupNorm(1, C) in place of BatchNorm, trained under the NB29 recipe, recovered under the identical seeded subsets and orders (shallow s307, deep s401); with no running statistics there is no dual mode, so the signal is an eval-mode benign escalation spike > 0.10 at any epoch",
+    "T3_subset_vs_order": "shallow fisher: (a) subset fixed at seed 307, batch order varied over three seeds; (b) batch-order seed fixed at 307, subset varied over three seeds",
+    "T4_unweighted_loss": "plain cross-entropy on the four pruned cells",
+    "T5_per_batch_trace": "baseline shallow fisher s307: per batch, the batch's maximum |z| and the maximum BatchNorm running variance after the step; eval-mode benign escalation every 25 batches"
+  },
+  "claims": {
+    "T1": "input clipping removes every normalisation collapse in all six cells",
+    "T2": "GroupNorm dense models show no eval-mode benign escalation spike > 0.10 at any epoch for seeds 307 and 401",
+    "T3": "collapses track the subset: they occur in at least two of three order variants with the subset fixed and in at most one of three subset variants with the order fixed; the reverse pattern is reported as tracking the order; neither is reported as such",
+    "T4": "removing class weighting does not remove the collapse in the four pruned cells (at least one collapse remains)",
+    "T5": "descriptive: the three largest single-batch jumps in maximum running variance coincide with the three batches of highest maximum |z| in the same unit"
+  },
+  "reporting_rule": "each claim reported as held or not held",
+  "no_test_access": true,
+  "no_new_selection": true
+}
