@@ -1,0 +1,11 @@
+{
+  "arm": "B_second_corpus_scores_and_structures",
+  "out_of_sample_design": "every saliency score is computed on TRAINING data (a natural-prior slice of 40 batches, seed 7, for Taylor and Fisher; a class-balanced training subset of up to 512 rows per class, seed 7, for semantic boundary leverage); every single-channel harm is measured on the VALIDATION evaluation subsample. The two never overlap, so score-to-harm validity is out-of-sample, unlike the CICIoT2023 benchmark",
+  "scores": "random (seed 1), magnitude, Taylor, Fisher, V-C = within-layer percentile rank of raw semantic boundary leverage times layer mean Fisher; V-C definition frozen from Section 5",
+  "harms": "single-group functional zeroing via temporarily_zero_group; harm_awbir (teacher-referenced, IoMT graph), harm_hsr_balanced_soc, harm_fine_macro_f1, harm_family_macro_f1, harm_benign_false_alert, all larger-is-worse relative to the teacher on the same rows",
+  "claims": {
+    "B6": "on the deep architecture, V-C's Spearman correlation with harm is at least Fisher's on at least two of the four semantic harms (awbir, hsr, fine, family); reported for both architectures with a layer-stratified bootstrap of the difference (2,000 resamples)"
+  },
+  "structures": "realised-FLOP calibration to 40% for all five methods on both architectures, tolerance 1.5 points, minimum 8 channels per layer; frozen structures and raw-student audits saved for notebooks 34 and 35",
+  "no_test_access": true
+}
