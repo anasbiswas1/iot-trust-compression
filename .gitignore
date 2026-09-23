@@ -62,3 +62,5 @@ results/saber/**/*.pth
 results/saber/31_consistent_normalisation/checkpoints/
 data/iomt_bridge/
 models/iomt/
+results/saber/34_iomt_factorial/checkpoints/
+results/saber/34_iomt_factorial/collapse_snapshots/

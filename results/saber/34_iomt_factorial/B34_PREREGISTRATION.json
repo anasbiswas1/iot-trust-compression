@@ -1,0 +1,24 @@
+{
+  "arm": "B_second_corpus_factorial",
+  "design": "5 methods x 5 seeds x 2 architectures x 2 regimes on the frozen NB33 40% structures. Shallow: minimal_ce (1 unit on a seeded 10% subset) and full_ce (6 fixed full epochs). Deep: minimal_ce and standard_ce (2 full epochs). Adam 1e-3, batch 1024, class weighting with each teacher's own exponent. Dual-mode audit at EVERY epoch; every final checkpoint saved; ONE fixed BatchNorm recalibration (50 batches from a single training slice, seed 2026) applied to every final model; all analyses reported under both normalisations, recalibrated as primary",
+  "collapse_definition": "normalisation collapse: eval-mode benign escalation exceeds batch-statistics benign escalation by more than 0.10 absolute. Chosen before any result because the shallow IoMT teacher's own baseline is 0.087, so the CICIoT2023 absolute 0.10 rule would fire on a healthy student",
+  "controls": "unpruned control: each dense teacher recovered under the identical seeded subsets, orders, weighting and schedule for 8 (shallow) / 6 (deep) units with the dual-mode audit; remedy: every collapse snapshot recalibrated on the fixed slice and evaluated normally",
+  "claims": {
+    "B1": "equalisation: recovery equalisation index for recalibrated AWBIR >= 0.70 in all four cells",
+    "B2a": "a recovery-seed effect on recalibrated AWBIR is detectable by permutation (p < 0.05) in >= 2 of 4 cells",
+    "B2b": "selection effects are small: the largest paired mean difference between methods in recalibrated AWBIR is below 0.03 (the materiality line of Section 4) in every cell",
+    "B3": "rank instability: mean pairwise rank correlation across seeds on recalibrated AWBIR < 0.5 in every cell",
+    "B4": "at least one normalisation collapse occurs across the factorial epochs and the unpruned control",
+    "B5": "if B4 holds, recalibration brings every collapse snapshot's eval-mode benign escalation to within 0.02 of its batch-statistics value"
+  },
+  "reporting_rule": "each claim reported as held or not held; a claim that does not hold changes the generality statement",
+  "seeds": [
+    101,
+    211,
+    307,
+    401,
+    503
+  ],
+  "no_test_access": true,
+  "no_new_selection": true
+}
