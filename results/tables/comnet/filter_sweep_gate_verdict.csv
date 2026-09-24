@@ -1,0 +1,5 @@
+criterion,value,pass
+both_new_geometries_collapse_at_38_weights_loss_gt_0.15,"32f 0.047, 128f 0.318",False
+losses_at_38_weights_agree_within_0.10_across_32_64_128,range 0.271,False
+fractional_reading_128f_at_38_worse_than_32f_at_38_by_gt_0.10,0.271,True
+ref_spearman_surviving_weights_vs_loss_all_geometries,-0.939,
