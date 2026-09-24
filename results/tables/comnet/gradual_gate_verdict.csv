@@ -1,0 +1,5 @@
+criterion,value,pass
+perlayer_gradual_conv0_sparsity_ge_0.75,0.802,True
+perlayer_gradual_collapse_loss_gt_0.15_and_ge4_classes,"loss 0.165, 8 classes",True
+global_gradual_keeps_conv0_lt_0.5_sparsity,0.31,True
+global_gradual_loss_lt_0.05,0.0294,True

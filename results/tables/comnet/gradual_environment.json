@@ -1,0 +1,28 @@
+{
+  "environment": {
+    "cpu_count": 8,
+    "cuda_available": true,
+    "machine": "x86_64",
+    "platform": "Linux-6.6.122+-x86_64-with-glibc2.39",
+    "processor": "x86_64",
+    "python": "3.13.15",
+    "ram_bytes": 54750404608,
+    "torch": "2.11.0+cu130",
+    "torch_threads": 4
+  },
+  "final_epochs": 2,
+  "mask_every": 100,
+  "rules": [
+    "gradual_perlayer80",
+    "gradual_global80"
+  ],
+  "s_final": 0.8,
+  "sched_epochs": 8,
+  "seeds": [
+    0,
+    1,
+    2,
+    3,
+    4
+  ]
+}
