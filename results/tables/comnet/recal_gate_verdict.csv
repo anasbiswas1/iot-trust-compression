@@ -1,0 +1,5 @@
+criterion,value,pass
+i_displacement_genuine_three_fresh_estimates_exceed_saved_by_0.10,"{'saved_running_stats': 0.271, 'batch_stats_on_test': 0.045, 'recal_cumulative': 0.502, 'recal_ema_0.1': 0.508}",False
+ii_specific_to_starved_uniform_change_gt_0.10_protected_and_global_lt_0.02,"uniform +0.232, protected -0.001, global -0.001",True
+iii_repairs_security_benign_within_5pts_of_dense_and_damaged_lt_4,benign 0.333 vs dense 0.286; damaged 1,True
+iv_mlp38_and_ton_recover_gt_half,"mlp38 0.44, ton 0.38",False
