@@ -1,0 +1,7 @@
+criterion,value,pass
+cnn_rho_PR_vs_loss_le_-0.8,-0.468,False
+mlp_rho_PR_vs_loss_le_-0.8,-0.911,True
+pooled_rho_PR_vs_loss_le_-0.8,-0.781,False
+pooled_PR_beats_surviving_weights,PR -0.781 vs weights -0.549,True
+ref_mlp_grid_only_rho_PR,-0.605,
+ref_penultimate_PR_pooled,-0.868,
