@@ -1,0 +1,56 @@
+{
+  "environment": {
+    "cpu_count": 8,
+    "cuda_available": true,
+    "machine": "x86_64",
+    "platform": "Linux-6.6.122+-x86_64-with-glibc2.39",
+    "processor": "x86_64",
+    "python": "3.13.15",
+    "ram_bytes": 54750404608,
+    "torch": "2.11.0+cu128",
+    "torch_threads": 4
+  },
+  "mappings": {
+    "M0_original": [
+      "benign",
+      "credential_attack",
+      "ddos",
+      "dos",
+      "malware_botnet",
+      "reconnaissance",
+      "spoofing_mitm",
+      "web_application"
+    ],
+    "M1_dos_ddos_merged": [
+      "benign",
+      "credential_attack",
+      "denial_of_service",
+      "malware_botnet",
+      "reconnaissance",
+      "spoofing_mitm",
+      "web_application"
+    ],
+    "M2_web_credential_merged": [
+      "application_attack",
+      "benign",
+      "ddos",
+      "dos",
+      "malware_botnet",
+      "reconnaissance",
+      "spoofing_mitm"
+    ],
+    "M3_coarse_four": [
+      "application",
+      "benign",
+      "probing",
+      "volumetric"
+    ]
+  },
+  "seeds": [
+    0,
+    1,
+    2,
+    3,
+    4
+  ]
+}
