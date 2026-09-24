@@ -1,0 +1,11 @@
+attacker_seeds,n_blind,blind_spots
+"(0, 1, 2)",3,DoS-HTTP_Flood;DoS-TCP_Flood;MITM-ArpSpoofing
+"(0, 1, 3)",2,DoS-TCP_Flood;MITM-ArpSpoofing
+"(0, 1, 4)",2,DoS-HTTP_Flood;MITM-ArpSpoofing
+"(0, 2, 3)",2,DoS-TCP_Flood;MITM-ArpSpoofing
+"(0, 2, 4)",5,DDoS-SlowLoris;DDoS-TCP_Flood;DoS-HTTP_Flood;DoS-UDP_Flood;MITM-ArpSpoofing
+"(0, 3, 4)",1,MITM-ArpSpoofing
+"(1, 2, 3)",5,DNS_Spoofing;DoS-HTTP_Flood;DoS-TCP_Flood;MITM-ArpSpoofing;Mirai-greip_flood
+"(1, 2, 4)",5,DDoS-UDP_Flood;DoS-HTTP_Flood;MITM-ArpSpoofing;Mirai-greip_flood;VulnerabilityScan
+"(1, 3, 4)",3,DoS-HTTP_Flood;MITM-ArpSpoofing;Mirai-greip_flood
+"(2, 3, 4)",5,DDoS-HTTP_Flood;DoS-HTTP_Flood;MITM-ArpSpoofing;Mirai-greip_flood;VulnerabilityScan

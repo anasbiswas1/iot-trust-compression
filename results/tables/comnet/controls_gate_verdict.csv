@@ -1,0 +1,6 @@
+control,value,pass
+A_f128_at_80pct,"loss 0.191 (75%: 0.105, 90%: 0.318)",True
+B_sparse_head_part_of_mechanism_dense_recovers_ge_0.10,0.0453,False
+B_representation_alone_collapses_dense_head_loss_gt_0.15,0.2257,True
+C_bn_recal_final_abs_mean_change_lt_0.02,0.2317,False
+D_val_selected_ratio_ge_2,1.458,False
