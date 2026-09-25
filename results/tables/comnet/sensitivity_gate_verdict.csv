@@ -1,0 +1,4 @@
+criterion,value,pass
+a_shuffled_batchstats_exceed_saved_by_0.10,0.2398,True
+b_interpolation_knife_edge,"first30 41%, last30 17%",False
+c_single_statistic_recovers_gt_half,means_only 101%,True
